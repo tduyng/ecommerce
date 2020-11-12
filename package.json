@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://gitlab.com/tienduy-nguyen/mern-shop/issues"
   },
-  "homepage": "https://gitlab.com/tienduy-nguyen/mern-shop#readme"
+  "homepage": "https://gitlab.com/tienduy-nguyen/mern-shop#readme",
+  "dependencies": {
+    "react-bootstrap": "^1.4.0"
+  }
 }
