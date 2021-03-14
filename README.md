@@ -1,6 +1,6 @@
 # E-commerce Project
 
-E-commerce project using **GraphQL** with stack: NestJS - ReactJS(+ViteJS) - MongoDB
+E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - MongoDB
 
 
 ## Features
@@ -25,11 +25,10 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(+ViteJS) - Mon
 ## Technologies
 
 - Backend
-  - NestJS
-  - @NestJS/GraphQL
+  - NodeJS (via NestJS)
+  - GraphQL (via @nestjs/graphql)
 - Frontend
-  - ViteJS
-  - ReactJS
+  - ReactJS (via NextJS)
   - Apollo GraphQL
 - Database
   - MongoDB
