@@ -1,0 +1,6 @@
+node_module
+tsconfig.json
+.gitnigore
+test/
+*spec.ts
+*.config.js
