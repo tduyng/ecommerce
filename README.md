@@ -4,7 +4,8 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 
 
 ## Features
-
+- Auth: Jwt, refresh-token, verification email
+- Send email with Nodemailer+Sendgrid
 - Full featured shopping cart
 - Product reviews and ratings
 - Top products carousel
@@ -17,8 +18,7 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 - Mark orders as delivered option
 - Checkout process (shipping, payment method, etc)
 - PayPal / credit card integration
-- Database seeder (products & users)
-
+- Upload images with Multer/Cloudinary
 - Testing: Unit tests, end to end tests
 - CI-CD: Github actions
 
