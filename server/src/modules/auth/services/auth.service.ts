@@ -1,4 +1,8 @@
-import { PayloadUserForJwtToken } from '@common/types/http.types';
+import {
+	DataStoredFromToken,
+	PayloadUserForJwtToken,
+	UserFromRequest,
+} from '@common/types/http.types';
 import { emailRegex, User } from '@modules/user/user.schema';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -119,5 +123,34 @@ export class AuthService {
 			.findById(_id, { username, email, thumbnail }, { new: true })
 			.lean();
 		return updated;
+	}
+
+	public async getUserFromToken(token: string): Promise<User | null> {
+		if (!token) return null;
+		const decoded: DataStoredFromToken = await this.jwtService.verifyAsync(token);
+		if (!decoded || !decoded?.user) return null;
+		const { user } = decoded;
+		const realUser: User = await this.userModel.findOne({ email: user.email }).lean();
+		if (!realUser) return null;
+		return realUser;
+	}
+
+	public async getUserFromRefreshToken(refreshToken: string): Promise<User | null> {
+		if (!refreshToken) return null;
+		const decoded: DataStoredFromToken = await this.jwtService.verifyAsync(refreshToken);
+		const userReq: UserFromRequest = decoded.user;
+		if (!decoded || !userReq) return null;
+		const user: User = await this.userModel
+			.findOne({ email: userReq.email })
+			.select('+currentHashedRefreshToken')
+			.lean();
+		if (!user) return null;
+		const isRefreshTokenMatching = await this.passwordService.verify(
+			user.currentHashedRefreshToken,
+			refreshToken,
+		);
+
+		if (!isRefreshTokenMatching) return null;
+		return user;
 	}
 }
