@@ -6,7 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { PayloadUserForJwtToken } from 'src/common/types';
 import { EmailService } from 'src/providers/email/email.service';
-import { LoginUserDto, RegisterUserDto, ResetPasswordDto } from '../dto';
+import { LoginUserInput, RegisterUserInput, ResetPasswordInput } from '../dto';
 import { AuthService } from '../services/auth.service';
 import { PasswordService } from '../services/password.service';
 
@@ -70,7 +70,7 @@ describe('AuthService', () => {
 	});
 
 	describe('validateUser', () => {
-		let loginInput: LoginUserDto;
+		let loginInput: LoginUserInput;
 		let hash: string;
 		let mockUser: User;
 		beforeAll(async () => {
@@ -146,7 +146,7 @@ describe('AuthService', () => {
 			emailService.sendEmailConfirmation.mockResolvedValue();
 			const result = await authService.register({
 				email: 'some-email@email.com',
-			} as RegisterUserDto);
+			} as RegisterUserInput);
 			expect(result).toEqual({ token: 'token-jwt' });
 		});
 	});
@@ -193,7 +193,7 @@ describe('AuthService', () => {
 			const input = {
 				token: 'some-token-jwt',
 				newPassword: 'newPassword',
-			} as ResetPasswordDto;
+			} as ResetPasswordInput;
 			jwtService.verifyAsync.mockReturnValue({ user: userJwt });
 			userModel.findOne.mockImplementationOnce(() => ({
 				select: jest
@@ -211,7 +211,7 @@ describe('AuthService', () => {
 			const input = {
 				token: 'some-token-jwt',
 				newPassword: 'newPassword',
-			} as ResetPasswordDto;
+			} as ResetPasswordInput;
 			jwtService.verifyAsync.mockReturnValue(null);
 			try {
 				await authService.resetPassword(input);
@@ -225,7 +225,7 @@ describe('AuthService', () => {
 			const input = {
 				token: 'some-token-jwt',
 				newPassword: 'newPassword',
-			} as ResetPasswordDto;
+			} as ResetPasswordInput;
 			jwtService.verifyAsync.mockReturnValue({ user: userJwt });
 			userModel.findOne.mockImplementationOnce(() => ({
 				select: jest
@@ -303,7 +303,7 @@ describe('AuthService', () => {
 		});
 
 		describe('getUserFromRefreshToken', () => {
-			let loginInput: LoginUserDto;
+			let loginInput: LoginUserInput;
 			let hash: string;
 			let mockUser: User;
 			beforeAll(async () => {

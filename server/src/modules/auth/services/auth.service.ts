@@ -10,12 +10,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EmailService } from 'src/providers/email/email.service';
 import {
-	ChangePasswordDto,
-	LoginUserDto,
-	RegisterUserDto,
-	ResetPasswordDto,
+	ChangePasswordInput,
+	LoginUserInput,
+	RegisterUserInput,
+	ResetPasswordInput,
 } from '../dto';
-import { UpdateProfileDto } from '../dto/update-profile.dto';
+import { UpdateProfileInput } from '../dto/update-profile.input';
 import { PasswordService } from './password.service';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
 		private emailService: EmailService,
 	) {}
 
-	public async validateUser(input: LoginUserDto) {
+	public async validateUser(input: LoginUserInput) {
 		const { usernameOrEmail, password } = input;
 		const isEmail = emailRegex.test(usernameOrEmail);
 		let user: User | null;
@@ -49,7 +49,7 @@ export class AuthService {
 		return user;
 	}
 
-	public async register(input: RegisterUserDto) {
+	public async register(input: RegisterUserInput) {
 		const payload: PayloadUserForJwtToken = {
 			user: { ...input },
 		};
@@ -78,7 +78,7 @@ export class AuthService {
 		return { token: emailToken };
 	}
 
-	public async resetPassword(input: ResetPasswordDto) {
+	public async resetPassword(input: ResetPasswordInput) {
 		const { token, newPassword } = input;
 		const decoded = await this.jwtService.verifyAsync(token);
 		if (!decoded || !decoded.user)
@@ -98,7 +98,7 @@ export class AuthService {
 	}
 
 	// When use want to change password, they already know their old password
-	public async changePassword(_id: string, input: ChangePasswordDto) {
+	public async changePassword(_id: string, input: ChangePasswordInput) {
 		const { oldPassword, newPassword } = input;
 		const user: User = await this.userModel.findById(_id).select('+password').lean();
 		if (!user) throw new BadRequestException(`User with id: ${_id} not found`);
@@ -112,7 +112,7 @@ export class AuthService {
 		return updated;
 	}
 
-	public async updateProfile(_id: string, input: UpdateProfileDto) {
+	public async updateProfile(_id: string, input: UpdateProfileInput) {
 		const user: User = await this.userModel.findById(_id).lean();
 		if (!user) throw new BadRequestException(`User with id: ${_id} not found`);
 		const username = input.username || user.username;
