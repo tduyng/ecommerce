@@ -31,7 +31,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@common/*": ["src/common/*"],
+
     }
   },
   "include": ["src", "test"]

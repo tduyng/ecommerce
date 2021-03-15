@@ -11,19 +11,13 @@ export enum RoleType {
 @Schema({ timestamps: true })
 export class User extends Document {
 	@Prop({ unique: true })
+	username: string;
+
+	@Prop({ unique: true })
 	email: string;
 
 	@Prop({ type: String, select: false })
 	password: string;
-
-	@Prop()
-	username: string;
-
-	@Prop({ required: false })
-	googleId?: string;
-
-	@Prop({ required: false })
-	facebookId?: string;
 
 	@Prop({ required: false })
 	thumbnail?: string;
