@@ -1,4 +1,4 @@
-import { RoleType, User } from '@modules/users/user.schema';
+import { RoleType, User } from '@modules/user/user.schema';
 import { Request, Response } from 'express';
 
 export interface HttpContext {

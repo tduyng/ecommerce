@@ -1,4 +1,4 @@
-import { User } from '@modules/users/user.schema';
+import { User } from '@modules/user/user.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HookNextFunction, Types, Document } from 'mongoose';
 

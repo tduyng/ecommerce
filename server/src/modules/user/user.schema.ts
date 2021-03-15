@@ -10,10 +10,10 @@ export enum RoleType {
 
 @Schema({ timestamps: true })
 export class User extends Document {
-	@Prop({ unique: true })
+	@Prop({ type: String, unique: true })
 	username: string;
 
-	@Prop({ unique: true })
+	@Prop({ type: String, unique: true })
 	email: string;
 
 	@Prop({ type: String, select: false })
@@ -21,9 +21,6 @@ export class User extends Document {
 
 	@Prop({ required: false })
 	thumbnail?: string;
-
-	@Prop({ type: Array, default: [] })
-	cart: any[];
 
 	@Prop({ type: String, enum: Object.values(RoleType), default: RoleType.USER })
 	role: RoleType;

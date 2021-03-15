@@ -15,7 +15,7 @@ export const envConfig = (): EnvConfig => {
 		port,
 		serverUrl: process.env.SERVER_URL || `http://localhost:5025`,
 		clientUrl: process.env.CLIENT_URL || `http://localhost:3000`,
-		mongodbUri: process.env.MONGODB_URI || `mongodb://localhost:27017/bookstore-test`,
+		mongodbUri: process.env.MONGODB_URI || `mongodb://localhost:27017/ecommerce-test`,
 		sessionSecret: process.env.SESSION_SECRET || `some-very-strong-secret`,
 		cookieSecret: process.env.COOKIE_SECRET || `some-very-strong-secret`,
 		jwt: {

@@ -1,5 +1,5 @@
 import { Review } from '@modules/review/review.schema';
-import { User } from '@modules/users/user.schema';
+import { User } from '@modules/user/user.schema';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
