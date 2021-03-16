@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@nestjs-modules/mailer": "^1.5.1",
-    "nodemailer-sendgrid-transport": "^0.2.0"
-  }
-}

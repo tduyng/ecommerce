@@ -3,11 +3,12 @@
 # ------------------------------------------------------
 
 type AuthToken {
-  """JWT access token"""
   accessToken: String
-
-  """JWT refresh token"""
   refreshToken: String
+}
+
+type AuthTokenResponse {
+  authToken: AuthToken
 }
 
 input ChangePasswordInput {
@@ -25,20 +26,29 @@ input LoginUserInput {
   usernameOrEmail: String!
 }
 
+type LogoutResponse {
+  error: MessageError
+  isLogout: Boolean!
+}
+
+type MessageError {
+  message: String!
+}
+
 type Mutation {
-  activate(token: String!): AuthToken!
-  autoRefreshPassword: AuthToken!
-  changePassword(input: ChangePasswordInput!): User!
-  forgotPassword(email: String!): String!
-  login(input: LoginUserInput!): AuthToken!
-  logout: Boolean!
-  refresh: AuthToken!
-  register(input: RegisterUserInput!): String!
-  resetPassword(input: ResetPasswordInput!): User!
+  activate(token: String!): AuthTokenResponse!
+  autoRefresh: AuthTokenResponse!
+  changePassword(input: ChangePasswordInput!): UserResponse!
+  forgotPassword(email: String!): TokenResponse!
+  login(input: LoginUserInput!): AuthTokenResponse!
+  logout: LogoutResponse!
+  refresh: AuthTokenResponse!
+  register(input: RegisterUserInput!): TokenResponse!
+  resetPassword(input: ResetPasswordInput!): UserResponse!
 }
 
 type Query {
-  me: User!
+  me: UserResponse!
 }
 
 input RegisterUserInput {
@@ -53,6 +63,10 @@ input ResetPasswordInput {
   token: String!
 }
 
+type TokenResponse {
+  token: String
+}
+
 type User {
   _id: ID!
   avatar: String
@@ -61,4 +75,9 @@ type User {
   role: String
   updatedAt: DateTime!
   username: String!
+}
+
+type UserResponse {
+  error: MessageError
+  user: User
 }

@@ -22,9 +22,10 @@ export interface UserFromRequest extends Partial<User> {
 	password?: string;
 	avatar?: string;
 }
-// export interface SessionAuthToken {
-// 	authToken?: {
-// 		accessToken: string;
-// 		refreshToken: string;
-// 	};
-// }
+export interface SessionAuthToken {
+	authToken?: IAuthToken;
+}
+export interface IAuthToken {
+	accessToken?: string;
+	refreshToken?: string;
+}
