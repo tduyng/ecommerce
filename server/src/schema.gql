@@ -1,0 +1,64 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthToken {
+  """JWT access token"""
+  accessToken: String
+
+  """JWT refresh token"""
+  refreshToken: String
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginUserInput {
+  password: String!
+  usernameOrEmail: String!
+}
+
+type Mutation {
+  activate(token: String!): AuthToken!
+  autoRefreshPassword: AuthToken!
+  changePassword(input: ChangePasswordInput!): User!
+  forgotPassword(email: String!): String!
+  login(input: LoginUserInput!): AuthToken!
+  logout: Boolean!
+  refresh: AuthToken!
+  register(input: RegisterUserInput!): String!
+  resetPassword(input: ResetPasswordInput!): User!
+}
+
+type Query {
+  me: User!
+}
+
+input RegisterUserInput {
+  avatar: String
+  email: String!
+  password: String
+  username: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  token: String!
+}
+
+type User {
+  _id: ID!
+  avatar: String
+  createdAt: DateTime!
+  email: String!
+  role: String
+  updatedAt: DateTime!
+  username: String!
+}

@@ -45,7 +45,7 @@ async function bootstrap() {
 
 	app.use(cookieParser(env.cookieSecret));
 	app.enableCors({
-		origin: true,
+		origin: env.clientUrl,
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 		credentials: true,
 	});
@@ -91,7 +91,7 @@ async function bootstrap() {
 	app.use(passport.session());
 
 	await app.listen(port, () => {
-		console.log(`Server is running at ${env.serverUrl}/api/graphql`);
+		console.log(`Server is running at ${env.serverUrl}/graphql`);
 	});
 }
 bootstrap();

@@ -1,4 +1,4 @@
-import { HookNextFunction, Document, Types } from 'mongoose';
+import { HookNextFunction, Document } from 'mongoose';
 import argon2 from 'argon2';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import slugify from 'slugify';
