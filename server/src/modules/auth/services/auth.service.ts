@@ -97,6 +97,7 @@ export class AuthService {
 			.findOne({ email: userJwt.email })
 			.select('+password')
 			.lean();
+		if (!realUser) throw new BadRequestException('Token is not valid');
 		const hash = await this.passwordService.hash(newPassword);
 		const updated: User = await this.userModel
 			.findByIdAndUpdate(realUser._id, { password: hash }, { new: true })

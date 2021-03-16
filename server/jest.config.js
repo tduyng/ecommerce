@@ -9,7 +9,7 @@ module.exports = {
 	testEnvironment: 'node',
 	moduleDirectories: ['node_modules', 'src'],
 	moduleNameMapper: {
-		'src/(.*)$': '<rootDir>/$1',
+		'^src/(.*)$': '<rootDir>/$1',
 		'^@common/(.*)$': '<rootDir>/common/$1',
 		'^@modules/(.*)$': '<rootDir>/modules/$1',
 		'^@app/(.*)$': '<rootDir>/app/$1',

@@ -1,6 +1,5 @@
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { join } from 'path';
-import { Request } from 'express';
 
 export const graphqlConfig = () => {
 	return {

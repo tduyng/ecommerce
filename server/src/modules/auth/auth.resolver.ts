@@ -11,11 +11,10 @@ import {
 	LoginUserInput,
 	RegisterUserInput,
 	ResetPasswordInput,
+	TokenResponse,
+	UserResponse,
 } from './dto';
-import { LogoutResponse } from './dto/logout-response.objec-type';
-import { TokenResponse } from './dto/token-response.objec-type';
-import { UserResponse } from './dto/user-response.object-type';
-import { JwtAuth, JwtRefreshTokenGuard } from './guards';
+import { JwtGuard, JwtRefreshTokenGuard } from './guards';
 import { AuthService } from './services/auth.service';
 
 @Resolver()
@@ -23,8 +22,10 @@ export class AuthResolver {
 	constructor(private authService: AuthService, private userService: UserService) {}
 
 	@Query(() => UserResponse)
-	public async me(@Context() ctx: HttpContext) {
-		const userJwt = ctx.req?.user as UserFromRequest;
+	public async me(@Context() { req }: HttpContext) {
+		const accessToken = req.session?.authToken?.accessToken;
+		if (!accessToken) return { user: null };
+		const userJwt: UserFromRequest = await this.authService.getUserFromToken(accessToken);
 		if (!userJwt) return { user: null };
 		const realUser: User = await this.userService.findById(userJwt._id);
 		if (!realUser) return { user: null };
@@ -45,7 +46,7 @@ export class AuthResolver {
 		req.user = user;
 		const authToken: AuthToken = await this.authService.generateAuthToken({ user });
 		req.session.authToken = authToken;
-		return authToken;
+		return { authToken };
 	}
 
 	@Mutation(() => AuthTokenResponse)
@@ -61,15 +62,15 @@ export class AuthResolver {
 		return { authToken };
 	}
 
-	@Mutation(() => LogoutResponse)
-	@JwtAuth()
+	@Mutation(() => Boolean)
+	@UseGuards(JwtGuard)
 	public async logout(@Context() { req }: HttpContext) {
 		try {
 			req.res?.clearCookie(SESSION_AUTH_KEY);
 			req.session?.destroy();
-			return { isLogout: true };
+			return true;
 		} catch (error) {
-			return { isLogout: false, error: { message: error.message } };
+			throw error;
 		}
 	}
 
@@ -99,7 +100,7 @@ export class AuthResolver {
 
 	// Users change password directly on website when he already knows their password
 	@Mutation(() => UserResponse)
-	@JwtAuth()
+	@UseGuards(JwtGuard)
 	public async changePassword(
 		@Args('input') input: ChangePasswordInput,
 		@Context() { req }: HttpContext,

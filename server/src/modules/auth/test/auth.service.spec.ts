@@ -1,5 +1,5 @@
 import { User } from '@modules/user/user.schema';
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -47,7 +47,6 @@ describe('AuthService', () => {
 			providers: [
 				AuthService,
 				JwtService,
-				PasswordService,
 				{ provide: getModelToken(User.name), useFactory: mockUserModel },
 				{ provide: EmailService, useFactory: mockEmailService },
 				{ provide: JwtService, useFactory: mockJwtService },
@@ -142,12 +141,12 @@ describe('AuthService', () => {
 
 	describe('register', () => {
 		it('Should return a token string for email confirmation', async () => {
-			jwtService.sign.mockReturnValue('token-jwt');
+			jwtService.signAsync.mockReturnValue('token-jwt');
 			emailService.sendEmailConfirmation.mockResolvedValue();
 			const result = await authService.register({
 				email: 'some-email@email.com',
 			} as RegisterUserInput);
-			expect(result).toEqual({ token: 'token-jwt' });
+			expect(result).toEqual('token-jwt');
 		});
 	});
 
@@ -172,7 +171,7 @@ describe('AuthService', () => {
 			jwtService.signAsync.mockReturnValue('some-token-jwt');
 			emailService.sendResetPassword.mockResolvedValue();
 			const result = await authService.forgotPassword('some-email@email.com');
-			expect(result).toEqual({ token: 'some-token-jwt' });
+			expect(result).toEqual('some-token-jwt');
 		});
 		it('Should throw an error when user not found with email given', async () => {
 			userModel.findOne.mockImplementationOnce(() => ({
@@ -216,7 +215,7 @@ describe('AuthService', () => {
 			try {
 				await authService.resetPassword(input);
 			} catch (error) {
-				expect(error).toBeInstanceOf(UnauthorizedException);
+				expect(error).toBeInstanceOf(BadRequestException);
 			}
 		});
 
@@ -235,7 +234,7 @@ describe('AuthService', () => {
 			try {
 				await authService.resetPassword(input);
 			} catch (error) {
-				expect(error).toBeInstanceOf(UnauthorizedException);
+				expect(error).toBeInstanceOf(BadRequestException);
 			}
 		});
 
@@ -245,7 +244,8 @@ describe('AuthService', () => {
 				jwtService.signAsync.mockReturnValue('some-token-jwt');
 				const result = await authService.generateAuthToken(payload);
 				expect(result).toEqual({
-					authToken: { accessToken: 'some-token-jwt', refreshToken: 'some-token-jwt' },
+					accessToken: 'some-token-jwt',
+					refreshToken: 'some-token-jwt',
 				});
 			});
 		});

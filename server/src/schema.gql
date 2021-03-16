@@ -26,11 +26,6 @@ input LoginUserInput {
   usernameOrEmail: String!
 }
 
-type LogoutResponse {
-  error: MessageError
-  isLogout: Boolean!
-}
-
 type MessageError {
   message: String!
 }
@@ -41,7 +36,7 @@ type Mutation {
   changePassword(input: ChangePasswordInput!): UserResponse!
   forgotPassword(email: String!): TokenResponse!
   login(input: LoginUserInput!): AuthTokenResponse!
-  logout: LogoutResponse!
+  logout: Boolean!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
   resetPassword(input: ResetPasswordInput!): UserResponse!
