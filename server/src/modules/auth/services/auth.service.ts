@@ -1,3 +1,4 @@
+import { envConfig } from '@common/config/env.config';
 import {
 	DataStoredFromToken,
 	PayloadUserForJwtToken,
@@ -15,6 +16,7 @@ import {
 	RegisterUserInput,
 	ResetPasswordInput,
 } from '../dto';
+import { AuthToken } from '../dto/auth-token.object-type';
 import { UpdateProfileInput } from '../dto/update-profile.input';
 import { PasswordService } from './password.service';
 
@@ -27,7 +29,7 @@ export class AuthService {
 		private emailService: EmailService,
 	) {}
 
-	public async validateUser(input: LoginUserInput) {
+	public async validateUser(input: LoginUserInput): Promise<User> {
 		const { usernameOrEmail, password } = input;
 		const isEmail = emailRegex.test(usernameOrEmail);
 		let user: User | null;
@@ -49,16 +51,19 @@ export class AuthService {
 		return user;
 	}
 
-	public async register(input: RegisterUserInput) {
+	public async register(input: RegisterUserInput): Promise<string> {
 		const payload: PayloadUserForJwtToken = {
 			user: { ...input },
 		};
-		const token = await this.jwtService.signAsync(payload);
+		const expiredTime = envConfig().jwt.jwtExpiredTime;
+		const token = await this.jwtService.signAsync(payload, {
+			expiresIn: expiredTime,
+		});
 		await this.emailService.sendEmailConfirmation(input.email, token);
-		return { token };
+		return token;
 	}
 
-	public async activateAccount(token: string) {
+	public async activateAccount(token: string): Promise<User> {
 		if (!token) return null;
 		const decoded = await this.jwtService.verifyAsync(token);
 		if (!decoded || !decoded?.user) return null;
@@ -68,17 +73,20 @@ export class AuthService {
 		return newUser;
 	}
 
-	public async forgotPassword(email: string) {
+	public async forgotPassword(email: string): Promise<string> {
 		if (!emailRegex.test(email)) throw new BadRequestException('Input must be email!');
 		const user = await this.userModel.findOne({ email }).lean();
 		if (!user) throw new BadRequestException(`User not found with email: ${email}`);
-		const emailToken = await this.jwtService.signAsync({ user });
+		const emailToken = await this.jwtService.signAsync(
+			{ user },
+			{ expiresIn: envConfig().jwt.jwtExpiredTime },
+		);
 		await this.emailService.sendResetPassword(email, emailToken);
 
-		return { token: emailToken };
+		return emailToken;
 	}
 
-	public async resetPassword(input: ResetPasswordInput) {
+	public async resetPassword(input: ResetPasswordInput): Promise<User> {
 		const { token, newPassword } = input;
 		const decoded = await this.jwtService.verifyAsync(token);
 		if (!decoded || !decoded.user)
@@ -90,7 +98,7 @@ export class AuthService {
 			.select('+password')
 			.lean();
 		const hash = await this.passwordService.hash(newPassword);
-		const updated = await this.userModel
+		const updated: User = await this.userModel
 			.findByIdAndUpdate(realUser._id, { password: hash }, { new: true })
 			.lean();
 
@@ -98,7 +106,7 @@ export class AuthService {
 	}
 
 	// When use want to change password, they already know their old password
-	public async changePassword(_id: string, input: ChangePasswordInput) {
+	public async changePassword(_id: string, input: ChangePasswordInput): Promise<User> {
 		const { oldPassword, newPassword } = input;
 		const user: User = await this.userModel.findById(_id).select('+password').lean();
 		if (!user) throw new BadRequestException(`User with id: ${_id} not found`);
@@ -106,21 +114,21 @@ export class AuthService {
 		if (!isMatch)
 			throw new BadRequestException(`Old password must match the current user password`);
 		const newHash = await this.passwordService.hash(newPassword);
-		const updated = await this.userModel
+		const updated: User = await this.userModel
 			.findByIdAndUpdate(_id, { password: newHash }, { new: true })
 			.lean();
 		return updated;
 	}
 
-	public async updateProfile(_id: string, input: UpdateProfileInput) {
+	public async updateProfile(_id: string, input: UpdateProfileInput): Promise<User> {
 		const user: User = await this.userModel.findById(_id).lean();
 		if (!user) throw new BadRequestException(`User with id: ${_id} not found`);
 		const username = input.username || user.username;
 		const email = input.email || user.email;
-		const thumbnail = input.thumbnail || user.thumbnail;
+		const avatar = input.avatar || user.avatar;
 
-		const updated = await this.userModel
-			.findById(_id, { username, email, thumbnail }, { new: true })
+		const updated: User = await this.userModel
+			.findById(_id, { username, email, avatar }, { new: true })
 			.lean();
 		return updated;
 	}
@@ -152,5 +160,44 @@ export class AuthService {
 
 		if (!isRefreshTokenMatching) return null;
 		return user;
+	}
+	public async resetCurrentHashedRefreshToken(
+		id: string,
+		refreshToken: string,
+	): Promise<User> {
+		const currentHashedRefreshToken = await this.passwordService.hash(refreshToken);
+		const user: User = await this.userModel
+			.findByIdAndUpdate(
+				id,
+				{
+					currentHashedRefreshToken,
+				},
+				{ new: true },
+			)
+			.lean();
+		return user;
+	}
+
+	public async resetAccessToken(payload: PayloadUserForJwtToken): Promise<string> {
+		const expiredTime = envConfig().jwt.jwtExpiredTime;
+		const accessToken = await this.jwtService.signAsync(payload, {
+			expiresIn: expiredTime,
+		});
+		return accessToken;
+	}
+
+	public async generateAuthToken(payload: PayloadUserForJwtToken): Promise<AuthToken> {
+		const envJwt = envConfig().jwt;
+		const accessToken = await this.jwtService.signAsync(payload, {
+			expiresIn: envJwt.jwtExpiredTime,
+		});
+		const refreshToken = await this.jwtService.signAsync(payload, {
+			expiresIn: envJwt.jwtRefreshExpiredTime,
+		});
+		const authToken: AuthToken = {
+			accessToken,
+			refreshToken,
+		};
+		return authToken;
 	}
 }

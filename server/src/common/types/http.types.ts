@@ -16,17 +16,15 @@ export interface DataStoredFromToken {
 
 export interface UserFromRequest extends Partial<User> {
 	_id?: string;
-	id?: string;
 	role?: RoleType;
 	email?: string;
 	username?: string;
 	password?: string;
-	thumbnail?: string;
-	cart?: any[];
+	avatar?: string;
 }
-export interface SessionAuthToken {
-	authToken?: {
-		accessToken: string;
-		refreshToken: string;
-	};
-}
+// export interface SessionAuthToken {
+// 	authToken?: {
+// 		accessToken: string;
+// 		refreshToken: string;
+// 	};
+// }

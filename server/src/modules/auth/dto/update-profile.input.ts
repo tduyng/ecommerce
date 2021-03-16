@@ -19,5 +19,5 @@ export class UpdateProfileInput {
 	@IsOptional()
 	@IsString()
 	@Field(() => String, { nullable: true })
-	thumbnail?: string;
+	avatar?: string;
 }

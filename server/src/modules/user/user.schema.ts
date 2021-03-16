@@ -42,7 +42,7 @@ export class User extends Document {
 
 	@Prop({ required: false })
 	@Field(() => String, { nullable: true })
-	thumbnail?: string;
+	avatar?: string;
 
 	@Prop({ type: String, enum: Object.values(RoleType), default: RoleType.USER })
 	@Field(() => String, { nullable: true })

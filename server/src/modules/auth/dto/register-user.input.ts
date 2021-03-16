@@ -30,5 +30,5 @@ export class RegisterUserInput {
 	@IsOptional()
 	@IsString()
 	@Field(() => String, { nullable: true })
-	thumbnail?: string;
+	avatar?: string;
 }
