@@ -70,15 +70,18 @@ export class UserService {
 		q: string,
 		pagination?: PaginationInput,
 	): Promise<PaginatedUser> {
+		const text = q.trim();
 		const count: number = await this.userModel.countDocuments({
-			$text: { $search: `\"${q}\"` },
+			$or: [{ username: new RegExp(text, 'i') }, { email: new RegExp(text, 'i') }],
 		});
 
 		const limit = pagination?.limit || 25;
 		const page = pagination?.page || 1;
 
 		const users: User[] = await this.userModel
-			.find({ $text: { $search: `\"${q}\"` } })
+			.find({
+				$or: [{ username: new RegExp(text, 'i') }, { email: new RegExp(text, 'i') }],
+			})
 			.skip((page - 1) * limit)
 			.limit(limit)
 			.lean();
