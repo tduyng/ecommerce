@@ -23,5 +23,6 @@ declare namespace NodeJS {
 		readonly CLOUDINARY_NAME: string;
 		readonly CLOUDINARY_API_KEY: string;
 		readonly CLOUDINARY_SECRET: string;
+		readonly FIREBASE_STORAGE_BUCKET: string;
 	}
 }

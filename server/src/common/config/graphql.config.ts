@@ -6,10 +6,11 @@ export const graphqlConfig = () => {
 		playground: process.env.NODE_ENV === 'development',
 		autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 		sortSchema: true,
-		uploads: {
-			maxFileSize: 20_000_000, // 20 MB
-			maxFiles: 5,
-		},
+		// uploads: {
+		// 	maxFileSize: 20_000_000, // 20 MB
+		// 	maxFiles: 5,
+		// },
+		uploads: false, // disable built-in upload handling
 		tracing: false,
 		context: ({ req, connection }) => {
 			if (!connection) {

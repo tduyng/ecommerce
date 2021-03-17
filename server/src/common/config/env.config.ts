@@ -28,16 +28,8 @@ export const envConfig = (): EnvConfig => {
 			sendgridApiKey: process.env.SENDGRID_API_KEY,
 			emailSender: process.env.EMAIL_AUTH_USER || 'your-email@yopmail.com',
 		},
-		auth: {
-			facebookAppId: process.env.FB_APP_ID,
-			facebookAppSecret: process.env.FB_APP_SECRET,
-			googleAppId: process.env.GOOGLE_APP_ID,
-			googleAppSecret: process.env.GOOGLE_APP_SECRET,
-		},
-		cloudinary: {
-			cloudName: process.env.CLOUDINARY_NAME,
-			apiKey: process.env.CLOUDINARY_API_KEY,
-			secret: process.env.CLOUDINARY_SECRET,
+		firebase: {
+			storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 		},
 	};
 };
@@ -56,19 +48,12 @@ export interface EnvConfig {
 		jwtRefreshSecret: string;
 		jwtRefreshExpiredTime: number;
 	};
-	auth?: {
-		facebookAppId: string;
-		facebookAppSecret: string;
-		googleAppId: string;
-		googleAppSecret: string;
-	};
+
 	email: {
 		sendgridApiKey: string;
 		emailSender: string;
 	};
-	cloudinary: {
-		cloudName: string;
-		apiKey: string;
-		secret: string;
+	firebase: {
+		storageBucket: string;
 	};
 }
