@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { UserWhereUniqueInput } from './dto';
+import { PaginatedUser } from './dto/paginated-user.object-type';
+import { PaginationInput } from './dto/pagination.input';
 import { User } from './user.schema';
 
 @Injectable()
@@ -17,10 +19,52 @@ export class UserService {
 		return user;
 	}
 
-	// finOne
-	// findMany
-	// updateOne
-	// updateMany
-	// deleteOne
-	// deleteMany
+	public async findManyUser(
+		filter: FilterQuery<User>,
+		pagination?: PaginationInput,
+	): Promise<PaginatedUser> {
+		let users: User[] = [];
+		if (!pagination) {
+			users = await this.userModel.find({ filter });
+		} else {
+			const limit = pagination.limit || 25;
+			const page = pagination.page || 1;
+			users = await this.userModel
+				.find(filter)
+				.skip((page - 1) * limit)
+				.limit(limit)
+				.lean();
+		}
+		const count = await this.userModel.countDocuments(filter);
+		return { count, users };
+	}
+
+	public async updateOne(_id: string, input: UpdateQuery<User>): Promise<User> {
+		const updated: User = await this.userModel
+			.findByIdAndUpdate(_id, input, { new: true })
+			.lean();
+		return updated;
+	}
+
+	public async updateMany(
+		filter: FilterQuery<User>,
+		input: UpdateQuery<User>,
+	): Promise<User[]> {
+		const updated: User[] = await this.userModel
+			.updateMany(filter, input, { new: true })
+			.lean();
+		return updated;
+	}
+
+	public async deleteById(_id: string) {
+		return await this.userModel.deleteOne({ _id });
+	}
+
+	public async deleteOne(filter: FilterQuery<User>) {
+		return await this.userModel.deleteOne(filter);
+	}
+
+	public async deleteMany(filter: FilterQuery<User>) {
+		return await this.userModel.deleteMany(filter);
+	}
 }
