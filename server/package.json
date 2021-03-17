@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "NODE_ENV=production nest build",
+    "seed": "ts-node -r tsconfig-paths/register  src/providers/database/seeder.ts",
     "start": "nest start",
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "NODE_ENV=development nest start --debug --watch",

@@ -1,17 +1,33 @@
 {
   "users": [{
-      "name": "admin1",
+      "username": "admin1",
       "email": "admin1@yopmail.com",
-      "password": "1234567"
+      "password": "1234567",
+      "role": "ADMIN"
     },
     {
-      "name": "user1",
+      "username": "user1",
       "email": "user1@yopmail.com",
       "password": "1234567"
     },
     {
-      "name": "user2",
+      "username": "user2",
       "email": "user2@yopmail.com",
+      "password": "1234567"
+    },
+    {
+      "username": "client2",
+      "email": "client2@yopmail.com",
+      "password": "1234567"
+    },
+    {
+      "username": "client3",
+      "email": "client3@yopmail.com",
+      "password": "1234567"
+    },
+    {
+      "username": "client4",
+      "email": "client4@yopmail.com",
       "password": "1234567"
     }
   ],
