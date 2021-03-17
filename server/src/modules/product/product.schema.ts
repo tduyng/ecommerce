@@ -1,7 +1,7 @@
 import { Review } from '@modules/review/review.schema';
 import { User } from '@modules/user/user.schema';
-import { Field, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Field, Float, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 
 @Schema()
@@ -39,8 +39,8 @@ export class Product extends Document {
 	@Field(() => Int)
 	numReviews: number;
 
-	@Prop({ type: Number, required: true, default: 0 })
-	@Field(() => Int)
+	@Prop({ type: Number, required: true, default: 0.0 })
+	@Field(() => Float)
 	price: number;
 
 	@Prop({ type: Number, required: true, default: 0 })
@@ -63,3 +63,5 @@ export class Product extends Document {
 	@Field(() => GraphQLISODateTime)
 	updatedAt: Date;
 }
+
+export const ProductSchema = SchemaFactory.createForClass(Product);
