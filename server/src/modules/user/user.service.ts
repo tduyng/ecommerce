@@ -25,7 +25,7 @@ export class UserService {
 	): Promise<PaginatedUser> {
 		let users: User[] = [];
 		if (!pagination) {
-			users = await this.userModel.find({ filter });
+			users = await this.userModel.find(filter).lean();
 		} else {
 			const limit = pagination.limit || 25;
 			const page = pagination.page || 1;

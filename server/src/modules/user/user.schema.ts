@@ -54,11 +54,11 @@ export class User extends Document {
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	createdAt: Date;
+	createdAt?: Date;
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	updatedAt: Date;
+	updatedAt?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
