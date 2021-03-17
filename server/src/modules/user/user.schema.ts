@@ -45,7 +45,7 @@ export class User extends Document {
 	avatar?: string;
 
 	@Prop({ type: String, enum: Object.values(RoleType), default: RoleType.USER })
-	@Field(() => String, { nullable: true })
+	@Field(() => String, { nullable: true, defaultValue: RoleType.USER })
 	role: RoleType;
 
 	@Prop({ type: String, select: false, required: false })
@@ -62,6 +62,8 @@ export class User extends Document {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+// Create indexes
+UserSchema.index({ username: 'text', email: 'text' });
 
 // Hook before insert or save
 UserSchema.pre('save', encryptPassword);

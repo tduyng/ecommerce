@@ -24,17 +24,15 @@ export class UserService {
 		pagination?: PaginationInput,
 	): Promise<PaginatedUser> {
 		let users: User[] = [];
-		if (!pagination) {
-			users = await this.userModel.find(filter).lean();
-		} else {
-			const limit = pagination.limit || 25;
-			const page = pagination.page || 1;
-			users = await this.userModel
-				.find(filter)
-				.skip((page - 1) * limit)
-				.limit(limit)
-				.lean();
-		}
+		// Always make default pagination = 25 with first page
+		const limit = pagination?.limit || 25;
+		const page = pagination?.page || 1;
+		users = await this.userModel
+			.find(filter)
+			.skip((page - 1) * limit)
+			.limit(limit)
+			.lean();
+
 		const count = await this.userModel.countDocuments(filter);
 		return { count, users };
 	}
@@ -66,5 +64,24 @@ export class UserService {
 
 	public async deleteMany(filter: FilterQuery<User>) {
 		return await this.userModel.deleteMany(filter);
+	}
+
+	public async queryUsers(
+		q: string,
+		pagination?: PaginationInput,
+	): Promise<PaginatedUser> {
+		const count: number = await this.userModel.countDocuments({
+			$text: { $search: `\"${q}\"` },
+		});
+
+		const limit = pagination?.limit || 25;
+		const page = pagination?.page || 1;
+
+		const users: User[] = await this.userModel
+			.find({ $text: { $search: `\"${q}\"` } })
+			.skip((page - 1) * limit)
+			.limit(limit)
+			.lean();
+		return { count, users };
 	}
 }

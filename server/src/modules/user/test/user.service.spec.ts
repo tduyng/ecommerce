@@ -79,18 +79,6 @@ describe('UserService', () => {
 			const result = await userService.findManyUser(filter, pagination);
 			expect(result).toEqual(mockResult);
 		});
-
-		it('Should return all users no pass through pagination', async () => {
-			const filter: FilterQuery<User> = { username: /some/i };
-			const mockResult: PaginatedUser = { count: 1, users: [mockUser] };
-			userModel.countDocuments.mockReturnValue(1);
-			userModel.find.mockImplementationOnce(() => ({
-				lean: jest.fn().mockReturnValue([mockUser]),
-			}));
-
-			const result = await userService.findManyUser(filter);
-			expect(result).toEqual(mockResult);
-		});
 	});
 
 	describe('updateMany', () => {
@@ -122,6 +110,25 @@ describe('UserService', () => {
 			const filter: FilterQuery<User> = { username: /some/i };
 			userModel.deleteMany.mockReturnValue({ deleteCount: 1 });
 			expect(await userService.deleteMany(filter)).toBeDefined();
+		});
+	});
+
+	describe('queryUsers', () => {
+		it('Should return array users + count', async () => {
+			const q: string = 'some';
+			const pagination: PaginationInput = { limit: 25, page: 1 };
+			const mockResult: PaginatedUser = { count: 1, users: [mockUser] };
+			userModel.countDocuments.mockReturnValue(1);
+			userModel.find.mockImplementationOnce(() => ({
+				skip: jest.fn().mockImplementation(() => ({
+					limit: jest.fn().mockImplementation(() => ({
+						lean: jest.fn().mockReturnValue([mockUser]),
+					})),
+				})),
+			}));
+
+			const result = await userService.queryUsers(q, pagination);
+			expect(result).toEqual(mockResult);
 		});
 	});
 });
