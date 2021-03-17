@@ -34,16 +34,27 @@ type Mutation {
   activate(token: String!): AuthTokenResponse!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
+  deleteUserById(id: String!): Boolean!
   forgotPassword(email: String!): TokenResponse!
   login(input: LoginUserInput!): AuthTokenResponse!
   logout: Boolean!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
   resetPassword(input: ResetPasswordInput!): UserResponse!
+  updateUser(id: String!, input: UpdateUserInput!): UserResponse!
+}
+
+type PaginatedUser {
+  count: Int!
+  users: [User!]!
 }
 
 type Query {
   me: UserResponse!
+  searchUsers(limit: Float!, page: Float!, q: String!): PaginatedUser!
+  userByEmail(email: String!): UserResponse!
+  userById(id: String!): UserResponse!
+  userByUsername(username: String!): UserResponse!
 }
 
 input RegisterUserInput {
@@ -60,6 +71,13 @@ input ResetPasswordInput {
 
 type TokenResponse {
   token: String
+}
+
+input UpdateUserInput {
+  avatar: String
+  email: String
+  role: String
+  username: String
 }
 
 type User {

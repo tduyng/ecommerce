@@ -5,7 +5,7 @@ import mongoose, { Connection } from 'mongoose';
 const readFile = util.promisify(fs.readFile);
 import dotenv from 'dotenv';
 import { User, UserSchema } from '@modules/user/user.schema';
-import argon2 from 'argon2';
+// import argon2 from 'argon2';
 
 let connection: Connection;
 const createConnection = async (): Promise<Connection> => {
@@ -38,13 +38,8 @@ async function uploadData() {
 
 	const json = await readFile(file, { encoding: 'utf8' });
 	const { users } = JSON.parse(json);
-	const arrUsers = [];
-	for (const user of users) {
-		const { password } = user;
-		const hash = await argon2.hash(password);
-		arrUsers.push({ ...user, password: hash });
-	}
-	await UserModel.create(arrUsers);
+
+	await UserModel.create(users);
 
 	Logger.log('Data created');
 }

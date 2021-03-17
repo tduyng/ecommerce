@@ -1,5 +1,7 @@
 import { UserResponse } from '@modules/auth/dto';
-import { Args, Resolver, Query } from '@nestjs/graphql';
+import { JwtGuard } from '@modules/auth/guards';
+import { UseGuards } from '@nestjs/common';
+import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
 import { Roles } from './decorators/roles.decorator';
 import { PaginatedUser } from './dto/paginated-user.object-type';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -8,6 +10,7 @@ import { UserService } from './user.service';
 
 @Resolver(() => User)
 @Roles(RoleType.ADMIN)
+@UseGuards(JwtGuard)
 export class AdminResolver {
 	constructor(private userService: UserService) {}
 	@Query(() => UserResponse)
@@ -43,13 +46,13 @@ export class AdminResolver {
 		return result;
 	}
 
-	@Query(() => UserResponse)
+	@Mutation(() => UserResponse)
 	public async updateUser(@Args('id') id: string, @Args('input') input: UpdateUserInput) {
 		const user = await this.userService.updateOne(id, input);
 		return { user };
 	}
 
-	@Query(() => Boolean)
+	@Mutation(() => Boolean)
 	public async deleteUserById(@Args('id') id: string) {
 		try {
 			await this.userService.deleteById(id);

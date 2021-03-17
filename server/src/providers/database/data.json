@@ -16,6 +16,11 @@
       "password": "1234567"
     },
     {
+      "username": "client1",
+      "email": "client1@yopmail.com",
+      "password": "1234567"
+    },
+    {
       "username": "client2",
       "email": "client2@yopmail.com",
       "password": "1234567"
