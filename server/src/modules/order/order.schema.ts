@@ -1,6 +1,5 @@
 import { OrderItem } from '@modules/order-item/order-item.schema';
 import { PaymentResult } from '@modules/payment-result/payment-result.schema';
-import { Review } from '@modules/review/review.schema';
 import { ShippingAddress } from '@modules/shipping-address/shipping-address.schema';
 import { User } from '@modules/user/user.schema';
 import { Field, Float, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
