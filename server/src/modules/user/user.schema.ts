@@ -36,6 +36,9 @@ export class User extends Document {
 	@Field()
 	email: string;
 
+	@Prop({ type: String, nullable: true })
+	fullName: string;
+
 	@Prop({ type: String, select: false })
 	@HideField()
 	password: string;
@@ -69,6 +72,7 @@ UserSchema.index({ username: 'text', email: 'text' });
 UserSchema.pre('save', encryptPassword);
 UserSchema.pre('save', updateUsername);
 UserSchema.pre('save', validateEmail);
+UserSchema.pre('save', setDefaultFullName);
 
 /* Helper methods */
 async function encryptPassword(
@@ -103,6 +107,17 @@ async function updateUsername(this: User, next: HookNextFunction) {
 		if (!this.isModified('username')) return next();
 		this.username = slugify(this.username, { lower: true });
 		return next();
+	} catch (error) {
+		return next(error);
+	}
+}
+
+async function setDefaultFullName(this: User, next: HookNextFunction) {
+	try {
+		if (!this.isModified('fullName')) return next();
+		if (this.username && !this.fullName) {
+			this.fullName = this.username;
+		}
 	} catch (error) {
 		return next(error);
 	}

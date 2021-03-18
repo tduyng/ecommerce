@@ -55,7 +55,7 @@ export class UserService {
 	}
 
 	public async deleteById(_id: string) {
-		return await this.userModel.deleteOne({ _id });
+		return await this.userModel.findByIdAndDelete(_id);
 	}
 
 	public async deleteOne(filter: FilterQuery<User>) {

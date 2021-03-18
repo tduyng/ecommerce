@@ -5,7 +5,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 
 @Schema()
-@ObjectType()
+@ObjectType('Product')
 export class Product extends Document {
 	// @Prop({ type: Types.ObjectId })
 	@Field(() => ID)
@@ -49,7 +49,7 @@ export class Product extends Document {
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: Review.name }] })
 	@Field(() => [Review])
-	reviews: Review[];
+	reviews: any[];
 
 	@Prop({ type: Types.ObjectId, ref: User.name, required: true })
 	@Field(() => User)
@@ -65,3 +65,5 @@ export class Product extends Document {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.index({ name: 'text', brand: 'text', description: 'text' });

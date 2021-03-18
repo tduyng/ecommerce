@@ -18,7 +18,7 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 - Mark orders as delivered option
 - Checkout process (shipping, payment method, etc)
 - PayPal / credit card integration
-- Upload images with Multer/Cloudinary
+- Upload images with Multer + Firebase storage
 - Testing: Unit tests, end to end tests
 - CI-CD: Github actions
 

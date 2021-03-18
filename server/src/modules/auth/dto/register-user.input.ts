@@ -30,5 +30,10 @@ export class RegisterUserInput {
 	@IsOptional()
 	@IsString()
 	@Field(() => String, { nullable: true })
+	fullName?: string;
+
+	@IsOptional()
+	@IsString()
+	@Field(() => String, { nullable: true })
 	avatar?: string;
 }

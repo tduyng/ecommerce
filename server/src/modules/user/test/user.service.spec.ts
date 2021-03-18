@@ -25,6 +25,7 @@ describe('UserService', () => {
 		deleteMany: jest.fn(),
 		countDocuments: jest.fn(),
 		updateMany: jest.fn(),
+		findByIdAndDelete: jest.fn(),
 	});
 
 	beforeAll(async () => {
@@ -95,7 +96,7 @@ describe('UserService', () => {
 
 	describe('deleteById', () => {
 		it('Should delete successfully', async () => {
-			userModel.deleteOne.mockReturnValue({ deleteCount: 1 });
+			userModel.findByIdAndDelete.mockReturnValue({ deleteCount: 1 });
 			expect(await userService.deleteById('some_id')).toBeDefined();
 		});
 	});

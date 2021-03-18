@@ -19,5 +19,10 @@ export class UpdateProfileInput {
 	@IsOptional()
 	@IsString()
 	@Field(() => String, { nullable: true })
+	fullName?: string;
+
+	@IsOptional()
+	@IsString()
+	@Field(() => String, { nullable: true })
 	avatar?: string;
 }
