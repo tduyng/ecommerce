@@ -88,7 +88,7 @@ export class ProductService {
 
 	public async updateProduct(_id: string, input: UpdateProductInput): Promise<Product> {
 		const updated: Product = await this.productModel
-			.findById(_id, input, { new: true })
+			.findByIdAndUpdate(_id, input, { new: true })
 			.lean();
 		return updated;
 	}
@@ -107,10 +107,12 @@ export class ProductService {
 		const product: Product = await this.findById(productId);
 		if (!product)
 			throw new BadRequestException(`Product with id: ${productId} not found`);
-		const isAlreadyReviewed = await this.productModel.findOne({
-			_id: productId,
-			'reviews.user._id': userId,
-		});
+		const isAlreadyReviewed = await this.productModel
+			.findOne({
+				_id: productId,
+				'reviews.user._id': userId,
+			})
+			.lean();
 		const review = {
 			...input,
 			reviewerName: user.fullName || user.username,
@@ -135,7 +137,10 @@ export class ProductService {
 						'reviews.user._id': userId,
 					},
 					{
-						$set: { 'cart.$.rating': input.rating, 'cart.$.comment': input.comment },
+						$set: {
+							'reviews.$.rating': input.rating,
+							'reviews.$.comment': input.comment,
+						},
 					},
 					{ new: true },
 				)
