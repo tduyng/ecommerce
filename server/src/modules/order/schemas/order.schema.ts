@@ -4,7 +4,7 @@ import { ShippingAddress } from '@modules/order/schemas/shipping-address.schema'
 import { User } from '@modules/user/user.schema';
 import { Field, Float, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types, Document, HookNextFunction } from 'mongoose';
+import { Types, Document } from 'mongoose';
 
 @Schema()
 @ObjectType()
