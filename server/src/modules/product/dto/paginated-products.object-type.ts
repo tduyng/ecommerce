@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Product } from '../product.schema';
+import { Product } from '../schemas/product.schema';
 
 @ObjectType()
 export class PaginatedProduct {

@@ -1,4 +1,4 @@
-import { Product } from '@modules/product/product.schema';
+import { Product } from '@modules/product/schemas/product.schema';
 import { Field, Float, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
@@ -8,7 +8,7 @@ import { Types, Document } from 'mongoose';
 export class OrderItem extends Document {
 	// @Prop({ type: Types.ObjectId })
 	@Field(() => ID)
-	_id: string;
+	_id?: string;
 
 	@Prop({ type: String, required: true })
 	@Field()
@@ -32,11 +32,11 @@ export class OrderItem extends Document {
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	createdAt: Date;
+	createdAt?: Date;
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	updatedAt: Date;
+	updatedAt?: Date;
 }
 
 export const OrderItemSchema = SchemaFactory.createForClass(OrderItem);

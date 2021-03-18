@@ -7,7 +7,7 @@ import { Document } from 'mongoose';
 export class ShippingAddress extends Document {
 	// @Prop({ type: Types.ObjectId })
 	@Field(() => ID)
-	_id: string;
+	_id?: string;
 
 	@Prop({ type: String, required: true })
 	@Field()
@@ -27,11 +27,11 @@ export class ShippingAddress extends Document {
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	createdAt: Date;
+	createdAt?: Date;
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	updatedAt: Date;
+	updatedAt?: Date;
 }
 
 export const ShippingAddressSchema = SchemaFactory.createForClass(ShippingAddress);
