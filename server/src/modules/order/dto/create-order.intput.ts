@@ -4,7 +4,7 @@ import { PaymentResult } from '../schemas/payment-result.schema';
 import { ShippingAddress } from '../schemas/shipping-address.schema';
 
 @InputType()
-export class OrderItemInput {
+export class CreateOrderInput {
 	@Field(() => OrderItem)
 	orderItems: OrderItem[];
 
