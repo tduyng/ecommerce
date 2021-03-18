@@ -1,10 +1,11 @@
 # E-commerce Project
 
-E-commerce project using **GraphQL** with stack: NestJS - ReactJS(+ViteJS) - MongoDB
+E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - MongoDB
 
 
 ## Features
-
+- Auth: Jwt, refresh-token, verification email
+- Send email with Nodemailer+Sendgrid
 - Full featured shopping cart
 - Product reviews and ratings
 - Top products carousel
@@ -17,19 +18,17 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(+ViteJS) - Mon
 - Mark orders as delivered option
 - Checkout process (shipping, payment method, etc)
 - PayPal / credit card integration
-- Database seeder (products & users)
-
+- Upload images with Multer + Firebase storage
 - Testing: Unit tests, end to end tests
 - CI-CD: Github actions
 
 ## Technologies
 
 - Backend
-  - NestJS
-  - @NestJS/GraphQL
+  - NodeJS (via NestJS)
+  - GraphQL (via @nestjs/graphql)
 - Frontend
-  - ViteJS
-  - ReactJS
+  - ReactJS (via NextJS)
   - Apollo GraphQL
 - Database
   - MongoDB

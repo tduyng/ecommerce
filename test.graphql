@@ -1,0 +1,1 @@
+{“query”:“mutation UploadFile($file:Upload!) {\n uploadFile(file:$file)\n}”, “variables”: { “file”: null }}

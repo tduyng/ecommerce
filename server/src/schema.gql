@@ -1,0 +1,96 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthToken {
+  accessToken: String
+  refreshToken: String
+}
+
+type AuthTokenResponse {
+  authToken: AuthToken
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginUserInput {
+  password: String!
+  usernameOrEmail: String!
+}
+
+type MessageError {
+  message: String!
+}
+
+type Mutation {
+  activate(token: String!): AuthTokenResponse!
+  autoRefresh: AuthTokenResponse!
+  changePassword(input: ChangePasswordInput!): UserResponse!
+  deleteUserById(id: String!): Boolean!
+  forgotPassword(email: String!): TokenResponse!
+  login(input: LoginUserInput!): AuthTokenResponse!
+  logout: Boolean!
+  refresh: AuthTokenResponse!
+  register(input: RegisterUserInput!): TokenResponse!
+  resetPassword(input: ResetPasswordInput!): UserResponse!
+  updateUser(id: String!, input: UpdateUserInput!): UserResponse!
+}
+
+type PaginatedUser {
+  count: Int!
+  users: [User!]!
+}
+
+type Query {
+  me: UserResponse!
+  searchUsers(limit: Float!, page: Float!, q: String!): PaginatedUser!
+  userByEmail(email: String!): UserResponse!
+  userById(id: String!): UserResponse!
+  userByUsername(username: String!): UserResponse!
+}
+
+input RegisterUserInput {
+  avatar: String
+  email: String!
+  password: String
+  username: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  token: String!
+}
+
+type TokenResponse {
+  token: String
+}
+
+input UpdateUserInput {
+  avatar: String
+  email: String
+  role: String
+  username: String
+}
+
+type User {
+  _id: ID!
+  avatar: String
+  createdAt: DateTime!
+  email: String!
+  role: String
+  updatedAt: DateTime!
+  username: String!
+}
+
+type UserResponse {
+  error: MessageError
+  user: User
+}
