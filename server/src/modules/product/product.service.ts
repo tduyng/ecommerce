@@ -1,9 +1,8 @@
-import { Review } from '@modules/review/review.schema';
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { UserService } from '@modules/user/user.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { LeanDocument, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateProductInput, PaginatedProduct, UpdateProductInput } from './dto';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
 import { Product } from './product.schema';
@@ -13,7 +12,6 @@ export class ProductService {
 	constructor(
 		@InjectModel(Product.name) private productModel: Model<Product>,
 		private userService: UserService,
-		@InjectModel(Review.name) private reviewModel: Model<Review>,
 	) {}
 
 	public async findMany(pagination?: PaginationInput): Promise<PaginatedProduct> {
