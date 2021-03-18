@@ -2,7 +2,7 @@ import { OrderItem } from '@modules/order-item/order-item.schema';
 import { PaymentResult } from '@modules/payment-result/payment-result.schema';
 import { ShippingAddress } from '@modules/shipping-address/shipping-address.schema';
 import { User } from '@modules/user/user.schema';
-import { Field, Float, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 
