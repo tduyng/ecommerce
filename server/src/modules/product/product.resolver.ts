@@ -53,25 +53,6 @@ export class ProductResolver {
 	}
 
 	@Mutation(() => Product)
-	public async createProduct(@Args('input') input: CreateProductInput) {
-		return await this.productService.createProduct(input);
-	}
-
-	@Mutation(() => Product)
-	public async updateProduct(
-		@Args('_id') _id: string,
-		@Args('input') input: UpdateProductInput,
-	) {
-		return await this.productService.updateProduct(_id, input);
-	}
-
-	@Mutation(() => Boolean)
-	public async deleteProduct(@Args('_id') _id: string) {
-		const productDeleted = await this.productService.deleteProduct(_id);
-		return productDeleted ? true : false;
-	}
-
-	@Mutation(() => Product)
 	@UseGuards(JwtGuard)
 	public async reviewProduct(
 		@Args('productId') productId: string,

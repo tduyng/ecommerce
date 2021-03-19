@@ -7,5 +7,6 @@ import { OrderService } from './order.service';
 @Module({
 	imports: [MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }])],
 	providers: [OrderService, OrderResolver],
+	exports: [OrderService],
 })
 export class OrderModule {}
