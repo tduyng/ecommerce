@@ -1,10 +1,10 @@
-import Head from 'next/head';
 import { MetaTags } from 'src/components/MetaTags';
 
 export default function Home() {
+  console.log('haha');
   return (
     <div>
-      <MetaTags title='Home' />
+      <MetaTags title="Home" />
 
       <main>
         <h1>Home</h1>

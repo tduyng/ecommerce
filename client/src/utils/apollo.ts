@@ -2,11 +2,10 @@ import { useMemo } from 'react';
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
-import { NextPageContext } from 'next';
 
 let apolloClient;
 
-function createApolloClient(ctx?: NextPageContext) {
+function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
@@ -38,9 +37,7 @@ export function initializeApollo(initialState = null) {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter((d) =>
-          sourceArray.every((s) => !isEqual(d, s))
-        ),
+        ...destinationArray.filter(d => sourceArray.every(s => !isEqual(d, s))),
       ],
     });
 
