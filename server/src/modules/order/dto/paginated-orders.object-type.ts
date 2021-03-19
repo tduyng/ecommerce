@@ -1,11 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Product } from '../schemas/product.schema';
+import { Order } from '../schemas';
 
 @ObjectType()
-export class PaginatedProduct {
+export class PaginatedOrder {
 	@Field(() => Int, { defaultValue: 0 })
 	count: number;
 
-	@Field(() => [Product])
-	products: Product[];
+	@Field(() => [Order])
+	orders: Order[];
 }

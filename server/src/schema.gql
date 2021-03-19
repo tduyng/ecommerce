@@ -16,6 +16,32 @@ input ChangePasswordInput {
   oldPassword: String!
 }
 
+input CreateOrderInput {
+  orderItems: [OrderItemInput!]!
+  paymentMethod: String!
+  paymentResult: PaymentResultInput!
+  shippingAddress: ShippingAddressInput!
+  shippingPrice: Float!
+  taxPrice: Float!
+  totalPrice: Float!
+}
+
+input CreateProductInput {
+  brand: String!
+  category: String!
+  countInStock: Int = 0
+  description: String!
+  image: String = "https://i.imgur.com/Vih6Km5.png"
+  name: String!
+  numReviews: Int = 0
+  price: Float!
+}
+
+input CreateReviewProductInput {
+  comment: String!
+  rating: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -34,14 +60,68 @@ type Mutation {
   activate(token: String!): AuthTokenResponse!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
+  createOrder(input: CreateOrderInput!): Order!
+  createProduct(input: CreateProductInput!): Product!
+  deleteProduct(_id: String!): Boolean!
   deleteUserById(id: String!): Boolean!
+  deliveryOrder(_id: String!): Order!
   forgotPassword(email: String!): TokenResponse!
   login(input: LoginUserInput!): AuthTokenResponse!
   logout: Boolean!
+  payOrder(_id: String!, paymentResult: PaymentResultInput!): Order!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
   resetPassword(input: ResetPasswordInput!): UserResponse!
+  reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
+  updateProduct(_id: String!, input: UpdateProductInput!): Product!
   updateUser(id: String!, input: UpdateUserInput!): UserResponse!
+}
+
+type Order {
+  _id: ID!
+  createdAt: DateTime!
+  deliveredAt: DateTime
+  isDelivered: Boolean!
+  isPaid: Boolean!
+  orderItems: [OrderItem!]!
+  paidAt: DateTime
+  paymentMethod: String!
+  paymentResult: PaymentResult!
+  shippingAddress: ShippingAddress!
+  shippingPrice: Float!
+  taxPrice: Float!
+  totalPrice: Float!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type OrderItem {
+  _id: ID!
+  createdAt: DateTime!
+  image: String!
+  name: String!
+  price: Float!
+  product: Product!
+  quantity: Int!
+  updatedAt: DateTime!
+}
+
+input OrderItemInput {
+  image: String!
+  name: String!
+  price: Float!
+  product: String!
+  quantity: Int = 1
+}
+
+type PaginatedOrder {
+  count: Int!
+  orders: [Order!]!
+}
+
+type PaginatedProduct {
+  count: Int!
+  products: [Product!]!
 }
 
 type PaginatedUser {
@@ -49,9 +129,53 @@ type PaginatedUser {
   users: [User!]!
 }
 
+input PaginationInput {
+  limit: Int
+  page: Int
+}
+
+type PaymentResult {
+  _id: ID!
+  createdAt: DateTime!
+  email: String!
+  status: String!
+  updatedAt: DateTime!
+}
+
+input PaymentResultInput {
+  email: String!
+  status: String!
+}
+
+type Product {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int!
+  createdAt: DateTime!
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int!
+  price: Float!
+  rating: Int!
+  reviews: [Review!]!
+  updatedAt: DateTime!
+  user: User!
+}
+
 type Query {
+  getManyOrders(pagination: PaginationInput): PaginatedOrder!
   me: UserResponse!
-  searchUsers(limit: Float!, page: Float!, q: String!): PaginatedUser!
+  myOrders(pagination: PaginationInput): PaginatedOrder!
+  orderById(_id: String!): Order!
+  productById(_id: String!): Product!
+  products(pagination: PaginationInput): PaginatedProduct!
+  productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
+  productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
+  queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
+  searchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
+  topProducts(limit: Float): [Product!]!
   userByEmail(email: String!): UserResponse!
   userById(id: String!): UserResponse!
   userByUsername(username: String!): UserResponse!
@@ -60,6 +184,7 @@ type Query {
 input RegisterUserInput {
   avatar: String
   email: String!
+  fullName: String
   password: String
   username: String!
 }
@@ -69,13 +194,51 @@ input ResetPasswordInput {
   token: String!
 }
 
+type Review {
+  _id: ID!
+  comment: String!
+  createdAt: DateTime!
+  rating: Int!
+  reviewerName: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type ShippingAddress {
+  _id: ID!
+  address: String!
+  city: String!
+  country: String!
+  createdAt: DateTime!
+  postalCode: String!
+  updatedAt: DateTime!
+}
+
+input ShippingAddressInput {
+  address: String!
+  city: String!
+  country: String!
+  postalCode: String!
+}
+
 type TokenResponse {
   token: String
+}
+
+input UpdateProductInput {
+  brand: String
+  category: String
+  countInStock: Int = 0
+  description: String
+  image: String = "https://i.imgur.com/Vih6Km5.png"
+  name: String
+  price: Float
 }
 
 input UpdateUserInput {
   avatar: String
   email: String
+  fullName: String
   role: String
   username: String
 }
@@ -85,6 +248,7 @@ type User {
   avatar: String
   createdAt: DateTime!
   email: String!
+  fullName: String
   role: String
   updatedAt: DateTime!
   username: String!

@@ -1,0 +1,5 @@
+fragment RegularPaymentResult on PaymentResult {
+  _id
+  status
+  email
+}

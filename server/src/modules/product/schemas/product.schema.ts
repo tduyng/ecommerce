@@ -1,4 +1,4 @@
-import { Review } from '@modules/review/review.schema';
+import { Review } from '@modules/product/schemas/review.schema';
 import { User } from '@modules/user/user.schema';
 import { Field, Float, GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
@@ -47,7 +47,7 @@ export class Product extends Document {
 	@Field(() => Int)
 	countInStock: number;
 
-	@Prop({ type: [{ type: Types.ObjectId, ref: Review.name }] })
+	@Prop({ type: [{ type: Types.ObjectId, ref: Review.name }], default: [] })
 	@Field(() => [Review])
 	reviews: any[];
 

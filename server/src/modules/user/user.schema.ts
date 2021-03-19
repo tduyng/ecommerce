@@ -37,7 +37,8 @@ export class User extends Document {
 	email: string;
 
 	@Prop({ type: String, nullable: true })
-	fullName: string;
+	@Field(() => String, { nullable: true })
+	fullName?: string;
 
 	@Prop({ type: String, select: false })
 	@HideField()
@@ -114,10 +115,10 @@ async function updateUsername(this: User, next: HookNextFunction) {
 
 async function setDefaultFullName(this: User, next: HookNextFunction) {
 	try {
-		if (!this.isModified('fullName')) return next();
 		if (this.username && !this.fullName) {
 			this.fullName = this.username;
 		}
+		return next();
 	} catch (error) {
 		return next(error);
 	}

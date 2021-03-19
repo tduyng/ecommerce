@@ -7,7 +7,7 @@ import { Document } from 'mongoose';
 export class PaymentResult extends Document {
 	// @Prop({ type: Types.ObjectId })
 	@Field(() => ID)
-	_id: string;
+	_id?: string;
 
 	@Prop()
 	@Field()
@@ -19,11 +19,11 @@ export class PaymentResult extends Document {
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	createdAt: Date;
+	createdAt?: Date;
 
 	@Prop({ type: Date, default: Date.now })
 	@Field(() => GraphQLISODateTime)
-	updatedAt: Date;
+	updatedAt?: Date;
 }
 
 export const PaymentResultSchema = SchemaFactory.createForClass(PaymentResult);
