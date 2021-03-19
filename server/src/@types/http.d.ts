@@ -1,12 +1,16 @@
-declare namespace Express {
-	interface Request {
-		session?: {
-			authToken?: {
-				accessToken?: string;
-				refreshToken?: string;
+import { Cart } from '@modules/user/dto';
+declare global {
+	namespace Express {
+		interface Request {
+			session?: {
+				authToken?: {
+					accessToken?: string;
+					refreshToken?: string;
+				};
+				cart?: Cart;
+				destroy: () => void;
+				res: Response;
 			};
-			destroy: () => void;
-			res: Response;
-		};
+		}
 	}
 }

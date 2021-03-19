@@ -5,9 +5,10 @@ import { Product, ProductSchema } from '@modules/product/schemas/product.schema'
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminResolver } from './admin.resolver';
-import { UserExitsValidator } from './decorators/user-exists.validator';
+import { UserExitsValidator } from '../../common/decorators/user-exists.validator';
 import { UploadService } from './upload.service';
 import { UserController } from './user.controller';
+import { UserResolver } from './user.resolver';
 import { User, UserSchema } from './user.schema';
 import { UserService } from './user.service';
 
@@ -23,10 +24,11 @@ import { UserService } from './user.service';
 	providers: [
 		UserService,
 		UserExitsValidator,
-		AdminResolver,
 		UploadService,
 		OrderService,
 		ProductService,
+		AdminResolver,
+		UserResolver,
 	],
 	exports: [UserService, UploadService],
 })

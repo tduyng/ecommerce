@@ -1,5 +1,5 @@
 import { JwtGuard } from '@modules/auth/guards';
-import { CurrentUser } from '@modules/user/decorators';
+import { CurrentUser } from '@common/decorators';
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
 import { BadRequestException, UseGuards } from '@nestjs/common';

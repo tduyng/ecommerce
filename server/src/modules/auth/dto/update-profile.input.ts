@@ -1,4 +1,4 @@
-import { UserExitsValidator } from '@modules/user/decorators/user-exists.validator';
+import { UserExitsValidator } from '@common/decorators/user-exists.validator';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEmail, IsOptional, IsString, Matches, Validate } from 'class-validator';
 

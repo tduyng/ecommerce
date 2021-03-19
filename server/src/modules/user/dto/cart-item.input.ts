@@ -2,7 +2,7 @@ import { ProductInput } from '@modules/product/dto/product.input';
 import { Field, Float, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
-export class OrderItemInput {
+export class CartItemInput {
 	@Field(() => ProductInput)
 	product: ProductInput;
 
