@@ -13,6 +13,8 @@ import session from 'express-session';
 import passport from 'passport';
 import { useContainer } from 'class-validator';
 import { AllExceptionsFilter } from './common/exceptions-filters/all-exceptions.filter';
+import mongoose from 'mongoose';
+
 async function bootstrap() {
 	const env = envConfig();
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -49,6 +51,10 @@ async function bootstrap() {
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 		credentials: true,
 	});
+
+	if (env.mode === 'development') {
+		mongoose.set('debug', true);
+	}
 
 	if (env.mode === 'production') {
 		app.set('trust proxy', 1); // trust first cookie

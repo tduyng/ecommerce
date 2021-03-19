@@ -1,3 +1,4 @@
+import { User } from '@modules/user/user.schema';
 import { UserService } from '@modules/user/user.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -131,9 +132,12 @@ describe('ProductService', () => {
 	describe('createProduct', () => {
 		it('Should return a product', async () => {
 			productModel.create.mockReturnValue(mockProduct);
-			const result = await productService.createProduct({
-				name: 'some_name',
-			} as CreateProductInput);
+			const result = await productService.createProduct(
+				{
+					name: 'some_name',
+				} as CreateProductInput,
+				{ _id: 'some_id' } as User,
+			);
 			expect(result).toEqual(mockProduct);
 		});
 	});

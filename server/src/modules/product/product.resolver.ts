@@ -14,14 +14,16 @@ export class ProductResolver {
 	constructor(private productService: ProductService) {}
 
 	@Query(() => PaginatedProduct)
-	public async products(@Args('pagination') pagination?: PaginationInput) {
+	public async products(
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
+	) {
 		return await this.productService.findMany(pagination);
 	}
 
 	@Query(() => PaginatedProduct)
 	public async productsByBrand(
 		@Args('brand') brand: string,
-		@Args('pagination') pagination?: PaginationInput,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.productService.findManyByBrand(brand, pagination);
 	}
@@ -29,7 +31,7 @@ export class ProductResolver {
 	@Query(() => PaginatedProduct)
 	public async productsByCategory(
 		@Args('category') category: string,
-		@Args('pagination') pagination?: PaginationInput,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.productService.findManyByCategory(category, pagination);
 	}
@@ -37,13 +39,13 @@ export class ProductResolver {
 	@Query(() => PaginatedProduct)
 	public async queryProducts(
 		@Args('q') q: string,
-		@Args('pagination') pagination?: PaginationInput,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.productService.queryProducts(q, pagination);
 	}
 
 	@Query(() => [Product])
-	public async topProducts(@Args('limit') limit?: number) {
+	public async topProducts(@Args('limit', { nullable: true }) limit?: number) {
 		return await this.productService.findTopProducts(limit);
 	}
 

@@ -10,6 +10,7 @@ import { UseGuards } from '@nestjs/common';
 // import { JwtGuard } from '@modules/auth/guards';
 // import { UseGuards } from '@nestjs/common';
 import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
+import { CurrentUser } from './decorators';
 import { Roles } from './decorators/roles.decorator';
 import { PaginatedUser } from './dto/paginated-user.object-type';
 import { PaginationInput } from './dto/pagination.input';
@@ -47,8 +48,8 @@ export class AdminResolver {
 	@Query(() => PaginatedUser)
 	public async searchUsers(
 		@Args('q') q: string,
-		@Args('limit') limit?: number,
-		@Args('page') page?: number,
+		@Args('limit', { nullable: true }) limit?: number,
+		@Args('page', { nullable: true }) page?: number,
 	) {
 		const safeLimit = limit || 25;
 		const safePage = page || 1;
@@ -76,7 +77,9 @@ export class AdminResolver {
 	}
 
 	@Query(() => PaginatedOrder)
-	public async getManyOrders(@Args('pagination') pagination?: PaginationInput) {
+	public async getManyOrders(
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
+	) {
 		return await this.orderService.findManyOrders(pagination);
 	}
 
@@ -86,8 +89,11 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => Product)
-	public async createProduct(@Args('input') input: CreateProductInput) {
-		return await this.productService.createProduct(input);
+	public async createProduct(
+		@Args('input') input: CreateProductInput,
+		@CurrentUser() user: User,
+	) {
+		return await this.productService.createProduct(input, user);
 	}
 
 	@Mutation(() => Product)

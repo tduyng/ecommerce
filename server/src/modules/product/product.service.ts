@@ -1,4 +1,5 @@
 import { PaginationInput } from '@modules/user/dto/pagination.input';
+import { User } from '@modules/user/user.schema';
 import { UserService } from '@modules/user/user.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -81,8 +82,8 @@ export class ProductService {
 		return product;
 	}
 
-	public async createProduct(input: CreateProductInput): Promise<Product> {
-		const newProduct: Product = await this.productModel.create(input);
+	public async createProduct(input: CreateProductInput, user: User): Promise<Product> {
+		const newProduct: Product = await this.productModel.create({ ...input, user });
 		return newProduct;
 	}
 

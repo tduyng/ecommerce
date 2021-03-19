@@ -47,7 +47,7 @@ export class Product extends Document {
 	@Field(() => Int)
 	countInStock: number;
 
-	@Prop({ type: [{ type: Types.ObjectId, ref: Review.name }] })
+	@Prop({ type: [{ type: Types.ObjectId, ref: Review.name }], default: [] })
 	@Field(() => [Review])
 	reviews: any[];
 

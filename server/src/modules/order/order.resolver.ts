@@ -22,7 +22,7 @@ export class OrderResolver {
 	@Query(() => PaginatedOrder)
 	public async myOrders(
 		@CurrentUser() user: User,
-		@Args('pagination') pagination?: PaginationInput,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.orderService.findOrdersByUser(user._id, pagination);
 	}

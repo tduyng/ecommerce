@@ -165,17 +165,17 @@ type Product {
 }
 
 type Query {
-  getManyOrders(pagination: PaginationInput!): PaginatedOrder!
+  getManyOrders(pagination: PaginationInput): PaginatedOrder!
   me: UserResponse!
-  myOrders(pagination: PaginationInput!): PaginatedOrder!
+  myOrders(pagination: PaginationInput): PaginatedOrder!
   orderById(_id: String!): Order!
   productById(_id: String!): Product!
-  products(pagination: PaginationInput!): PaginatedProduct!
-  productsByBrand(brand: String!, pagination: PaginationInput!): PaginatedProduct!
-  productsByCategory(category: String!, pagination: PaginationInput!): PaginatedProduct!
-  queryProducts(pagination: PaginationInput!, q: String!): PaginatedProduct!
-  searchUsers(limit: Float!, page: Float!, q: String!): PaginatedUser!
-  topProducts(limit: Float!): [Product!]!
+  products(pagination: PaginationInput): PaginatedProduct!
+  productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
+  productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
+  queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
+  searchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
+  topProducts(limit: Float): [Product!]!
   userByEmail(email: String!): UserResponse!
   userById(id: String!): UserResponse!
   userByUsername(username: String!): UserResponse!
@@ -248,6 +248,7 @@ type User {
   avatar: String
   createdAt: DateTime!
   email: String!
+  fullName: String
   role: String
   updatedAt: DateTime!
   username: String!
