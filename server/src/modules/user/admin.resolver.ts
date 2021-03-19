@@ -3,7 +3,9 @@ import { JwtGuard } from '@modules/auth/guards';
 import { PaginatedOrder } from '@modules/order/dto/paginated-orders.object-type';
 import { OrderService } from '@modules/order/order.service';
 import { Order } from '@modules/order/schemas';
+import { CreateProductInput, UpdateProductInput } from '@modules/product/dto';
 import { ProductService } from '@modules/product/product.service';
+import { Product } from '@modules/product/schemas/product.schema';
 import { UseGuards } from '@nestjs/common';
 // import { JwtGuard } from '@modules/auth/guards';
 // import { UseGuards } from '@nestjs/common';
@@ -74,7 +76,7 @@ export class AdminResolver {
 	}
 
 	@Query(() => PaginatedOrder)
-	public async getManyOrders(@Args('pagination?') pagination?: PaginationInput) {
+	public async getManyOrders(@Args('pagination') pagination?: PaginationInput) {
 		return await this.orderService.findManyOrders(pagination);
 	}
 

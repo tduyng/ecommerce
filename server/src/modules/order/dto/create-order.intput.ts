@@ -1,18 +1,18 @@
 import { Field, Float, InputType } from '@nestjs/graphql';
-import { OrderItem } from '../schemas/order-item.schema';
-import { PaymentResult } from '../schemas/payment-result.schema';
-import { ShippingAddress } from '../schemas/shipping-address.schema';
+import { PaymentResultInput } from '.';
+import { ShippingAddressInput } from './shipping-address.input';
+import { OrderItemInput } from './order-item.input';
 
 @InputType()
 export class CreateOrderInput {
-	@Field(() => OrderItem)
-	orderItems: OrderItem[];
+	@Field(() => [OrderItemInput])
+	orderItems: OrderItemInput[];
 
-	@Field(() => ShippingAddress)
-	shippingAddress: ShippingAddress;
+	@Field(() => ShippingAddressInput)
+	shippingAddress: ShippingAddressInput;
 
-	@Field(() => PaymentResult)
-	paymentResult: PaymentResult;
+	@Field(() => PaymentResultInput)
+	paymentResult: PaymentResultInput;
 
 	@Field(() => String)
 	paymentMethod: string;

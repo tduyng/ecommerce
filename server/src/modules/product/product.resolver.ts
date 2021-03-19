@@ -4,7 +4,7 @@ import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateProductInput, PaginatedProduct, UpdateProductInput } from './dto';
+import { PaginatedProduct } from './dto';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
 import { ProductService } from './product.service';
 import { Product } from './schemas/product.schema';
