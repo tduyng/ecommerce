@@ -1,0 +1,10 @@
+fragment RegularOrderItem on OrderItem {
+  _id
+  name
+  quantity
+  price
+  image
+  product {
+    ...RegularProduct
+  }
+}

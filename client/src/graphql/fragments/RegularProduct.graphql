@@ -1,0 +1,16 @@
+fragment RegularProduct on Product {
+  _id
+  brand
+  category
+  name
+  image
+  price
+  numReviews
+  rating
+  reviews {
+    ...RegularReview
+  }
+  user {
+    ...RegularUser
+  }
+}

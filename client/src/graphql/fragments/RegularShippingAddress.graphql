@@ -1,0 +1,7 @@
+fragment RegularShippingAddress on ShippingAddress {
+  _id
+  address
+  city
+  postalCode
+  country
+}

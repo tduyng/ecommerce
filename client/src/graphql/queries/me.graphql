@@ -1,0 +1,14 @@
+query Me {
+  me {
+    user {
+      _id
+      username
+      email
+      fullName
+      avatar
+    }
+    error {
+      message
+    }
+  }
+}

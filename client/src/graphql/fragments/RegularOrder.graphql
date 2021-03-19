@@ -1,0 +1,23 @@
+fragment RegularOrder on Order {
+  paymentMethod
+  taxPrice
+  shippingPrice
+  totalPrice
+  isPaid
+  paidAt
+  isDelivered
+  deliveredAt
+  orderItems {
+    ...RegularOrderItem
+  }
+
+  shippingAddress {
+    ...RegularShippingAddress
+  }
+  paymentResult {
+    ...RegularPaymentResult
+  }
+  user {
+    ...RegularUser
+  }
+}
