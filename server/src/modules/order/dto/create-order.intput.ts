@@ -1,4 +1,4 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, InputType } from '@nestjs/graphql';
 import { OrderItem } from '../schemas/order-item.schema';
 import { PaymentResult } from '../schemas/payment-result.schema';
 import { ShippingAddress } from '../schemas/shipping-address.schema';

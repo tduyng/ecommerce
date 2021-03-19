@@ -44,9 +44,45 @@ type Mutation {
   updateUser(id: String!, input: UpdateUserInput!): UserResponse!
 }
 
+type OrderItem {
+  _id: ID!
+  createdAt: DateTime!
+  image: String!
+  name: String!
+  price: Float!
+  product: Product!
+  quantity: Int!
+  updatedAt: DateTime!
+}
+
 type PaginatedUser {
   count: Int!
   users: [User!]!
+}
+
+type PaymentResult {
+  _id: ID!
+  createdAt: DateTime!
+  email: String!
+  status: String!
+  updatedAt: DateTime!
+}
+
+type Product {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int!
+  createdAt: DateTime!
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int!
+  price: Float!
+  rating: Int!
+  reviews: [Review!]!
+  updatedAt: DateTime!
+  user: User!
 }
 
 type Query {
@@ -60,6 +96,7 @@ type Query {
 input RegisterUserInput {
   avatar: String
   email: String!
+  fullName: String
   password: String
   username: String!
 }
@@ -69,6 +106,26 @@ input ResetPasswordInput {
   token: String!
 }
 
+type Review {
+  _id: ID!
+  comment: String!
+  createdAt: DateTime!
+  rating: Int!
+  reviewerName: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type ShippingAddress {
+  _id: ID!
+  address: String!
+  city: String!
+  country: String!
+  createdAt: DateTime!
+  postalCode: String!
+  updatedAt: DateTime!
+}
+
 type TokenResponse {
   token: String
 }
@@ -76,6 +133,7 @@ type TokenResponse {
 input UpdateUserInput {
   avatar: String
   email: String
+  fullName: String
   role: String
   username: String
 }

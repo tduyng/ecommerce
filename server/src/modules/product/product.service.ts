@@ -93,7 +93,7 @@ export class ProductService {
 		return updated;
 	}
 
-	public async deleteProduct(_id: string) {
+	public async deleteProduct(_id: string): Promise<Product> {
 		return await this.productModel.findByIdAndDelete(_id);
 	}
 
