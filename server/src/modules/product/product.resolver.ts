@@ -2,7 +2,7 @@ import { JwtGuard } from '@modules/auth/guards';
 import { CurrentUser } from '@modules/user/decorators';
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
-import { UseGuards } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PaginatedProduct } from './dto';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
@@ -51,7 +51,9 @@ export class ProductResolver {
 
 	@Query(() => Product)
 	public async productById(@Args('_id') _id: string) {
-		return await this.productService.findById(_id);
+		const product = await this.productService.findById(_id);
+		if (!product) throw new BadRequestException(`Product with id: ${_id} not found`);
+		return product;
 	}
 
 	@Mutation(() => Product)

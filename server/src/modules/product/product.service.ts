@@ -34,11 +34,13 @@ export class ProductService {
 		const limit = pagination?.limit || 25;
 		const page = pagination?.page || 1;
 		const products: Product[] = await this.productModel
-			.find({ brand })
+			.find({ brand: new RegExp(brand, 'i') })
 			.skip((page - 1) * limit)
 			.limit(limit)
 			.lean();
-		const count = await this.productModel.countDocuments({ brand });
+		const count = await this.productModel.countDocuments({
+			brand: new RegExp(brand, 'i'),
+		});
 		return { count, products };
 	}
 
@@ -49,11 +51,13 @@ export class ProductService {
 		const limit = pagination?.limit || 25;
 		const page = pagination?.page || 1;
 		const products: Product[] = await this.productModel
-			.find({ category })
+			.find({ category: new RegExp(category, 'i') })
 			.skip((page - 1) * limit)
 			.limit(limit)
 			.lean();
-		const count = await this.productModel.countDocuments({ category });
+		const count = await this.productModel.countDocuments({
+			category: new RegExp(category, 'i'),
+		});
 		return { count, products };
 	}
 

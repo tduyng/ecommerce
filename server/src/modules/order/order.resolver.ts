@@ -2,7 +2,7 @@ import { JwtGuard } from '@modules/auth/guards';
 import { CurrentUser } from '@modules/user/decorators';
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
-import { UseGuards } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
 import { CreateOrderInput, PaymentResultInput } from './dto';
 import { PaginatedOrder } from './dto/paginated-orders.object-type';
@@ -16,7 +16,9 @@ export class OrderResolver {
 
 	@Query(() => Order)
 	public async orderById(@Args('_id') _id: string) {
-		return await this.orderService.findOrderById(_id);
+		const order = await this.orderService.findOrderById(_id);
+		if (!order) throw new BadRequestException(`Order with id: ${_id} not found.`);
+		return order;
 	}
 
 	@Query(() => PaginatedOrder)
@@ -28,8 +30,11 @@ export class OrderResolver {
 	}
 
 	@Mutation(() => Order)
-	public async createOrder(@Args('input') input: CreateOrderInput) {
-		return await this.createOrder(input);
+	public async createOrder(
+		@Args('input') input: CreateOrderInput,
+		@CurrentUser() user: User,
+	) {
+		return await this.orderService.createOrder(user._id, input);
 	}
 
 	@Mutation(() => Order)
