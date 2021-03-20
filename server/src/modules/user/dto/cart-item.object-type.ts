@@ -1,10 +1,10 @@
-import { Product } from '@modules/product/schemas/product.schema';
+import { ProductCart } from '@modules/product/dto/product-cart.object-type';
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('CartItem')
+@ObjectType()
 export class CartItem {
-	@Field(() => Product)
-	product: Product;
+	@Field(() => ProductCart)
+	product: ProductCart;
 
 	@Field(() => Int)
 	quantity: number;

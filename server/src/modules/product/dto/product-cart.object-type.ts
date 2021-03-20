@@ -1,7 +1,7 @@
-import { Field, Float, ID, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 
-@InputType()
-export class ProductInput {
+@ObjectType()
+export class ProductCart {
 	@Field(() => ID)
 	_id: string;
 

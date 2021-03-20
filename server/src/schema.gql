@@ -11,6 +11,12 @@ type AuthTokenResponse {
   authToken: AuthToken
 }
 
+type CartItem {
+  price: Float!
+  product: ProductCart!
+  quantity: Int!
+}
+
 input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
@@ -58,6 +64,7 @@ type MessageError {
 
 type Mutation {
   activate(token: String!): AuthTokenResponse!
+  addToCart: [CartItem!]!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
   createOrder(input: CreateOrderInput!): Order!
@@ -71,8 +78,10 @@ type Mutation {
   payOrder(_id: String!, paymentResult: PaymentResultInput!): Order!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
+  removeItemFromCart: [CartItem!]!
   resetPassword(input: ResetPasswordInput!): UserResponse!
   reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
+  updateCart: [CartItem!]!
   updateProduct(_id: String!, input: UpdateProductInput!): Product!
   updateUser(id: String!, input: UpdateUserInput!): UserResponse!
 }
@@ -107,11 +116,9 @@ type OrderItem {
 }
 
 input OrderItemInput {
-  image: String!
-  name: String!
   price: Float!
-  product: String!
-  quantity: Int = 1
+  product: ProductInput!
+  quantity: Int!
 }
 
 type PaginatedOrder {
@@ -162,6 +169,32 @@ type Product {
   reviews: [Review!]!
   updatedAt: DateTime!
   user: User!
+}
+
+type ProductCart {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int!
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int!
+  price: Float!
+  rating: Int!
+}
+
+input ProductInput {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int = 0
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int = 0
+  price: Float!
+  rating: Int = 0
 }
 
 type Query {

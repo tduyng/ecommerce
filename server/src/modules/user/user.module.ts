@@ -8,9 +8,9 @@ import { AdminResolver } from './admin.resolver';
 import { UserExitsValidator } from '../../common/decorators/user-exists.validator';
 import { UploadService } from './upload.service';
 import { UserController } from './user.controller';
-import { UserResolver } from './user.resolver';
 import { User, UserSchema } from './user.schema';
 import { UserService } from './user.service';
+import { UserResolver } from './user.resolver';
 
 @Module({
 	imports: [
