@@ -1,8 +1,8 @@
-query Products(pagination: PaginationInput){
-  products(pagination: $pagination){
+query Products($pagination: PaginationInput) {
+  products(pagination: $pagination) {
     count
 
-    products{
+    products {
       ...RegularProduct
     }
   }

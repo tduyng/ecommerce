@@ -1,5 +1,5 @@
-mutation RemoveItemFromCart(productId: String!){
-  removeItemFromCart(productId: $ProductId){
+mutation RemoveItemFromCart($productId: String!) {
+  removeItemFromCart(productId: $productId) {
     ...RegularCartItem
   }
 }

@@ -1,8 +1,8 @@
-query ProductsByBrand($category: String!, pagination: PaginationInput){
-  productsByBrand(category: $category, pagination: pagination){
+query ProductsByCategory($category: String!, $pagination: PaginationInput) {
+  productsByCategory(category: $category, pagination: $pagination) {
     count
 
-    products{
+    products {
       ...RegularProduct
     }
   }

@@ -1,4 +1,4 @@
-mutation CreateOrder($input: CreateOrder!) {
+mutation CreateOrder($input: CreateOrderInput!) {
   createOrder(input: $input) {
     ...RegularOrder
   }
