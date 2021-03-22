@@ -1,3 +1,4 @@
+export * from './category-brands.object-type';
 export * from './create-product.input';
 export * from './create-review-product.input';
 export * from './paginated-products.object-type';

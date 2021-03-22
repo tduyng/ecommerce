@@ -4,7 +4,7 @@ import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
 import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PaginatedProduct } from './dto';
+import { CategoryBrands, PaginatedProduct } from './dto';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
 import { ProductService } from './product.service';
 import { Product } from './schemas/product.schema';
@@ -60,8 +60,13 @@ export class ProductResolver {
 	}
 
 	@Query(() => [String])
-	public async brandsOfCategory(@Args('category') category: string) {
+	public async brandsByCategory(@Args('category') category: string) {
 		return await this.productService.getBrandsBelongsToCategory(category);
+	}
+
+	@Query(() => [CategoryBrands])
+	public async categoryBrands() {
+		return await this.productService.getCategoryBrands();
 	}
 
 	@Query(() => Product)

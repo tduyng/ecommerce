@@ -23,6 +23,11 @@ input CartItemInput {
   quantity: Int!
 }
 
+type CategoryBrands {
+  brands: [String!]!
+  category: String!
+}
+
 input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
@@ -210,7 +215,8 @@ type Query {
   adminGetUserByUsername(username: String!): UserResponse!
   adminSearchUsers(pagination: PaginationInput, q: String!): PaginatedUser!
   allCategories: [String!]!
-  brandsOfCategory(category: String!): [String!]!
+  brandsByCategory(category: String!): [String!]!
+  categoryBrands: [CategoryBrands!]!
   latestProducts(limit: Int): [Product!]!
   me: UserResponse!
   myOrders(pagination: PaginationInput): PaginatedOrder!
