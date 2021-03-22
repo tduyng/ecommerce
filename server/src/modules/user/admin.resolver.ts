@@ -28,25 +28,25 @@ export class AdminResolver {
 		private productService: ProductService,
 	) {}
 	@Query(() => UserResponse)
-	public async userById(@Args('id') id: string) {
+	public async adminGetUserById(@Args('id') id: string) {
 		const user: User = await this.userService.findById(id);
 		return { user };
 	}
 
 	@Query(() => UserResponse)
-	public async userByUsername(@Args('username') username: string) {
+	public async adminGetUserByUsername(@Args('username') username: string) {
 		const user = await this.userService.findOne({ username });
 		return { user };
 	}
 
 	@Query(() => UserResponse)
-	public async userByEmail(@Args('email') email: string) {
+	public async adminGetUserByEmail(@Args('email') email: string) {
 		const user = await this.userService.findOne({ email });
 		return { user };
 	}
 
 	@Query(() => PaginatedUser)
-	public async searchUsers(
+	public async adminSearchUsers(
 		@Args('q') q: string,
 		@Args('limit', { nullable: true }) limit?: number,
 		@Args('page', { nullable: true }) page?: number,
@@ -61,13 +61,16 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => UserResponse)
-	public async updateUser(@Args('id') id: string, @Args('input') input: UpdateUserInput) {
+	public async adminUpdateOneUser(
+		@Args('id') id: string,
+		@Args('input') input: UpdateUserInput,
+	) {
 		const user = await this.userService.updateOne(id, input);
 		return { user };
 	}
 
 	@Mutation(() => Boolean)
-	public async deleteUserById(@Args('id') id: string) {
+	public async adminDeleteUserById(@Args('id') id: string) {
 		try {
 			await this.userService.deleteById(id);
 			return true;
@@ -77,19 +80,19 @@ export class AdminResolver {
 	}
 
 	@Query(() => PaginatedOrder)
-	public async getManyOrders(
+	public async adminGetOrders(
 		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.orderService.findManyOrders(pagination);
 	}
 
 	@Mutation(() => Order)
-	public async deliveryOrder(@Args('_id') _id: string) {
+	public async adminSetDeliveryOrder(@Args('_id') _id: string) {
 		return await this.orderService.updateOrderToDelivered(_id);
 	}
 
 	@Mutation(() => Product)
-	public async createProduct(
+	public async adminCreateProduct(
 		@Args('input') input: CreateProductInput,
 		@CurrentUser() user: User,
 	) {
@@ -97,7 +100,7 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => Product)
-	public async updateProduct(
+	public async adminUpdateProduct(
 		@Args('_id') _id: string,
 		@Args('input') input: UpdateProductInput,
 	) {
@@ -105,7 +108,7 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => Boolean)
-	public async deleteProduct(@Args('_id') _id: string) {
+	public async adminDeleteProduct(@Args('_id') _id: string) {
 		const productDeleted = await this.productService.deleteProduct(_id);
 		return productDeleted ? true : false;
 	}

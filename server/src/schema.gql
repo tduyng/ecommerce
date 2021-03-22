@@ -65,13 +65,15 @@ type MessageError {
 type Mutation {
   activate(token: String!): AuthTokenResponse!
   addToCart: [CartItem!]!
+  adminCreateProduct(input: CreateProductInput!): Product!
+  adminDeleteProduct(_id: String!): Boolean!
+  adminDeleteUserById(id: String!): Boolean!
+  adminSetDeliveryOrder(_id: String!): Order!
+  adminUpdateOneUser(id: String!, input: UpdateUserInput!): UserResponse!
+  adminUpdateProduct(_id: String!, input: UpdateProductInput!): Product!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
   createOrder(input: CreateOrderInput!): Order!
-  createProduct(input: CreateProductInput!): Product!
-  deleteProduct(_id: String!): Boolean!
-  deleteUserById(id: String!): Boolean!
-  deliveryOrder(_id: String!): Order!
   forgotPassword(email: String!): TokenResponse!
   login(input: LoginUserInput!): AuthTokenResponse!
   logout: Boolean!
@@ -82,8 +84,6 @@ type Mutation {
   resetPassword(input: ResetPasswordInput!): UserResponse!
   reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
   updateCart: [CartItem!]!
-  updateProduct(_id: String!, input: UpdateProductInput!): Product!
-  updateUser(id: String!, input: UpdateUserInput!): UserResponse!
 }
 
 type Order {
@@ -198,7 +198,11 @@ input ProductInput {
 }
 
 type Query {
-  getManyOrders(pagination: PaginationInput): PaginatedOrder!
+  adminGetOrders(pagination: PaginationInput): PaginatedOrder!
+  adminGetUserByEmail(email: String!): UserResponse!
+  adminGetUserById(id: String!): UserResponse!
+  adminGetUserByUsername(username: String!): UserResponse!
+  adminSearchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
   me: UserResponse!
   myOrders(pagination: PaginationInput): PaginatedOrder!
   orderById(_id: String!): Order!
@@ -207,11 +211,7 @@ type Query {
   productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
   productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
   queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
-  searchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
   topProducts(limit: Float): [Product!]!
-  userByEmail(email: String!): UserResponse!
-  userById(id: String!): UserResponse!
-  userByUsername(username: String!): UserResponse!
 }
 
 input RegisterUserInput {
