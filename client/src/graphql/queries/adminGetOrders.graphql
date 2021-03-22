@@ -1,0 +1,9 @@
+query AdminGetOrders($pagination: PaginationInput) {
+  adminGetOrders(pagination: $pagination) {
+    count
+
+    orders {
+      ...RegularOrder
+    }
+  }
+}

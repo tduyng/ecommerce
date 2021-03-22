@@ -2,11 +2,9 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -27,6 +25,13 @@ export type AuthToken = {
 export type AuthTokenResponse = {
   __typename?: 'AuthTokenResponse';
   authToken?: Maybe<AuthToken>;
+};
+
+export type CartItem = {
+  __typename?: 'CartItem';
+  price: Scalars['Float'];
+  product: ProductCart;
+  quantity: Scalars['Int'];
 };
 
 export type ChangePasswordInput = {
@@ -60,6 +65,7 @@ export type CreateReviewProductInput = {
   rating: Scalars['Int'];
 };
 
+
 export type LoginUserInput = {
   password: Scalars['String'];
   usernameOrEmail: Scalars['String'];
@@ -73,6 +79,7 @@ export type MessageError = {
 export type Mutation = {
   __typename?: 'Mutation';
   activate: AuthTokenResponse;
+  addToCart: Array<CartItem>;
   autoRefresh: AuthTokenResponse;
   changePassword: UserResponse;
   createOrder: Order;
@@ -86,70 +93,87 @@ export type Mutation = {
   payOrder: Order;
   refresh: AuthTokenResponse;
   register: TokenResponse;
+  removeItemFromCart: Array<CartItem>;
   resetPassword: UserResponse;
   reviewProduct: Product;
+  updateCart: Array<CartItem>;
   updateProduct: Product;
   updateUser: UserResponse;
 };
+
 
 export type MutationActivateArgs = {
   token: Scalars['String'];
 };
 
+
 export type MutationChangePasswordArgs = {
   input: ChangePasswordInput;
 };
+
 
 export type MutationCreateOrderArgs = {
   input: CreateOrderInput;
 };
 
+
 export type MutationCreateProductArgs = {
   input: CreateProductInput;
 };
+
 
 export type MutationDeleteProductArgs = {
   _id: Scalars['String'];
 };
 
+
 export type MutationDeleteUserByIdArgs = {
   id: Scalars['String'];
 };
+
 
 export type MutationDeliveryOrderArgs = {
   _id: Scalars['String'];
 };
 
+
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
+
 export type MutationLoginArgs = {
   input: LoginUserInput;
 };
+
 
 export type MutationPayOrderArgs = {
   _id: Scalars['String'];
   paymentResult: PaymentResultInput;
 };
 
+
 export type MutationRegisterArgs = {
   input: RegisterUserInput;
 };
 
+
 export type MutationResetPasswordArgs = {
   input: ResetPasswordInput;
 };
+
 
 export type MutationReviewProductArgs = {
   input: CreateReviewProductInput;
   productId: Scalars['String'];
 };
 
+
 export type MutationUpdateProductArgs = {
   _id: Scalars['String'];
   input: UpdateProductInput;
 };
+
 
 export type MutationUpdateUserArgs = {
   id: Scalars['String'];
@@ -188,11 +212,9 @@ export type OrderItem = {
 };
 
 export type OrderItemInput = {
-  image: Scalars['String'];
-  name: Scalars['String'];
   price: Scalars['Float'];
-  product: Scalars['String'];
-  quantity?: Maybe<Scalars['Int']>;
+  product: ProductInput;
+  quantity: Scalars['Int'];
 };
 
 export type PaginatedOrder = {
@@ -250,6 +272,33 @@ export type Product = {
   user: User;
 };
 
+export type ProductCart = {
+  __typename?: 'ProductCart';
+  _id: Scalars['ID'];
+  brand: Scalars['String'];
+  category: Scalars['String'];
+  countInStock: Scalars['Int'];
+  description: Scalars['String'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  numReviews: Scalars['Int'];
+  price: Scalars['Float'];
+  rating: Scalars['Int'];
+};
+
+export type ProductInput = {
+  _id: Scalars['ID'];
+  brand: Scalars['String'];
+  category: Scalars['String'];
+  countInStock?: Maybe<Scalars['Int']>;
+  description: Scalars['String'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  numReviews?: Maybe<Scalars['Int']>;
+  price: Scalars['Float'];
+  rating?: Maybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getManyOrders: PaginatedOrder;
@@ -268,40 +317,49 @@ export type Query = {
   userByUsername: UserResponse;
 };
 
+
 export type QueryGetManyOrdersArgs = {
   pagination?: Maybe<PaginationInput>;
 };
+
 
 export type QueryMyOrdersArgs = {
   pagination?: Maybe<PaginationInput>;
 };
 
+
 export type QueryOrderByIdArgs = {
   _id: Scalars['String'];
 };
+
 
 export type QueryProductByIdArgs = {
   _id: Scalars['String'];
 };
 
+
 export type QueryProductsArgs = {
   pagination?: Maybe<PaginationInput>;
 };
+
 
 export type QueryProductsByBrandArgs = {
   brand: Scalars['String'];
   pagination?: Maybe<PaginationInput>;
 };
 
+
 export type QueryProductsByCategoryArgs = {
   category: Scalars['String'];
   pagination?: Maybe<PaginationInput>;
 };
 
+
 export type QueryQueryProductsArgs = {
   pagination?: Maybe<PaginationInput>;
   q: Scalars['String'];
 };
+
 
 export type QuerySearchUsersArgs = {
   limit?: Maybe<Scalars['Float']>;
@@ -309,17 +367,21 @@ export type QuerySearchUsersArgs = {
   q: Scalars['String'];
 };
 
+
 export type QueryTopProductsArgs = {
   limit?: Maybe<Scalars['Float']>;
 };
+
 
 export type QueryUserByEmailArgs = {
   email: Scalars['String'];
 };
 
+
 export type QueryUserByIdArgs = {
   id: Scalars['String'];
 };
+
 
 export type QueryUserByUsernameArgs = {
   username: Scalars['String'];
@@ -408,179 +470,185 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type RegularOrderFragment = { __typename?: 'Order' } & Pick<
-  Order,
-  | 'paymentMethod'
-  | 'taxPrice'
-  | 'shippingPrice'
-  | 'totalPrice'
-  | 'isPaid'
-  | 'paidAt'
-  | 'isDelivered'
-  | 'deliveredAt'
-> & {
-    orderItems: Array<{ __typename?: 'OrderItem' } & RegularOrderItemFragment>;
-    shippingAddress: { __typename?: 'ShippingAddress' } & RegularShippingAddressFragment;
-    paymentResult: { __typename?: 'PaymentResult' } & RegularPaymentResultFragment;
-    user: { __typename?: 'User' } & RegularUserFragment;
-  };
+export type RegularOrderFragment = (
+  { __typename?: 'Order' }
+  & Pick<Order, 'paymentMethod' | 'taxPrice' | 'shippingPrice' | 'totalPrice' | 'isPaid' | 'paidAt' | 'isDelivered' | 'deliveredAt'>
+  & { orderItems: Array<(
+    { __typename?: 'OrderItem' }
+    & RegularOrderItemFragment
+  )>, shippingAddress: (
+    { __typename?: 'ShippingAddress' }
+    & RegularShippingAddressFragment
+  ), paymentResult: (
+    { __typename?: 'PaymentResult' }
+    & RegularPaymentResultFragment
+  ), user: (
+    { __typename?: 'User' }
+    & RegularUserFragment
+  ) }
+);
 
-export type RegularOrderItemFragment = { __typename?: 'OrderItem' } & Pick<
-  OrderItem,
-  '_id' | 'name' | 'quantity' | 'price' | 'image'
-> & { product: { __typename?: 'Product' } & RegularProductFragment };
+export type RegularOrderItemFragment = (
+  { __typename?: 'OrderItem' }
+  & Pick<OrderItem, '_id' | 'name' | 'quantity' | 'price' | 'image'>
+  & { product: (
+    { __typename?: 'Product' }
+    & RegularProductFragment
+  ) }
+);
 
-export type RegularPaymentResultFragment = { __typename?: 'PaymentResult' } & Pick<
-  PaymentResult,
-  '_id' | 'status' | 'email'
->;
+export type RegularPaymentResultFragment = (
+  { __typename?: 'PaymentResult' }
+  & Pick<PaymentResult, '_id' | 'status' | 'email'>
+);
 
-export type RegularProductFragment = { __typename?: 'Product' } & Pick<
-  Product,
-  '_id' | 'brand' | 'category' | 'name' | 'image' | 'price' | 'numReviews' | 'rating'
-> & {
-    reviews: Array<{ __typename?: 'Review' } & RegularReviewFragment>;
-    user: { __typename?: 'User' } & RegularUserFragment;
-  };
+export type RegularProductFragment = (
+  { __typename?: 'Product' }
+  & Pick<Product, '_id' | 'brand' | 'category' | 'name' | 'image' | 'price' | 'numReviews' | 'rating'>
+  & { reviews: Array<(
+    { __typename?: 'Review' }
+    & RegularReviewFragment
+  )>, user: (
+    { __typename?: 'User' }
+    & RegularUserFragment
+  ) }
+);
 
-export type RegularReviewFragment = { __typename?: 'Review' } & Pick<
-  Review,
-  '_id' | 'rating' | 'comment'
->;
+export type RegularReviewFragment = (
+  { __typename?: 'Review' }
+  & Pick<Review, '_id' | 'rating' | 'comment'>
+);
 
-export type RegularShippingAddressFragment = { __typename?: 'ShippingAddress' } & Pick<
-  ShippingAddress,
-  '_id' | 'address' | 'city' | 'postalCode' | 'country'
->;
+export type RegularShippingAddressFragment = (
+  { __typename?: 'ShippingAddress' }
+  & Pick<ShippingAddress, '_id' | 'address' | 'city' | 'postalCode' | 'country'>
+);
 
-export type RegularUserFragment = { __typename?: 'User' } & Pick<
-  User,
-  '_id' | 'username' | 'email' | 'fullName' | 'avatar'
->;
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, '_id' | 'username' | 'email' | 'fullName' | 'avatar' | 'role'>
+);
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me: { __typename?: 'UserResponse' } & {
-    user?: Maybe<
-      { __typename?: 'User' } & Pick<
-        User,
-        '_id' | 'username' | 'email' | 'fullName' | 'avatar'
-      >
-    >;
-    error?: Maybe<{ __typename?: 'MessageError' } & Pick<MessageError, 'message'>>;
-  };
-};
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me: (
+    { __typename?: 'UserResponse' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
+    )>, error?: Maybe<(
+      { __typename?: 'MessageError' }
+      & Pick<MessageError, 'message'>
+    )> }
+  ) }
+);
 
 export const RegularReviewFragmentDoc = gql`
-  fragment RegularReview on Review {
-    _id
-    rating
-    comment
-  }
-`;
+    fragment RegularReview on Review {
+  _id
+  rating
+  comment
+}
+    `;
 export const RegularUserFragmentDoc = gql`
-  fragment RegularUser on User {
-    _id
-    username
-    email
-    fullName
-    avatar
-  }
-`;
+    fragment RegularUser on User {
+  _id
+  username
+  email
+  fullName
+  avatar
+  role
+}
+    `;
 export const RegularProductFragmentDoc = gql`
-  fragment RegularProduct on Product {
-    _id
-    brand
-    category
-    name
-    image
-    price
-    numReviews
-    rating
-    reviews {
-      ...RegularReview
-    }
-    user {
-      ...RegularUser
-    }
+    fragment RegularProduct on Product {
+  _id
+  brand
+  category
+  name
+  image
+  price
+  numReviews
+  rating
+  reviews {
+    ...RegularReview
   }
-  ${RegularReviewFragmentDoc}
-  ${RegularUserFragmentDoc}
-`;
+  user {
+    ...RegularUser
+  }
+}
+    ${RegularReviewFragmentDoc}
+${RegularUserFragmentDoc}`;
 export const RegularOrderItemFragmentDoc = gql`
-  fragment RegularOrderItem on OrderItem {
-    _id
-    name
-    quantity
-    price
-    image
-    product {
-      ...RegularProduct
-    }
+    fragment RegularOrderItem on OrderItem {
+  _id
+  name
+  quantity
+  price
+  image
+  product {
+    ...RegularProduct
   }
-  ${RegularProductFragmentDoc}
-`;
+}
+    ${RegularProductFragmentDoc}`;
 export const RegularShippingAddressFragmentDoc = gql`
-  fragment RegularShippingAddress on ShippingAddress {
-    _id
-    address
-    city
-    postalCode
-    country
-  }
-`;
+    fragment RegularShippingAddress on ShippingAddress {
+  _id
+  address
+  city
+  postalCode
+  country
+}
+    `;
 export const RegularPaymentResultFragmentDoc = gql`
-  fragment RegularPaymentResult on PaymentResult {
-    _id
-    status
-    email
-  }
-`;
+    fragment RegularPaymentResult on PaymentResult {
+  _id
+  status
+  email
+}
+    `;
 export const RegularOrderFragmentDoc = gql`
-  fragment RegularOrder on Order {
-    paymentMethod
-    taxPrice
-    shippingPrice
-    totalPrice
-    isPaid
-    paidAt
-    isDelivered
-    deliveredAt
-    orderItems {
-      ...RegularOrderItem
-    }
-    shippingAddress {
-      ...RegularShippingAddress
-    }
-    paymentResult {
-      ...RegularPaymentResult
-    }
+    fragment RegularOrder on Order {
+  paymentMethod
+  taxPrice
+  shippingPrice
+  totalPrice
+  isPaid
+  paidAt
+  isDelivered
+  deliveredAt
+  orderItems {
+    ...RegularOrderItem
+  }
+  shippingAddress {
+    ...RegularShippingAddress
+  }
+  paymentResult {
+    ...RegularPaymentResult
+  }
+  user {
+    ...RegularUser
+  }
+}
+    ${RegularOrderItemFragmentDoc}
+${RegularShippingAddressFragmentDoc}
+${RegularPaymentResultFragmentDoc}
+${RegularUserFragmentDoc}`;
+export const MeDocument = gql`
+    query Me {
+  me {
     user {
       ...RegularUser
     }
-  }
-  ${RegularOrderItemFragmentDoc}
-  ${RegularShippingAddressFragmentDoc}
-  ${RegularPaymentResultFragmentDoc}
-  ${RegularUserFragmentDoc}
-`;
-export const MeDocument = gql`
-  query Me {
-    me {
-      user {
-        _id
-        username
-        email
-        fullName
-        avatar
-      }
-      error {
-        message
-      }
+    error {
+      message
     }
   }
-`;
+}
+    ${RegularUserFragmentDoc}`;
 
 /**
  * __useMeQuery__
@@ -597,18 +665,14 @@ export const MeDocument = gql`
  *   },
  * });
  */
-export function useMeQuery(
-  baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
-export function useMeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;

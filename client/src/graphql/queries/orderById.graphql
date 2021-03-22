@@ -1,0 +1,5 @@
+query OrderById($_id: String!) {
+  orderById(_id: $_id) {
+    ...RegularOrder
+  }
+}

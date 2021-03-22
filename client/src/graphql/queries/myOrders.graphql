@@ -1,0 +1,8 @@
+query MyOrders($pagination: PaginationInput) {
+  myOrders(pagination: $pagination) {
+    count
+    orders {
+      ...RegularOrder
+    }
+  }
+}

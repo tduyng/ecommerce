@@ -1,0 +1,9 @@
+query ProductsByBrand($category: String!, pagination: PaginationInput){
+  productsByBrand(category: $category, pagination: pagination){
+    count
+
+    products{
+      ...RegularProduct
+    }
+  }
+}

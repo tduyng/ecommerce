@@ -1,0 +1,9 @@
+query QueryProducts($q: String!, pagination: PaginationInput){
+  queryProducts(q: $q, pagination: pagination){
+    count
+
+    products{
+      ...RegularProduct
+    }
+  }
+}
