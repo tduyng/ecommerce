@@ -62,7 +62,7 @@ export const Header = () => {
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="py-3">
-        <Container fluid>
+        <Container fluid style={{ maxWidth: '1400px' }}>
           <NextLink href="/" passHref>
             <Navbar.Brand>ZetaShop</Navbar.Brand>
           </NextLink>

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Carousel, Image } from 'react-bootstrap';
 
-export const ProductCarousel = () => {
+export const HomeCarousel = () => {
   const products = [
-    { name: 'Cannon EOS 80D DSLR Camera', src: '/camera.jpg' },
-    { name: 'IPhone 11 Pro 256GB Memory', src: '/phone.jpg' },
-    { name: 'Sony Playstation 4 Pro White Version', src: '/playstation.jpg' },
+    { name: '', src: '/carousel1.jpg' },
+    { name: '', src: '/carousel2.jpg' },
   ];
 
   return (
-    <Carousel pause="hover" className="bg-dark text-center mx-auto">
+    <Carousel pause="hover" className="bg-light text-center mx-auto">
       {products.map((product, index) => (
         <Carousel.Item key={index}>
           <Image src={product.src} alt={product.name} className="img-fluid" />

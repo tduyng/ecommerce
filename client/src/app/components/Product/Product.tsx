@@ -1,13 +1,17 @@
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import Link from 'next/link';
-import React from 'react';
 import { Rating } from './Rating';
 
 export const ProductComponent = ({ product }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <Link href={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant="top" style={{ maxHeight: '15rem' }} />
+      <Link href={`/product/${product._id}`} passHref>
+        <Card.Img
+          src={product.image}
+          variant="top"
+          style={{ maxHeight: '15rem', cursor: 'pointer' }}
+        />
       </Link>
 
       <Card.Body>

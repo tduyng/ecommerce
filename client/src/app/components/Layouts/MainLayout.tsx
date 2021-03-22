@@ -9,7 +9,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <>
       <Header />
       <main className="py-3 px-2" style={{ minHeight: '85vh' }}>
-        <Container fluid>{children}</Container>
+        <Container style={{ maxWidth: '1400px' }}>{children}</Container>
       </main>
 
       <Footer />
