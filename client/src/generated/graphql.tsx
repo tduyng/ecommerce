@@ -327,6 +327,9 @@ export type Query = {
   adminGetUserById: UserResponse;
   adminGetUserByUsername: UserResponse;
   adminSearchUsers: PaginatedUser;
+  allCategories: Array<Scalars['String']>;
+  brandsByCategory: Array<Scalars['String']>;
+  latestProducts: Array<Product>;
   me: UserResponse;
   myOrders: PaginatedOrder;
   orderById: Order;
@@ -362,6 +365,16 @@ export type QueryAdminGetUserByUsernameArgs = {
 export type QueryAdminSearchUsersArgs = {
   pagination?: Maybe<PaginationInput>;
   q: Scalars['String'];
+};
+
+
+export type QueryBrandsByCategoryArgs = {
+  category: Scalars['String'];
+};
+
+
+export type QueryLatestProductsArgs = {
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -874,6 +887,37 @@ export type AdminSearchUsersQuery = (
       & RegularUserFragment
     )> }
   ) }
+);
+
+export type AllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllCategoriesQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'allCategories'>
+);
+
+export type BrandsByCategoryQueryVariables = Exact<{
+  category: Scalars['String'];
+}>;
+
+
+export type BrandsByCategoryQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'brandsByCategory'>
+);
+
+export type LatestProductsQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type LatestProductsQuery = (
+  { __typename?: 'Query' }
+  & { latestProducts: Array<(
+    { __typename?: 'Product' }
+    & RegularProductFragment
+  )> }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -1889,6 +1933,106 @@ export function useAdminSearchUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type AdminSearchUsersQueryHookResult = ReturnType<typeof useAdminSearchUsersQuery>;
 export type AdminSearchUsersLazyQueryHookResult = ReturnType<typeof useAdminSearchUsersLazyQuery>;
 export type AdminSearchUsersQueryResult = Apollo.QueryResult<AdminSearchUsersQuery, AdminSearchUsersQueryVariables>;
+export const AllCategoriesDocument = gql`
+    query AllCategories {
+  allCategories
+}
+    `;
+
+/**
+ * __useAllCategoriesQuery__
+ *
+ * To run a query within a React component, call `useAllCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<AllCategoriesQuery, AllCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllCategoriesQuery, AllCategoriesQueryVariables>(AllCategoriesDocument, options);
+      }
+export function useAllCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllCategoriesQuery, AllCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllCategoriesQuery, AllCategoriesQueryVariables>(AllCategoriesDocument, options);
+        }
+export type AllCategoriesQueryHookResult = ReturnType<typeof useAllCategoriesQuery>;
+export type AllCategoriesLazyQueryHookResult = ReturnType<typeof useAllCategoriesLazyQuery>;
+export type AllCategoriesQueryResult = Apollo.QueryResult<AllCategoriesQuery, AllCategoriesQueryVariables>;
+export const BrandsByCategoryDocument = gql`
+    query BrandsByCategory($category: String!) {
+  brandsByCategory(category: $category)
+}
+    `;
+
+/**
+ * __useBrandsByCategoryQuery__
+ *
+ * To run a query within a React component, call `useBrandsByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBrandsByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBrandsByCategoryQuery({
+ *   variables: {
+ *      category: // value for 'category'
+ *   },
+ * });
+ */
+export function useBrandsByCategoryQuery(baseOptions: Apollo.QueryHookOptions<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>(BrandsByCategoryDocument, options);
+      }
+export function useBrandsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>(BrandsByCategoryDocument, options);
+        }
+export type BrandsByCategoryQueryHookResult = ReturnType<typeof useBrandsByCategoryQuery>;
+export type BrandsByCategoryLazyQueryHookResult = ReturnType<typeof useBrandsByCategoryLazyQuery>;
+export type BrandsByCategoryQueryResult = Apollo.QueryResult<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>;
+export const LatestProductsDocument = gql`
+    query LatestProducts($limit: Int) {
+  latestProducts(limit: $limit) {
+    ...RegularProduct
+  }
+}
+    ${RegularProductFragmentDoc}`;
+
+/**
+ * __useLatestProductsQuery__
+ *
+ * To run a query within a React component, call `useLatestProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestProductsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useLatestProductsQuery(baseOptions?: Apollo.QueryHookOptions<LatestProductsQuery, LatestProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LatestProductsQuery, LatestProductsQueryVariables>(LatestProductsDocument, options);
+      }
+export function useLatestProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LatestProductsQuery, LatestProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LatestProductsQuery, LatestProductsQueryVariables>(LatestProductsDocument, options);
+        }
+export type LatestProductsQueryHookResult = ReturnType<typeof useLatestProductsQuery>;
+export type LatestProductsLazyQueryHookResult = ReturnType<typeof useLatestProductsLazyQuery>;
+export type LatestProductsQueryResult = Apollo.QueryResult<LatestProductsQuery, LatestProductsQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
