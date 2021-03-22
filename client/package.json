@@ -6,24 +6,50 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "lint": "eslint --fix --ext js,jsx,ts,tsx src/",
+    "prettier": "prettier --write \"(*.tsx|*.ts|*.jsx|*.js|*.scss|*.css)\"",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
+    "bootstrap": "^4.6.0",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "next": "10.0.9",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-bootstrap": "^1.5.2",
+    "react-dom": "17.0.1",
+    "react-hot-toast": "^1.0.2",
+    "react-paypal-button-v2": "^2.6.3",
+    "react-slick": "^0.28.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.3",
     "@graphql-codegen/typescript": "^1.21.0",
     "@graphql-codegen/typescript-operations": "^1.17.15",
     "@graphql-codegen/typescript-react-apollo": "^2.2.1",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@types/eslint": "^7.2.7",
+    "@types/jest": "^26.0.21",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
+    "@types/testing-library__jest-dom": "^5.9.5",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
     "deepmerge": "^4.2.2",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.6.3",
+    "jest-fetch-mock": "^3.0.3",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1",
+    "ts-jest": "^26.5.3",
     "typescript": "^4.2.3"
   }
 }

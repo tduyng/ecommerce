@@ -1,0 +1,8 @@
+mutation RefreshToken {
+  refresh {
+    authToken {
+      accessToken
+      refreshToken
+    }
+  }
+}

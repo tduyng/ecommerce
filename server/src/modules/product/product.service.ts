@@ -1,10 +1,16 @@
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
 import { UserService } from '@modules/user/user.service';
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+	BadRequestException,
+	HttpException,
+	Injectable,
+	UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateProductInput, PaginatedProduct, UpdateProductInput } from './dto';
+import { CategoryBrands } from './dto/category-brands.object-type';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
 import { Product } from './schemas/product.schema';
 
@@ -156,7 +162,7 @@ export class ProductService {
 	}
 
 	public async findTopProducts(limit?: number) {
-		const safeLimit = limit | 5;
+		const safeLimit = limit | 25;
 		const products: Product[] = await this.productModel
 			.find({})
 			.sort({ rating: -1 })
@@ -164,5 +170,44 @@ export class ProductService {
 			.lean();
 
 		return products;
+	}
+
+	public async findLatestProducts(limit?: number) {
+		const safeLimit = limit | 25;
+		const products: Product[] = await this.productModel
+			.find({})
+			.sort({ createdAt: -1 })
+			.limit(safeLimit)
+			.lean();
+
+		return products;
+	}
+
+	public async getCategoryList(): Promise<string[]> {
+		const categories: string[] = await this.productModel.find().distinct('category');
+		return categories;
+	}
+
+	public async getBrandsBelongsToCategory(category: string): Promise<string[]> {
+		const brands: string[] = await this.productModel
+			.find({ category: new RegExp('^' + category + '$', 'i') })
+			.distinct('brand');
+		return brands;
+	}
+
+	public async getCategoryBrands(): Promise<CategoryBrands[]> {
+		const result: CategoryBrands[] = [];
+
+		try {
+			const categories = await this.getCategoryList();
+			for (const category of categories) {
+				const brands = await this.getBrandsBelongsToCategory(category);
+				result.push({ category, brands });
+			}
+
+			return result;
+		} catch (error) {
+			throw new HttpException(error.message, 500);
+		}
 	}
 }

@@ -1,0 +1,5 @@
+mutation ReviewProduct($productId: String!, $input: CreateReviewProductInput!) {
+  reviewProduct(productId: $productId, input: $input) {
+    ...RegularProduct
+  }
+}

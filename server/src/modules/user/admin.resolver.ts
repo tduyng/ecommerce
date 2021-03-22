@@ -10,8 +10,8 @@ import { UseGuards } from '@nestjs/common';
 // import { JwtGuard } from '@modules/auth/guards';
 // import { UseGuards } from '@nestjs/common';
 import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
-import { CurrentUser } from './decorators';
-import { Roles } from './decorators/roles.decorator';
+import { CurrentUser } from '../../common/decorators';
+import { Roles } from '../../common/decorators/roles.decorator';
 import { PaginatedUser } from './dto/paginated-user.object-type';
 import { PaginationInput } from './dto/pagination.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -28,31 +28,30 @@ export class AdminResolver {
 		private productService: ProductService,
 	) {}
 	@Query(() => UserResponse)
-	public async userById(@Args('id') id: string) {
-		const user: User = await this.userService.findById(id);
+	public async adminGetUserById(@Args('_id') _id: string) {
+		const user: User = await this.userService.findById(_id);
 		return { user };
 	}
 
 	@Query(() => UserResponse)
-	public async userByUsername(@Args('username') username: string) {
+	public async adminGetUserByUsername(@Args('username') username: string) {
 		const user = await this.userService.findOne({ username });
 		return { user };
 	}
 
 	@Query(() => UserResponse)
-	public async userByEmail(@Args('email') email: string) {
+	public async adminGetUserByEmail(@Args('email') email: string) {
 		const user = await this.userService.findOne({ email });
 		return { user };
 	}
 
 	@Query(() => PaginatedUser)
-	public async searchUsers(
+	public async adminSearchUsers(
 		@Args('q') q: string,
-		@Args('limit', { nullable: true }) limit?: number,
-		@Args('page', { nullable: true }) page?: number,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
-		const safeLimit = limit || 25;
-		const safePage = page || 1;
+		const safeLimit = pagination?.limit || 25;
+		const safePage = pagination?.page || 1;
 		const result = await this.userService.queryUsers(q, {
 			limit: safeLimit,
 			page: safePage,
@@ -61,15 +60,18 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => UserResponse)
-	public async updateUser(@Args('id') id: string, @Args('input') input: UpdateUserInput) {
-		const user = await this.userService.updateOne(id, input);
+	public async adminUpdateUserById(
+		@Args('_id') _id: string,
+		@Args('input') input: UpdateUserInput,
+	) {
+		const user = await this.userService.updateOne(_id, input);
 		return { user };
 	}
 
 	@Mutation(() => Boolean)
-	public async deleteUserById(@Args('id') id: string) {
+	public async adminDeleteUserById(@Args('_id') _id: string) {
 		try {
-			await this.userService.deleteById(id);
+			await this.userService.deleteById(_id);
 			return true;
 		} catch (error) {
 			return false;
@@ -77,19 +79,19 @@ export class AdminResolver {
 	}
 
 	@Query(() => PaginatedOrder)
-	public async getManyOrders(
+	public async adminGetOrders(
 		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
 		return await this.orderService.findManyOrders(pagination);
 	}
 
 	@Mutation(() => Order)
-	public async deliveryOrder(@Args('_id') _id: string) {
+	public async adminSetDeliveryOrder(@Args('_id') _id: string) {
 		return await this.orderService.updateOrderToDelivered(_id);
 	}
 
 	@Mutation(() => Product)
-	public async createProduct(
+	public async adminCreateProduct(
 		@Args('input') input: CreateProductInput,
 		@CurrentUser() user: User,
 	) {
@@ -97,7 +99,7 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => Product)
-	public async updateProduct(
+	public async adminUpdateProduct(
 		@Args('_id') _id: string,
 		@Args('input') input: UpdateProductInput,
 	) {
@@ -105,7 +107,7 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => Boolean)
-	public async deleteProduct(@Args('_id') _id: string) {
+	public async adminDeleteProduct(@Args('_id') _id: string) {
 		const productDeleted = await this.productService.deleteProduct(_id);
 		return productDeleted ? true : false;
 	}

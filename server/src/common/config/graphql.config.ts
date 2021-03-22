@@ -1,17 +1,22 @@
+import { GqlModuleOptions } from '@nestjs/graphql';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { join } from 'path';
 
-export const graphqlConfig = () => {
+export const graphqlConfig = (): GqlModuleOptions => {
 	return {
 		playground: process.env.NODE_ENV === 'development',
 		autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 		sortSchema: true,
-		// uploads: {
-		// 	maxFileSize: 20_000_000, // 20 MB
-		// 	maxFiles: 5,
-		// },
-		uploads: false, // disable built-in upload handling
+		uploads: {
+			maxFileSize: 20_000_000, // 20 MB
+			maxFiles: 5,
+		},
 		tracing: false,
+		buildSchemaOptions: {
+			numberScalarMode: 'integer',
+		},
+		cors: false,
+
 		context: ({ req, connection }) => {
 			if (!connection) {
 				// Http request

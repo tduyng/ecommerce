@@ -1,19 +1,14 @@
+import { ProductInput } from '@modules/product/dto/product.input';
 import { Field, Float, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class OrderItemInput {
-	@Field()
-	name: string;
+	@Field(() => ProductInput)
+	product: ProductInput;
 
-	@Field(() => Int, { defaultValue: 1 })
+	@Field(() => Int)
 	quantity: number;
 
 	@Field(() => Float)
 	price: number;
-
-	@Field()
-	image: string;
-
-	@Field(() => String)
-	product: string;
 }

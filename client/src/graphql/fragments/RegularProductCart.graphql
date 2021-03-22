@@ -1,0 +1,12 @@
+fragment RegularProductCart on ProductCart {
+  _id
+  brand
+  category
+  countInStock
+  description
+  image
+  name
+  numReviews
+  price
+  rating
+}

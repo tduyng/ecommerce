@@ -1,0 +1,8 @@
+query AdminSearchUsers($q: String!, $pagination: PaginationInput) {
+  adminSearchUsers(q: $q, pagination: $pagination) {
+    count
+    users {
+      ...RegularUser
+    }
+  }
+}

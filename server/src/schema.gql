@@ -11,6 +11,23 @@ type AuthTokenResponse {
   authToken: AuthToken
 }
 
+type CartItem {
+  price: Float!
+  product: ProductCart!
+  quantity: Int!
+}
+
+input CartItemInput {
+  price: Float!
+  product: ProductInput!
+  quantity: Int!
+}
+
+type CategoryBrands {
+  brands: [String!]!
+  category: String!
+}
+
 input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
@@ -58,23 +75,26 @@ type MessageError {
 
 type Mutation {
   activate(token: String!): AuthTokenResponse!
+  addToCart(input: CartItemInput!): [CartItem!]!
+  adminCreateProduct(input: CreateProductInput!): Product!
+  adminDeleteProduct(_id: String!): Boolean!
+  adminDeleteUserById(_id: String!): Boolean!
+  adminSetDeliveryOrder(_id: String!): Order!
+  adminUpdateProduct(_id: String!, input: UpdateProductInput!): Product!
+  adminUpdateUserById(_id: String!, input: UpdateUserInput!): UserResponse!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
   createOrder(input: CreateOrderInput!): Order!
-  createProduct(input: CreateProductInput!): Product!
-  deleteProduct(_id: String!): Boolean!
-  deleteUserById(id: String!): Boolean!
-  deliveryOrder(_id: String!): Order!
   forgotPassword(email: String!): TokenResponse!
   login(input: LoginUserInput!): AuthTokenResponse!
   logout: Boolean!
   payOrder(_id: String!, paymentResult: PaymentResultInput!): Order!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
+  removeItemFromCart(productId: String!): [CartItem!]!
   resetPassword(input: ResetPasswordInput!): UserResponse!
   reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
-  updateProduct(_id: String!, input: UpdateProductInput!): Product!
-  updateUser(id: String!, input: UpdateUserInput!): UserResponse!
+  updateCart(input: CartItemInput!): [CartItem!]!
 }
 
 type Order {
@@ -107,11 +127,9 @@ type OrderItem {
 }
 
 input OrderItemInput {
-  image: String!
-  name: String!
   price: Float!
-  product: String!
-  quantity: Int = 1
+  product: ProductInput!
+  quantity: Int!
 }
 
 type PaginatedOrder {
@@ -164,8 +182,42 @@ type Product {
   user: User!
 }
 
+type ProductCart {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int!
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int!
+  price: Float!
+  rating: Int!
+}
+
+input ProductInput {
+  _id: ID!
+  brand: String!
+  category: String!
+  countInStock: Int = 0
+  description: String!
+  image: String!
+  name: String!
+  numReviews: Int = 0
+  price: Float!
+  rating: Int = 0
+}
+
 type Query {
-  getManyOrders(pagination: PaginationInput): PaginatedOrder!
+  adminGetOrders(pagination: PaginationInput): PaginatedOrder!
+  adminGetUserByEmail(email: String!): UserResponse!
+  adminGetUserById(_id: String!): UserResponse!
+  adminGetUserByUsername(username: String!): UserResponse!
+  adminSearchUsers(pagination: PaginationInput, q: String!): PaginatedUser!
+  allCategories: [String!]!
+  brandsByCategory(category: String!): [String!]!
+  categoryBrands: [CategoryBrands!]!
+  latestProducts(limit: Int): [Product!]!
   me: UserResponse!
   myOrders(pagination: PaginationInput): PaginatedOrder!
   orderById(_id: String!): Order!
@@ -174,11 +226,7 @@ type Query {
   productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
   productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
   queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
-  searchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
-  topProducts(limit: Float): [Product!]!
-  userByEmail(email: String!): UserResponse!
-  userById(id: String!): UserResponse!
-  userByUsername(username: String!): UserResponse!
+  topProducts(limit: Int): [Product!]!
 }
 
 input RegisterUserInput {

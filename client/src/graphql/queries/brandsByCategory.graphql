@@ -1,0 +1,3 @@
+query BrandsByCategory($category: String!) {
+  brandsByCategory(category: $category)
+}

@@ -2,15 +2,14 @@ import { useMemo } from 'react';
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
-import { NextPageContext } from 'next';
 
 let apolloClient;
 
-function createApolloClient(ctx?: NextPageContext) {
+function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: 'http://localhost:4220/graphql', // Server URL (must be absolute)
+      uri: 'http://localhost:5025/graphql', // Server URL (must be absolute)
       credentials: 'include',
       // Additional fetch() options like `credentials` or `headers`
     }),
@@ -38,9 +37,7 @@ export function initializeApollo(initialState = null) {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter((d) =>
-          sourceArray.every((s) => !isEqual(d, s))
-        ),
+        ...destinationArray.filter(d => sourceArray.every(s => !isEqual(d, s))),
       ],
     });
 

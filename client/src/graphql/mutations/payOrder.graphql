@@ -1,0 +1,5 @@
+mutation PayOrder($_id: String!, $paymentResult: PaymentResultInput!) {
+  payOrder(_id: $_id, paymentResult: $paymentResult) {
+    ...RegularOrder
+  }
+}

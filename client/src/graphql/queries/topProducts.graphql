@@ -1,0 +1,5 @@
+query TopProducts($limit: Int) {
+  topProducts(limit: $limit) {
+    ...RegularProduct
+  }
+}

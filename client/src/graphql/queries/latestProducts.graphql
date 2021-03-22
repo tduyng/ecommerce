@@ -1,0 +1,5 @@
+query LatestProducts($limit: Int) {
+  latestProducts(limit: $limit) {
+    ...RegularProduct
+  }
+}

@@ -1,0 +1,9 @@
+**/*.scss
+node_modules
+tsconfig.json
+.gitnigore
+__mocks__
+setupTests.ts
+__test__
+**/*.spec.*
+**/*.test.*

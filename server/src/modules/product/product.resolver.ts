@@ -1,10 +1,10 @@
 import { JwtGuard } from '@modules/auth/guards';
-import { CurrentUser } from '@modules/user/decorators';
+import { CurrentUser } from '@common/decorators';
 import { PaginationInput } from '@modules/user/dto/pagination.input';
 import { User } from '@modules/user/user.schema';
 import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PaginatedProduct } from './dto';
+import { CategoryBrands, PaginatedProduct } from './dto';
 import { CreateReviewProductInput } from './dto/create-review-product.input';
 import { ProductService } from './product.service';
 import { Product } from './schemas/product.schema';
@@ -47,6 +47,26 @@ export class ProductResolver {
 	@Query(() => [Product])
 	public async topProducts(@Args('limit', { nullable: true }) limit?: number) {
 		return await this.productService.findTopProducts(limit);
+	}
+
+	@Query(() => [Product])
+	public async latestProducts(@Args('limit', { nullable: true }) limit?: number) {
+		return await this.productService.findLatestProducts(limit);
+	}
+
+	@Query(() => [String])
+	public async allCategories() {
+		return await this.productService.getCategoryList();
+	}
+
+	@Query(() => [String])
+	public async brandsByCategory(@Args('category') category: string) {
+		return await this.productService.getBrandsBelongsToCategory(category);
+	}
+
+	@Query(() => [CategoryBrands])
+	public async categoryBrands() {
+		return await this.productService.getCategoryBrands();
 	}
 
 	@Query(() => Product)
