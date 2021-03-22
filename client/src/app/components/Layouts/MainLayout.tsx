@@ -8,7 +8,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="py-3" style={{ minHeight: '85vh' }}>
+      <main className="py-3 px-2" style={{ minHeight: '85vh' }}>
         <Container fluid>{children}</Container>
       </main>
 

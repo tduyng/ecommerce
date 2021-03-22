@@ -26,24 +26,24 @@ export const Header = () => {
 
   let authGroupButtons = (
     <>
-      <NextLink href="/login">
+      <NextLink href="/login" passHref>
         <Nav.Link>
           <i className="fas fa-sign-in-alt"></i> Login
         </Nav.Link>
       </NextLink>
 
-      <NextLink href="/register">
+      <NextLink href="/register" passHref>
         <Nav.Link>
           <i className="fas fa-user-plus"></i> Register
         </Nav.Link>
       </NextLink>
     </>
   );
-  if (!loading && data?.me) {
+  if (!loading && user) {
     authGroupButtons = (
       <>
         <NavDropdown title={user?.fullName} id="username">
-          <NextLink href="/profile">
+          <NextLink href="/profile" passHref>
             <NavDropdown.Item>Profile</NavDropdown.Item>
           </NextLink>
           <NavDropdown.Item onClick={() => logoutUser()}>Logout</NavDropdown.Item>
@@ -64,14 +64,14 @@ export const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="py-3">
         <Container fluid>
-          <NextLink href="/">
+          <NextLink href="/" passHref>
             <Navbar.Brand>ZetaShop</Navbar.Brand>
           </NextLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <SearchBox />
             <Nav className="ml-auto">
-              <NextLink href="/cart">
+              <NextLink href="/cart" passHref>
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
@@ -79,13 +79,13 @@ export const Header = () => {
               {authGroupButtons}
               {!loading && user && user?.role == 'ADMIN' && (
                 <NavDropdown title="Admin" id="adminmenu">
-                  <NextLink href="/admin/product/new">
+                  <NextLink href="/admin/product/new" passHref>
                     <NavDropdown.Item>Create Product</NavDropdown.Item>
                   </NextLink>
-                  <NextLink href="/admin/users">
+                  <NextLink href="/admin/users" passHref>
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </NextLink>
-                  <NextLink href="/admin/orders">
+                  <NextLink href="/admin/orders" passHref>
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </NextLink>
                 </NavDropdown>

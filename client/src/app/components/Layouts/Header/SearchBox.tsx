@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Form, Button } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
 
 export const SearchBox = () => {
   const router = useRouter();
@@ -9,29 +9,31 @@ export const SearchBox = () => {
   const submitHandler = (e: any) => {
     e.preventDefault();
     if (keyword.trim()) {
-      router.push(`/query?q=${keyword}`);
-    } else {
-      router.push('/');
+      router.push(`/product/search?q=${keyword}`);
     }
   };
 
   return (
-    <Form onSubmit={submitHandler} inline>
-      <Form.Control
-        type="text"
-        name="q"
-        onChange={e => setKeyword(e.target.value)}
-        placeholder="Search Products..."
-        className="mr-sm-2 ml-sm-1 mb-sm-2"
-      ></Form.Control>
-      <Button
-        type="submit"
-        variant="outline-success"
-        className="px-3"
-        style={{ marginTop: '-0.4rem', paddingTop: '0.4rem', paddingBottom: '0.4rem' }}
-      >
-        Search
-      </Button>
+    <Form onSubmit={submitHandler} inline className="mt-sm-2">
+      <InputGroup>
+        <input
+          className="form-control py-2 border-right-0 border"
+          type="search"
+          name="q"
+          placeholder="Search"
+          onChange={e => setKeyword(e.target.value)}
+          id="example-search-input"
+        ></input>
+        <span className="input-group-append">
+          <button
+            className="input-group-text"
+            onClick={e => submitHandler(e)}
+            type="submit"
+          >
+            <i className="fa fa-search"></i>
+          </button>
+        </span>
+      </InputGroup>
     </Form>
   );
 };
