@@ -1,13 +1,13 @@
 import { MetaTags } from 'src/app/components/Layouts/MetaTags';
 
-export default function Home() {
+export default function LoginPage() {
   return (
-    <div>
-      <MetaTags title="Home" />
+    <>
+      <MetaTags title="Login" />
 
       <main>
-        <h1>Home</h1>
+        <h1>Login</h1>
       </main>
-    </div>
+    </>
   );
 }
