@@ -73,10 +73,10 @@ type Mutation {
   addToCart(input: CartItemInput!): [CartItem!]!
   adminCreateProduct(input: CreateProductInput!): Product!
   adminDeleteProduct(_id: String!): Boolean!
-  adminDeleteUserById(id: String!): Boolean!
+  adminDeleteUserById(_id: String!): Boolean!
   adminSetDeliveryOrder(_id: String!): Order!
-  adminUpdateOneUser(id: String!, input: UpdateUserInput!): UserResponse!
   adminUpdateProduct(_id: String!, input: UpdateProductInput!): Product!
+  adminUpdateUserById(_id: String!, input: UpdateUserInput!): UserResponse!
   autoRefresh: AuthTokenResponse!
   changePassword(input: ChangePasswordInput!): UserResponse!
   createOrder(input: CreateOrderInput!): Order!
@@ -206,7 +206,7 @@ input ProductInput {
 type Query {
   adminGetOrders(pagination: PaginationInput): PaginatedOrder!
   adminGetUserByEmail(email: String!): UserResponse!
-  adminGetUserById(id: String!): UserResponse!
+  adminGetUserById(_id: String!): UserResponse!
   adminGetUserByUsername(username: String!): UserResponse!
   adminSearchUsers(pagination: PaginationInput, q: String!): PaginatedUser!
   me: UserResponse!
@@ -217,7 +217,7 @@ type Query {
   productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
   productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
   queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
-  topProducts(limit: Float): [Product!]!
+  topProducts(limit: Int): [Product!]!
 }
 
 input RegisterUserInput {

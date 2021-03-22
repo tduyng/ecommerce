@@ -28,8 +28,8 @@ export class AdminResolver {
 		private productService: ProductService,
 	) {}
 	@Query(() => UserResponse)
-	public async adminGetUserById(@Args('id') id: string) {
-		const user: User = await this.userService.findById(id);
+	public async adminGetUserById(@Args('_id') _id: string) {
+		const user: User = await this.userService.findById(_id);
 		return { user };
 	}
 
@@ -60,18 +60,18 @@ export class AdminResolver {
 	}
 
 	@Mutation(() => UserResponse)
-	public async adminUpdateOneUser(
-		@Args('id') id: string,
+	public async adminUpdateUserById(
+		@Args('_id') _id: string,
 		@Args('input') input: UpdateUserInput,
 	) {
-		const user = await this.userService.updateOne(id, input);
+		const user = await this.userService.updateOne(_id, input);
 		return { user };
 	}
 
 	@Mutation(() => Boolean)
-	public async adminDeleteUserById(@Args('id') id: string) {
+	public async adminDeleteUserById(@Args('_id') _id: string) {
 		try {
-			await this.userService.deleteById(id);
+			await this.userService.deleteById(_id);
 			return true;
 		} catch (error) {
 			return false;
