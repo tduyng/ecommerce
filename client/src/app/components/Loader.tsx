@@ -7,8 +7,8 @@ const Loader = () => {
       animation="border"
       role="status"
       style={{
-        width: '100px',
-        height: '100px',
+        width: '2rem',
+        height: '2rem',
         margin: 'auto',
         display: 'block',
       }}

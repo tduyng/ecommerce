@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { SearchBox } from './SearchBox';
-import { useLogoutMutation, useMeQuery } from 'src/generated/graphql';
+import { useLogoutMutation, useMeQuery, User } from 'src/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { IUser } from 'src/app/types/user.types';
 import toast from 'react-hot-toast';
 import NextLink from 'next/link';
 
@@ -13,7 +12,7 @@ export const Header = () => {
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const { data, loading } = useMeQuery();
   const router = useRouter();
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const logoutUser = async () => {
     if (!logoutFetching) {
@@ -54,11 +53,11 @@ export const Header = () => {
 
   useEffect(() => {
     if (data?.me) {
-      setUser(data?.me?.user as IUser);
+      setUser(data?.me?.user as User);
     } else {
       setUser(null);
     }
-  }, [data]);
+  }, [data, loading]);
 
   return (
     <header>
