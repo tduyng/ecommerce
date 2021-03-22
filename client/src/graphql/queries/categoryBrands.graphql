@@ -1,0 +1,6 @@
+query CategoryBrands {
+  categoryBrands {
+    category
+    brands
+  }
+}

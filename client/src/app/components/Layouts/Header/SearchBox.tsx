@@ -15,7 +15,7 @@ export const SearchBox = () => {
 
   return (
     <Form onSubmit={submitHandler} inline className="mt-sm-2">
-      <InputGroup>
+      <InputGroup style={{ minWidth: '18rem' }}>
         <input
           className="form-control py-2 border-right-0 border"
           type="search"

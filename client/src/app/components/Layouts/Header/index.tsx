@@ -6,9 +6,11 @@ import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import NextLink from 'next/link';
+import { CategoryList } from './CategoryList';
 
 export const Header = () => {
   const apolloClient = useApolloClient();
+  const [loadingHeader, setLoadingHeader] = useState(true);
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const { data, loading } = useMeQuery();
   const router = useRouter();
@@ -51,24 +53,34 @@ export const Header = () => {
     );
   }
 
+  const [width, setWidth] = useState(1000);
+
   useEffect(() => {
+    setLoadingHeader(false);
     if (data?.me) {
       setUser(data?.me?.user as User);
     } else {
       setUser(null);
     }
-  }, [data, loading]);
+
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [data, loading, loadingHeader, setLoadingHeader, width, setWidth]);
 
   return (
-    <header>
+    <header className="bg-dark px-2">
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="py-3">
         <Container fluid style={{ maxWidth: '1400px' }}>
           <NextLink href="/" passHref>
             <Navbar.Brand>ZetaShop</Navbar.Brand>
           </NextLink>
+          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <SearchBox />
             <Nav className="ml-auto">
               <NextLink href="/cart" passHref>
                 <Nav.Link>
@@ -92,7 +104,11 @@ export const Header = () => {
             </Nav>
           </Navbar.Collapse>
         </Container>
+        {width < 992 && <CategoryList width={width} />}
       </Navbar>
+      <Container fluid style={{ maxWidth: '1400px' }}>
+        {width >= 992 && <CategoryList width={width} />}
+      </Container>
     </header>
   );
 };

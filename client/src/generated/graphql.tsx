@@ -40,6 +40,12 @@ export type CartItemInput = {
   quantity: Scalars['Int'];
 };
 
+export type CategoryBrands = {
+  __typename?: 'CategoryBrands';
+  brands: Array<Scalars['String']>;
+  category: Scalars['String'];
+};
+
 export type ChangePasswordInput = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
@@ -329,6 +335,7 @@ export type Query = {
   adminSearchUsers: PaginatedUser;
   allCategories: Array<Scalars['String']>;
   brandsByCategory: Array<Scalars['String']>;
+  categoryBrands: Array<CategoryBrands>;
   latestProducts: Array<Product>;
   me: UserResponse;
   myOrders: PaginatedOrder;
@@ -905,6 +912,17 @@ export type BrandsByCategoryQueryVariables = Exact<{
 export type BrandsByCategoryQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'brandsByCategory'>
+);
+
+export type CategoryBrandsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryBrandsQuery = (
+  { __typename?: 'Query' }
+  & { categoryBrands: Array<(
+    { __typename?: 'CategoryBrands' }
+    & Pick<CategoryBrands, 'category' | 'brands'>
+  )> }
 );
 
 export type LatestProductsQueryVariables = Exact<{
@@ -1998,6 +2016,41 @@ export function useBrandsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type BrandsByCategoryQueryHookResult = ReturnType<typeof useBrandsByCategoryQuery>;
 export type BrandsByCategoryLazyQueryHookResult = ReturnType<typeof useBrandsByCategoryLazyQuery>;
 export type BrandsByCategoryQueryResult = Apollo.QueryResult<BrandsByCategoryQuery, BrandsByCategoryQueryVariables>;
+export const CategoryBrandsDocument = gql`
+    query CategoryBrands {
+  categoryBrands {
+    category
+    brands
+  }
+}
+    `;
+
+/**
+ * __useCategoryBrandsQuery__
+ *
+ * To run a query within a React component, call `useCategoryBrandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryBrandsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoryBrandsQuery(baseOptions?: Apollo.QueryHookOptions<CategoryBrandsQuery, CategoryBrandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryBrandsQuery, CategoryBrandsQueryVariables>(CategoryBrandsDocument, options);
+      }
+export function useCategoryBrandsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryBrandsQuery, CategoryBrandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryBrandsQuery, CategoryBrandsQueryVariables>(CategoryBrandsDocument, options);
+        }
+export type CategoryBrandsQueryHookResult = ReturnType<typeof useCategoryBrandsQuery>;
+export type CategoryBrandsLazyQueryHookResult = ReturnType<typeof useCategoryBrandsLazyQuery>;
+export type CategoryBrandsQueryResult = Apollo.QueryResult<CategoryBrandsQuery, CategoryBrandsQueryVariables>;
 export const LatestProductsDocument = gql`
     query LatestProducts($limit: Int) {
   latestProducts(limit: $limit) {

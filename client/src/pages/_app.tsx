@@ -4,6 +4,7 @@ import React from 'react';
 import { useApollo } from 'src/utils/apollo';
 import { Toaster } from 'react-hot-toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'src/styles/index.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);
