@@ -209,6 +209,9 @@ type Query {
   adminGetUserById(_id: String!): UserResponse!
   adminGetUserByUsername(username: String!): UserResponse!
   adminSearchUsers(pagination: PaginationInput, q: String!): PaginatedUser!
+  allCategories: [String!]!
+  brandsOfCategory(category: String!): [String!]!
+  latestProducts(limit: Int): [Product!]!
   me: UserResponse!
   myOrders(pagination: PaginationInput): PaginatedOrder!
   orderById(_id: String!): Order!

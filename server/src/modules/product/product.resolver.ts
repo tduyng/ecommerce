@@ -49,6 +49,21 @@ export class ProductResolver {
 		return await this.productService.findTopProducts(limit);
 	}
 
+	@Query(() => [Product])
+	public async latestProducts(@Args('limit', { nullable: true }) limit?: number) {
+		return await this.productService.findLatestProducts(limit);
+	}
+
+	@Query(() => [String])
+	public async allCategories() {
+		return await this.productService.getCategoryList();
+	}
+
+	@Query(() => [String])
+	public async brandsOfCategory(@Args('category') category: string) {
+		return await this.productService.getBrandsBelongsToCategory(category);
+	}
+
 	@Query(() => Product)
 	public async productById(@Args('_id') _id: string) {
 		const product = await this.productService.findById(_id);

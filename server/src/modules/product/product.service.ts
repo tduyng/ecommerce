@@ -156,7 +156,7 @@ export class ProductService {
 	}
 
 	public async findTopProducts(limit?: number) {
-		const safeLimit = limit | 5;
+		const safeLimit = limit | 25;
 		const products: Product[] = await this.productModel
 			.find({})
 			.sort({ rating: -1 })
@@ -164,5 +164,28 @@ export class ProductService {
 			.lean();
 
 		return products;
+	}
+
+	public async findLatestProducts(limit?: number) {
+		const safeLimit = limit | 25;
+		const products: Product[] = await this.productModel
+			.find({})
+			.sort({ createdAt: -1 })
+			.limit(safeLimit)
+			.lean();
+
+		return products;
+	}
+
+	public async getCategoryList(): Promise<string[]> {
+		const categories: string[] = await this.productModel.find().distinct('category');
+		return categories;
+	}
+
+	public async getBrandsBelongsToCategory(category: string) {
+		const brands: string[] = await this.productModel
+			.find({ category: new RegExp('^' + category + '$', 'i') })
+			.distinct('brand');
+		return brands;
 	}
 }
