@@ -8,10 +8,15 @@
   .navbar .nav-item .dropdown-menu {
     margin-top: 0;
   }
-  .dropdown-menu.show {
-    background: #343a40;
-  }
   .navbar-nav > li > .dropdown-menu {
     background-color: #343a40;
+  }
+  .dropdown:hover {
+    .dropdown {
+      display: block;
+    }
+    .dropdown-menu {
+      display: block;
+    }
   }
 }
