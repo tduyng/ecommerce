@@ -1,0 +1,7 @@
+fragment RegularCartItem on CartItem {
+  price
+  quantity
+  product {
+    ...RegularProductCart
+  }
+}

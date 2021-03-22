@@ -1,0 +1,6 @@
+mutation AdminUpdateUserById($_id: String!, $input: UpdateUserInput!){
+  adminUpdateUserById(_id: $_id, input: input: $input){
+    error{message}
+    user{...RegularUser}
+  }
+}

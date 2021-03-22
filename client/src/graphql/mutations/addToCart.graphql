@@ -1,0 +1,5 @@
+mutation AddToCart($input: CartItemInput!) {
+  addToCart(input: $input) {
+    ...RegularCartItem
+  }
+}

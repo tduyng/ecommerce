@@ -1,0 +1,5 @@
+mutation AdminSetDeliveryOrder($_id: String!) {
+  adminSetDeliveryOrder(_id: $_id) {
+    ...RegularOrder
+  }
+}

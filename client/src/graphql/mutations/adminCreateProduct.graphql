@@ -1,0 +1,5 @@
+mutation AdminCreateProduct($input: CreateProductInput!) {
+  adminCreateProduct(input: $input) {
+    ...RegularProduct
+  }
+}

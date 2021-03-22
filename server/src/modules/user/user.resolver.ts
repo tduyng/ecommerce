@@ -1,6 +1,6 @@
 import { GraphqlReq } from '@common/decorators/request-grapql.decorator';
 import { HttpException } from '@nestjs/common';
-import { Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Request } from 'express';
 import { CartItem, CartItemInput } from './dto';
 import { User } from './user.schema';
@@ -8,7 +8,10 @@ import { User } from './user.schema';
 @Resolver(() => User)
 export class UserResolver {
 	@Mutation(() => [CartItem])
-	public async addToCart(input: CartItemInput, @GraphqlReq() req: Request) {
+	public async addToCart(
+		@Args('input') input: CartItemInput,
+		@GraphqlReq() req: Request,
+	) {
 		try {
 			let cart: CartItem[] = this.getCartFromCookies(req);
 
@@ -32,7 +35,10 @@ export class UserResolver {
 	}
 
 	@Mutation(() => [CartItem])
-	public async updateCart(input: CartItemInput, @GraphqlReq() req: Request) {
+	public async updateCart(
+		@Args('input') input: CartItemInput,
+		@GraphqlReq() req: Request,
+	) {
 		try {
 			const productId = input.product._id;
 			let cart: CartItem[] = this.getCartFromCookies(req);
@@ -46,7 +52,10 @@ export class UserResolver {
 	}
 
 	@Mutation(() => [CartItem])
-	public async removeItemFromCart(productId: string, @GraphqlReq() req: Request) {
+	public async removeItemFromCart(
+		@Args('productId') productId: string,
+		@GraphqlReq() req: Request,
+	) {
 		try {
 			let cart: CartItem[] = this.getCartFromCookies(req);
 			cart = cart.filter((item) => item.product._id != productId);

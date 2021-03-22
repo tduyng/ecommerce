@@ -1,0 +1,3 @@
+mutation AdminDeleteUserById($_id: String!) {
+  adminDeleteUserById(_id: $_id)
+}

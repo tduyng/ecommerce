@@ -1,0 +1,7 @@
+mutation Login($input: Login) {
+  login(input: $input) {
+    authToken {
+      accessToken
+    }
+  }
+}

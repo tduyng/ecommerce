@@ -17,6 +17,12 @@ type CartItem {
   quantity: Int!
 }
 
+input CartItemInput {
+  price: Float!
+  product: ProductInput!
+  quantity: Int!
+}
+
 input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
@@ -64,7 +70,7 @@ type MessageError {
 
 type Mutation {
   activate(token: String!): AuthTokenResponse!
-  addToCart: [CartItem!]!
+  addToCart(input: CartItemInput!): [CartItem!]!
   adminCreateProduct(input: CreateProductInput!): Product!
   adminDeleteProduct(_id: String!): Boolean!
   adminDeleteUserById(id: String!): Boolean!
@@ -80,10 +86,10 @@ type Mutation {
   payOrder(_id: String!, paymentResult: PaymentResultInput!): Order!
   refresh: AuthTokenResponse!
   register(input: RegisterUserInput!): TokenResponse!
-  removeItemFromCart: [CartItem!]!
+  removeItemFromCart(productId: String!): [CartItem!]!
   resetPassword(input: ResetPasswordInput!): UserResponse!
   reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
-  updateCart: [CartItem!]!
+  updateCart(input: CartItemInput!): [CartItem!]!
 }
 
 type Order {
@@ -202,7 +208,7 @@ type Query {
   adminGetUserByEmail(email: String!): UserResponse!
   adminGetUserById(id: String!): UserResponse!
   adminGetUserByUsername(username: String!): UserResponse!
-  adminSearchUsers(limit: Float, page: Float, q: String!): PaginatedUser!
+  adminSearchUsers(pagination: PaginationInput, q: String!): PaginatedUser!
   me: UserResponse!
   myOrders(pagination: PaginationInput): PaginatedOrder!
   orderById(_id: String!): Order!

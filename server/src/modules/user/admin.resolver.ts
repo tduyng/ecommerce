@@ -48,11 +48,10 @@ export class AdminResolver {
 	@Query(() => PaginatedUser)
 	public async adminSearchUsers(
 		@Args('q') q: string,
-		@Args('limit', { nullable: true }) limit?: number,
-		@Args('page', { nullable: true }) page?: number,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
 	) {
-		const safeLimit = limit || 25;
-		const safePage = page || 1;
+		const safeLimit = pagination?.limit || 25;
+		const safePage = pagination?.page || 1;
 		const result = await this.userService.queryUsers(q, {
 			limit: safeLimit,
 			page: safePage,
