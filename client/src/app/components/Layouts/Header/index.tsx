@@ -1,62 +1,93 @@
-import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { SearchBox } from './SearchBox';
-import { useMeQuery } from 'src/generated/graphql';
+import { useLogoutMutation, useMeQuery } from 'src/generated/graphql';
 import { useApolloClient } from '@apollo/client';
+import { useRouter } from 'next/router';
+import { IUser } from 'src/app/types/user.types';
+import toast from 'react-hot-toast';
+import NextLink from 'next/link';
 
 export const Header = () => {
   const apolloClient = useApolloClient();
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const { data, loading } = useMeQuery();
+  const router = useRouter();
+  const [user, setUser] = useState<IUser | null>(null);
+
+  const logoutUser = async () => {
+    if (!logoutFetching) {
+      await logout();
+      await apolloClient.resetStore();
+      toast.success('Logout successfully!');
+      router.push('/');
+    }
+  };
+
   let authGroupButtons = (
-    <LinkContainer to="/login">
-      <Nav.Link>
-        <i className="fas fa-user"></i> Sign In
-      </Nav.Link>
-    </LinkContainer>
+    <>
+      <NextLink href="/login">
+        <Nav.Link>
+          <i className="fas fa-sign-in-alt"></i> Login
+        </Nav.Link>
+      </NextLink>
+
+      <NextLink href="/register">
+        <Nav.Link>
+          <i className="fas fa-user-plus"></i> Register
+        </Nav.Link>
+      </NextLink>
+    </>
   );
   if (!loading && data?.me) {
     authGroupButtons = (
       <>
-        <NavDropdown title={userInfo.name} id="username">
-          <LinkContainer to="/profile">
+        <NavDropdown title={user?.fullName} id="username">
+          <NextLink href="/profile">
             <NavDropdown.Item>Profile</NavDropdown.Item>
-          </LinkContainer>
-          <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+          </NextLink>
+          <NavDropdown.Item onClick={() => logoutUser()}>Logout</NavDropdown.Item>
         </NavDropdown>
       </>
     );
   }
 
+  useEffect(() => {
+    if (data?.me) {
+      setUser(data?.me?.user as IUser);
+    } else {
+      setUser(null);
+    }
+  }, [data]);
+
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>ProShop</Navbar.Brand>
-          </LinkContainer>
+      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="py-3">
+        <Container fluid>
+          <NextLink href="/">
+            <Navbar.Brand>ZetaShop</Navbar.Brand>
+          </NextLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <SearchBox />
             <Nav className="ml-auto">
-              <LinkContainer to="/cart">
+              <NextLink href="/cart">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
-              </LinkContainer>
+              </NextLink>
               {authGroupButtons}
-              {!loading && data?.me && data?.me?.user?.role == 'ADMIN' && (
+              {!loading && user && user?.role == 'ADMIN' && (
                 <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
+                  <NextLink href="/admin/product/new">
+                    <NavDropdown.Item>Create Product</NavDropdown.Item>
+                  </NextLink>
+                  <NextLink href="/admin/users">
                     <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
+                  </NextLink>
+                  <NextLink href="/admin/orders">
                     <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
+                  </NextLink>
                 </NavDropdown>
               )}
             </Nav>

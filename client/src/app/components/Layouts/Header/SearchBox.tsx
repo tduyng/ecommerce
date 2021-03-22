@@ -22,9 +22,14 @@ export const SearchBox = () => {
         name="q"
         onChange={e => setKeyword(e.target.value)}
         placeholder="Search Products..."
-        className="mr-sm-2 ml-sm-5"
+        className="mr-sm-2 ml-sm-1 mb-sm-2"
       ></Form.Control>
-      <Button type="submit" variant="outline-success" className="p-2">
+      <Button
+        type="submit"
+        variant="outline-success"
+        className="px-3"
+        style={{ marginTop: '-0.4rem', paddingTop: '0.4rem', paddingBottom: '0.4rem' }}
+      >
         Search
       </Button>
     </Form>
