@@ -1,5 +1,8 @@
 mutation Login($input: LoginUserInput!) {
   login(input: $input) {
+    user {
+      ...RegularUser
+    }
     authToken {
       accessToken
     }

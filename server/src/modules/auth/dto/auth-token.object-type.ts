@@ -1,3 +1,4 @@
+import { User } from '@modules/user/user.schema';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -13,4 +14,7 @@ export class AuthToken {
 export class AuthTokenResponse {
 	@Field(() => AuthToken, { nullable: true })
 	authToken?: AuthToken;
+
+	@Field(() => User, { nullable: true })
+	user?: User;
 }

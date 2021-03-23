@@ -68,7 +68,7 @@ body {
 .card-img-top-50 {
   cursor: pointer;
   width: 100%;
-  height: 16rem;
+  height: 15rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -194,4 +194,12 @@ body {
 
 .social-class i:hover {
   cursor: pointer;
+}
+
+.font-size-small {
+  font-size: 0.9rem;
+}
+
+.text-underline {
+  text-decoration: underline;
 }

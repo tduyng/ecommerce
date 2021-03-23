@@ -25,11 +25,13 @@ export const CardAtm: React.FC<Props> = ({ cardItem }) => {
       <Link href="/" passHref>
         <Card.ImgOverlay className="mt-4">
           <Card.Title>{cardItem.title}</Card.Title>
-          <Card.Text className="w-75">{cardItem.description}</Card.Text>
+          <Card.Text className="w-75 font-size-small">{cardItem.description}</Card.Text>
 
           <Card.Text>
             <Link href="/" passHref>
-              <a className="text-white">{cardItem.textLink}</a>
+              <a className="text-white font-size-small text-underline">
+                {cardItem.textLink}
+              </a>
             </Link>
           </Card.Text>
         </Card.ImgOverlay>

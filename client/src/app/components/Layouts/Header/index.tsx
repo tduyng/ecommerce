@@ -43,7 +43,7 @@ export const Header = () => {
   if (!loading && user) {
     authGroupButtons = (
       <>
-        <NavDropdown title={user?.fullName} id="username">
+        <NavDropdown title={user?.fullName || user?.username} id="username">
           <NextLink href="/profile" passHref>
             <NavDropdown.Item>Profile</NavDropdown.Item>
           </NextLink>
@@ -53,11 +53,25 @@ export const Header = () => {
     );
   }
 
+  const groupAdmin = (
+    <NavDropdown title="Admin" id="adminmenu">
+      <NextLink href="/admin/product/new" passHref>
+        <NavDropdown.Item>Create Product</NavDropdown.Item>
+      </NextLink>
+      <NextLink href="/admin/users" passHref>
+        <NavDropdown.Item>Users</NavDropdown.Item>
+      </NextLink>
+      <NextLink href="/admin/orders" passHref>
+        <NavDropdown.Item>Orders</NavDropdown.Item>
+      </NextLink>
+    </NavDropdown>
+  );
+
   const [width, setWidth] = useState(1000);
 
   useEffect(() => {
     setLoadingHeader(false);
-    if (data?.me) {
+    if (data?.me.user) {
       setUser(data?.me?.user as User);
     } else {
       setUser(null);
@@ -88,19 +102,7 @@ export const Header = () => {
                 </Nav.Link>
               </NextLink>
               {authGroupButtons}
-              {!loading && user && user?.role == 'ADMIN' && (
-                <NavDropdown title="Admin" id="adminmenu">
-                  <NextLink href="/admin/product/new" passHref>
-                    <NavDropdown.Item>Create Product</NavDropdown.Item>
-                  </NextLink>
-                  <NextLink href="/admin/users" passHref>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </NextLink>
-                  <NextLink href="/admin/orders" passHref>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </NextLink>
-                </NavDropdown>
-              )}
+              {!loading && user && user?.role == 'ADMIN' && groupAdmin}
             </Nav>
           </Navbar.Collapse>
         </Container>

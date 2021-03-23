@@ -9,6 +9,7 @@ type AuthToken {
 
 type AuthTokenResponse {
   authToken: AuthToken
+  user: User
 }
 
 type CartItem {
