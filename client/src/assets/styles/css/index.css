@@ -51,19 +51,25 @@ body {
 
 .card-image {
   cursor: pointer;
+  width: 100%;
+  height: 20vw;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .card-img-top {
   cursor: pointer;
+  width: 100%;
+  height: 20vw;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .img-15 {
-  max-height: 15rem;
-  cursor: pointer;
-}
-
-.img-20 {
-  max-height: 20rem;
+  width: 100%;
+  height: 20vw;
+  -o-object-fit: cover;
+     object-fit: cover;
   cursor: pointer;
 }
 

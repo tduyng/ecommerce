@@ -7,6 +7,7 @@ import { HomeHotDeal } from 'src/app/components/Home/HomeHotDeal';
 import { HomeTopCategories } from 'src/app/components/Home/HomeTopCategories';
 import { HomeTopRating } from 'src/app/components/Home/HomeTopRating';
 import { HomeCinematic } from 'src/app/components/Home/HomeCinematic';
+import { HomeCareAtm } from 'src/app/components/Home/HomeCardAtm';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
           <HomeCinematic />
           <HomeTopRating />
           <HomeLatestProduct />
+          <HomeCareAtm />
         </div>
       </div>
     </MainLayout>
