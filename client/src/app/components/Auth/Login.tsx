@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import {
   LoginUserInput,
@@ -9,11 +9,13 @@ import {
 import { Message } from './Message';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export const Login = () => {
   const [login] = useLoginMutation();
   const [error, setError] = useState('');
   const router = useRouter();
+  const [redirect, setRedirect] = useState('');
 
   const [formData, setFormData] = useState<LoginUserInput>({
     usernameOrEmail: '',
@@ -25,34 +27,46 @@ export const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const response = await login({
-      variables: {
-        input: formData,
-      },
-      update: (cache, { data }) => {
-        cache.writeQuery<MeQuery>({
-          query: MeDocument,
-          data: {
-            __typename: 'Query',
-            me: { user: data?.login.user },
-          },
-        });
-        cache.evict({ fieldName: 'products:{}' });
-      },
-    });
-    console.log(response);
-    if (response?.errors) {
-      setError(response?.errors[0].message);
-      return;
-    } else if (response?.data?.login?.user) {
-      toast.success('Logged in successfully');
-      if (typeof router.query.next === 'string') {
-        router.push(router.query.next);
-      } else {
-        router.push('/');
+    try {
+      const response = await login({
+        variables: {
+          input: formData,
+        },
+        update: (cache, { data }) => {
+          cache.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: {
+              __typename: 'Query',
+              me: { user: data?.login.user },
+            },
+          });
+          cache.evict({ fieldName: 'products:{}' });
+        },
+      });
+      console.log(response);
+      if (response?.errors) {
+        setError(response?.errors[0].message);
+        return;
+      } else if (response?.data?.login?.user) {
+        toast.success('Logged in successfully');
+        if (typeof router.query.redirect === 'string') {
+          router.push(router.query.redirect);
+        } else {
+          router.push('/');
+        }
       }
+    } catch (error) {
+      setError(error.message);
     }
   };
+
+  useEffect(() => {
+    if (typeof router.query.redirect === 'string') {
+      setRedirect(router.query.redirect);
+    } else {
+      setRedirect('');
+    }
+  }, [redirect, setRedirect]);
   return (
     <Row className="justify-content-md-center mt-5">
       <Col xs={12} md={6} lg={4}>
@@ -83,6 +97,15 @@ export const Login = () => {
             Login
           </Button>
         </Form>
+
+        <Row className="py-3">
+          <Col>
+            New Customer?{' '}
+            <Link href={redirect ? `/register?redirect=${redirect}` : '/register'}>
+              Register
+            </Link>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );
