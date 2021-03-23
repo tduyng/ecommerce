@@ -21,7 +21,7 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
 
   const largeScreen = (
     <div className="w-100 py-2 d-flex">
-      {/* <>
+      <>
         {!loading &&
           categoryBrands.map((item, index) => {
             <NavDropdown
@@ -37,7 +37,7 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
               })}
             </NavDropdown>;
           })}
-      </> */}
+      </>
       <Dropdown>
         <Dropdown.Toggle variant="dark" id="dropdown-basic">
           Laptop

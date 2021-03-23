@@ -11,12 +11,27 @@
   .navbar-nav > li > .dropdown-menu {
     background-color: #343a40;
   }
-  .dropdown:hover {
-    .dropdown {
-      display: block;
-    }
-    .dropdown-menu {
-      display: block;
-    }
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+    z-index: 100;
+  }
+
+  .card-image {
+    cursor: pointer;
+  }
+  .card-img-top {
+    cursor: pointer;
+  }
+  .img-15 {
+    max-height: 15rem;
+    cursor: pointer;
+  }
+  .img-20 {
+    max-height: 20rem;
+    cursor: pointer;
+  }
+  .cursor-pointer {
+    cursor: pointer;
   }
 }
