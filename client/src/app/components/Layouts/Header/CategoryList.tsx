@@ -3,6 +3,7 @@ import { Dropdown, Nav, NavDropdown } from 'react-bootstrap';
 import { CategoryBrands, useCategoryBrandsQuery } from 'src/generated/graphql';
 import NextLink from 'next/link';
 import Loader from '../../Loader';
+import HoverControlledDropdown from '../../Home/HoverControlledDropdown';
 
 interface Props {
   width: number;
@@ -10,7 +11,6 @@ interface Props {
 
 export const CategoryList: React.FC<Props> = ({ width }) => {
   const { data, loading } = useCategoryBrandsQuery();
-
   const [categoryBrands, setCategoryBrands] = useState<CategoryBrands[]>([]);
 
   useEffect(() => {
@@ -24,22 +24,34 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
       <>
         {!loading &&
           categoryBrands.map((item, index) => {
-            <NavDropdown
-              title={item.category}
-              id="category-menu"
-              key={index}
-              className="text-uppercase"
-            >
-              {item.brands.map(brand => {
-                <NextLink href={`/category/${item.category}?brand=${brand}`} passHref>
-                  <NavDropdown.Item>{brand}</NavDropdown.Item>
-                </NextLink>;
-              })}
-            </NavDropdown>;
+            <HoverControlledDropdown key={index}>
+              <Dropdown.Toggle
+                variant="dark"
+                id={`dropdown-basic-${index}`}
+                className="text-uppercase"
+              >
+                {item.category}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {item?.brands.map((brand, i) => {
+                  <NextLink
+                    href={`/category/${item.category}?brand=${brand}`}
+                    passHref
+                    key={i}
+                  >
+                    <Dropdown.Item>MacBook</Dropdown.Item>
+                  </NextLink>;
+                })}
+              </Dropdown.Menu>
+            </HoverControlledDropdown>;
           })}
       </>
-      <Dropdown>
-        <Dropdown.Toggle variant="dark" id="dropdown-basic">
+      <HoverControlledDropdown key="test-key-1">
+        <Dropdown.Toggle
+          variant="dark"
+          id="dropdown-basic-test-1"
+          className="text-uppercase"
+        >
           Laptop
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -53,9 +65,14 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
             <Dropdown.Item>HP</Dropdown.Item>
           </NextLink>
         </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown>
-        <Dropdown.Toggle variant="dark" id="dropdown-basic">
+      </HoverControlledDropdown>
+
+      <HoverControlledDropdown key="test-key-2">
+        <Dropdown.Toggle
+          variant="dark"
+          id="dropdown-basic-test2"
+          className="text-uppercase"
+        >
           Phone
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -66,7 +83,7 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
             <Dropdown.Item>Apple</Dropdown.Item>
           </NextLink>
         </Dropdown.Menu>
-      </Dropdown>
+      </HoverControlledDropdown>
     </div>
   );
 

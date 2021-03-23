@@ -11,41 +11,35 @@
   .navbar-nav > li > .dropdown-menu {
     background-color: #343a40;
   }
+
   .dropdown:hover .dropdown-menu {
     display: block !important;
     margin-top: 0;
     z-index: 100;
   }
   .dropdown-toggle::after {
-    -webkit-transition: -webkit-transform 0.15s linear;
-    transition: -webkit-transform 0.15s linear;
     transition: transform 0.15s linear;
-    transition: transform 0.15s linear, -webkit-transform 0.15s linear;
   }
+
   .show.dropdown .dropdown-toggle::after {
-    -webkit-transform: translateY(3px);
-            transform: translateY(3px);
+    transform: translateY(3px);
   }
 }
 
 .card-image {
   cursor: pointer;
 }
-
 .card-img-top {
   cursor: pointer;
 }
-
 .img-15 {
   max-height: 15rem;
   cursor: pointer;
 }
-
 .img-20 {
   max-height: 20rem;
   cursor: pointer;
 }
-
 .cursor-pointer {
   cursor: pointer;
 }
