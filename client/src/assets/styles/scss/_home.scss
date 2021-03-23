@@ -25,6 +25,22 @@
   background: #f3f3f3;
 }
 
+$grid-columns: 12 !default;
+$grid-gutter-width: 0.5rem !default;
+
+@media all and (min-width: 768px) {
+  .home-cat-item {
+    div {
+      margin-left: 0.1rem;
+      margin-right: 0.1rem;
+    }
+  }
+  .top-categories {
+    overflow-x: auto;
+    flex-wrap: wrap;
+  }
+}
+
 @media all and (min-width: 992px) {
   .card-img-circle {
     img {

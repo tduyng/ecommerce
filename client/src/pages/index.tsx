@@ -5,6 +5,8 @@ import { HomeCarousel } from 'src/app/components/Home/HomeCarousel';
 import { HomeLatestProduct } from 'src/app/components/Home/HomeLatestProduct';
 import { HomeHotDeal } from 'src/app/components/Home/HomeHotDeal';
 import { HomeTopCategories } from 'src/app/components/Home/HomeTopCategories';
+import { HomeTopRating } from 'src/app/components/Home/HomeTopRating';
+import { HomeCinematic } from 'src/app/components/Home/HomeCinematic';
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       <div className="bg-gray">
         <div className="container-1400">
           <HomeTopCategories />
+          <HomeCinematic />
+          <HomeTopRating />
           <HomeLatestProduct />
         </div>
       </div>

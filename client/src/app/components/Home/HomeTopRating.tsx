@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../Loader';
 import Slider from 'react-slick';
-import { Product, useLatestProductsQuery } from 'src/generated/graphql';
+import { Product, useTopProductsQuery } from 'src/generated/graphql';
 import { ProductComponent } from '../Product/Product';
 import Link from 'next/link';
 
-export const HomeLatestProduct = () => {
-  const { data, loading } = useLatestProductsQuery();
+export const HomeTopRating = () => {
+  const { data, loading } = useTopProductsQuery();
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    setProducts(data?.latestProducts as Product[]);
+    setProducts(data?.topProducts as Product[]);
   }, [data, loading]);
 
   interface ArrowProps {
@@ -78,7 +78,7 @@ export const HomeLatestProduct = () => {
   return (
     <div className="pt-5">
       <div className="d-flex justify-content-between">
-        <h3 className="">New Release</h3>
+        <h3 className="">Top Rating</h3>
         <div>
           <Link href="/" passHref>
             <a>

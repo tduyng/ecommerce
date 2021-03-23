@@ -8,7 +8,7 @@ interface CartPresentProp {
 }
 export const CartPresent: React.FC<CartPresentProp> = ({ product }) => {
   return (
-    <Card className="my-2 rounded" style={{ cursor: 'pointer' }}>
+    <Card className="my-2 rounded mx-auto" style={{ cursor: 'pointer' }}>
       <Link href={`/product/${product._id}`} passHref>
         <Card.Img
           src={product.image}

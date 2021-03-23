@@ -15,6 +15,10 @@ body {
   padding-right: 1rem;
 }
 
+.fas {
+  cursor: pointer;
+}
+
 @media all and (min-width: 992px) {
   .navbar .nav-item .dropdown-menu {
     display: none;
@@ -97,6 +101,18 @@ body {
 
 .bg-gray {
   background: #f3f3f3;
+}
+
+@media all and (min-width: 768px) {
+  .home-cat-item div {
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+  }
+  .top-categories {
+    overflow-x: auto;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
 }
 
 @media all and (min-width: 992px) {

@@ -11,6 +11,8 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-
+.fas {
+  cursor: pointer;
+}
 @import 'navbar';
 @import 'home';
