@@ -5,28 +5,30 @@ import { Rating } from './Rating';
 
 export const ProductComponent = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
+    <Card className="my-3 p-1 rounded" style={{ cursor: 'pointer' }}>
       <Link href={`/product/${product._id}`} passHref>
         <Card.Img
           src={product.image}
           variant="top"
-          style={{ maxHeight: '15rem', cursor: 'pointer' }}
+          style={{ cursor: 'pointer', maxHeight: '10rem', width: '100%' }}
         />
       </Link>
 
-      <Card.Body>
-        <Link href={`/product/${product._id}`}>
+      <Link href={`/product/${product._id}`}>
+        <Card.Body>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>
-        </Link>
 
-        <Card.Text as="div">
-          <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-        </Card.Text>
+          <Card.Text as="div">
+            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+          </Card.Text>
 
-        <Card.Text as="h3">${product.price}</Card.Text>
-      </Card.Body>
+          <Card.Text as="h4" className="pt-2">
+            ${product.price}
+          </Card.Text>
+        </Card.Body>
+      </Link>
     </Card>
   );
 };

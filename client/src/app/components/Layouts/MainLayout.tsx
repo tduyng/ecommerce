@@ -8,8 +8,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="py-3 px-2" style={{ minHeight: '85vh' }}>
-        <Container style={{ maxWidth: '1400px' }}>{children}</Container>
+      <main className="py-3" style={{ minHeight: '85vh' }}>
+        <Container fluid className="px-0">
+          {children}
+        </Container>
       </main>
 
       <Footer />
