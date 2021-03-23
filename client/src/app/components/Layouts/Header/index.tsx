@@ -4,7 +4,7 @@ import { SearchBox } from './SearchBox';
 import { useLogoutMutation, useMeQuery, User } from 'src/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import NextLink from 'next/link';
 import { CategoryList } from './CategoryList';
 
@@ -20,7 +20,17 @@ export const Header = () => {
     if (!logoutFetching) {
       await logout();
       await apolloClient.resetStore();
-      toast.success('Logout successfully!');
+
+      toast.success('Logged out successfully', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       router.push('/');
     }
   };

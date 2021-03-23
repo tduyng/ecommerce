@@ -50,8 +50,8 @@ export const Login = () => {
       } else if (response?.data?.login?.user) {
         toast.success('Logged in successfully', {
           position: 'bottom-left',
-          autoClose: 5000,
-          hideProgressBar: false,
+          autoClose: 1000,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
