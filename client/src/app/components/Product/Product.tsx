@@ -10,8 +10,7 @@ export const ProductComponent = ({ product }) => {
         <Card.Img
           src={product.image}
           variant="top"
-          className="img-15"
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', maxHeight: '10rem', width: '100%' }}
         />
       </Link>
 
@@ -25,7 +24,9 @@ export const ProductComponent = ({ product }) => {
             <Rating value={product.rating} text={`${product.numReviews} reviews`} />
           </Card.Text>
 
-          <Card.Text as="h3">${product.price}</Card.Text>
+          <Card.Text as="h4" className="pt-2">
+            ${product.price}
+          </Card.Text>
         </Card.Body>
       </Link>
     </Card>

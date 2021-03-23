@@ -18,7 +18,7 @@ export default function Home() {
       <div className="bg-gray">
         <div className="container-1400">
           <HomeTopCategories />
-          {/* <HomeLatestProduct /> */}
+          <HomeLatestProduct />
         </div>
       </div>
     </MainLayout>

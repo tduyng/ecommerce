@@ -7,29 +7,53 @@ import { ProductComponent } from '../Product/Product';
 export const HomeLatestProduct = () => {
   const { data, loading } = useLatestProductsQuery();
   const [products, setProducts] = useState<Product[]>([]);
+  console.log(products);
 
   useEffect(() => {
     setProducts(data?.latestProducts as Product[]);
   }, [data, loading]);
 
+  interface ArrowProps {
+    onClick?: () => void;
+  }
+  const NextArrow: React.FC<ArrowProps> = props => {
+    const { onClick } = props;
+    return (
+      <div className={'icon-related next'} onClick={onClick}>
+        <i className="fas fa-arrow-circle-right"></i>
+      </div>
+    );
+  };
+
+  const PrevArrow: React.FC<ArrowProps> = props => {
+    const { onClick } = props;
+    return (
+      <div className={'icon-related prev'} onClick={onClick}>
+        <i className="fas fa-arrow-circle-left"></i>
+      </div>
+    );
+  };
+
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 992,
         settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
@@ -53,14 +77,12 @@ export const HomeLatestProduct = () => {
 
   return (
     <div className="pt-5">
-      <h2 className="text-center">Latest Product</h2>
+      <h2 className="text-center">New Release</h2>
 
-      <div className="d-flex">
-        <Slider {...settings}>
-          {products?.length > 0
-            ? products.map(item => {
-                return <ProductComponent product={item} key={item._id} />;
-              })
+      <div className="">
+        <Slider {...settings} className="">
+          {!loading && products?.length > 0
+            ? products.map(item => <ProductComponent product={item} key={item._id} />)
             : null}
         </Slider>
       </div>
