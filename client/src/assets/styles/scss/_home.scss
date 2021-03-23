@@ -89,3 +89,13 @@ $grid-gutter-width: 0.5rem !default;
     opacity: 1;
   }
 }
+.social-class {
+  font-size: 2rem;
+
+  i {
+    margin-right: 0.5rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

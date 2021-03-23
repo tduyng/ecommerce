@@ -20,7 +20,7 @@ export const CardAtm: React.FC<Props> = ({ cardItem }) => {
       style={{ cursor: 'pointer' }}
     >
       <Link href="/" passHref>
-        <Card.Img src={cardItem.image} alt="Card image" />
+        <Card.Img src={cardItem.image} alt="Card image" className="card-img-top-50" />
       </Link>
       <Link href="/" passHref>
         <Card.ImgOverlay className="mt-4">

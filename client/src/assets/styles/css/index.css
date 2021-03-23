@@ -65,6 +65,14 @@ body {
      object-fit: cover;
 }
 
+.card-img-top-50 {
+  cursor: pointer;
+  width: 100%;
+  height: 16rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .img-15 {
   width: 100%;
   height: 20vw;
@@ -174,4 +182,16 @@ body {
 
 .item-slider .icon-related:hover {
   opacity: 1;
+}
+
+.social-class {
+  font-size: 2rem;
+}
+
+.social-class i {
+  margin-right: 0.5rem;
+}
+
+.social-class i:hover {
+  cursor: pointer;
 }
