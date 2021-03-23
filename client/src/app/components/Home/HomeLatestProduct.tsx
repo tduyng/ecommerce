@@ -7,7 +7,6 @@ import { ProductComponent } from '../Product/Product';
 export const HomeLatestProduct = () => {
   const { data, loading } = useLatestProductsQuery();
   const [products, setProducts] = useState<Product[]>([]);
-  console.log(products);
 
   useEffect(() => {
     setProducts(data?.latestProducts as Product[]);
@@ -37,16 +36,16 @@ export const HomeLatestProduct = () => {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 6,
+    slidesToScroll: 6,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 5,
+          slidesToScroll: 5,
         },
       },
       {
@@ -59,8 +58,8 @@ export const HomeLatestProduct = () => {
       {
         breakpoint: 510,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
       {
