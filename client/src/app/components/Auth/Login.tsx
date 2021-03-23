@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 import {
   LoginUserInput,
   MeDocument,
   MeQuery,
   useLoginMutation,
 } from 'src/generated/graphql';
-import { Message } from './Message';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export const Login = () => {
   const [login] = useLoginMutation();
   const [error, setError] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
   const [redirect, setRedirect] = useState('');
 
@@ -48,7 +48,15 @@ export const Login = () => {
         setError(response?.errors[0].message);
         return;
       } else if (response?.data?.login?.user) {
-        toast.success('Logged in successfully');
+        toast.success('Logged in successfully', {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         if (typeof router.query.redirect === 'string') {
           router.push(router.query.redirect);
         } else {
@@ -56,6 +64,7 @@ export const Login = () => {
         }
       }
     } catch (error) {
+      setShowAlert(true);
       setError(error.message);
     }
   };
@@ -71,7 +80,16 @@ export const Login = () => {
     <Row className="justify-content-md-center mt-5">
       <Col xs={12} md={6} lg={4}>
         <h2>Login</h2>
-        {error && <Message variant="danger">{error}</Message>}
+        {error && (
+          <Alert
+            show={showAlert}
+            variant="danger"
+            onClick={() => setShowAlert(!showAlert)}
+            dismissible
+          >
+            {error}
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Control
@@ -100,9 +118,14 @@ export const Login = () => {
 
         <Row className="py-3">
           <Col>
-            New Customer?{' '}
-            <Link href={redirect ? `/register?redirect=${redirect}` : '/register'}>
-              Register
+            <small>New customer? </small>
+            <Link
+              href={redirect ? `/register?redirect=${redirect}` : '/register'}
+              passHref
+            >
+              <a>
+                <small>Register</small>
+              </a>
             </Link>
           </Col>
         </Row>

@@ -2,7 +2,8 @@ import { ApolloProvider } from '@apollo/client';
 import { AppProps } from 'next/app';
 import React from 'react';
 import { useApollo } from 'src/utils/apollo';
-import { Toaster } from 'react-hot-toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,13 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={apolloClient}>
       <Component {...pageProps} />
-      <Toaster
-        position="bottom-right"
-        reverseOrder={false}
-        toastOptions={{
-          style: { fontSize: '1.6rem' },
-        }}
-      />
+      <ToastContainer />
     </ApolloProvider>
   );
 }
