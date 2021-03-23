@@ -4,7 +4,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 
 export const HomeContact = () => {
   return (
-    <div className=" mt-5">
+    <div className=" mt-4 mb-4">
       <Row>
         <Col xs={12} sm={6} md={4} className="text-center mx-auto pt-4">
           <h3>How Are We Doing?</h3>
@@ -55,7 +55,7 @@ export const HomeContact = () => {
                 <Col xs={8}>
                   <Form.Control type="email" placeholder="Enter email"></Form.Control>
                 </Col>
-                <Col xs={3} className="px-0 mx-0">
+                <Col xs={3} className="px-0 mr-auto">
                   <Button variant="primary" type="submit">
                     Sign Up
                   </Button>
