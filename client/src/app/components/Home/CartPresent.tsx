@@ -6,7 +6,7 @@ import { Product } from 'src/generated/graphql';
 interface CartPresentProp {
   product: Partial<Product>;
 }
-export const HomeCartPresent: React.FC<CartPresentProp> = ({ product }) => {
+export const CartPresent: React.FC<CartPresentProp> = ({ product }) => {
   return (
     <Card className="my-2 rounded" style={{ cursor: 'pointer' }}>
       <Link href={`/product/${product._id}`} passHref>
@@ -20,7 +20,9 @@ export const HomeCartPresent: React.FC<CartPresentProp> = ({ product }) => {
       <Link href={`/product/${product._id}`} passHref>
         <Card.Body className="pb-0 mb-2">
           <Card.Title as="div">
-            <strong>{product.name}</strong>
+            <small>
+              <strong>{product.name}</strong>
+            </small>
           </Card.Title>
 
           <Card.Text as="div">

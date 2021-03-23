@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Product } from 'src/generated/graphql';
-import { HomeCartPresent } from './HomeCartPresent';
+import { CartPresent } from './CartPresent';
 
 export const HomeHotDeal = () => {
   const products: Partial<Product>[] = [
@@ -23,10 +23,10 @@ export const HomeHotDeal = () => {
   return (
     <Row className="">
       <Col sm={12} md={6}>
-        <HomeCartPresent product={products[0]} />
+        <CartPresent product={products[0]} />
       </Col>
       <Col sm={12} md={6}>
-        <HomeCartPresent product={products[1]} />
+        <CartPresent product={products[1]} />
       </Col>
     </Row>
   );

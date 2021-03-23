@@ -1,0 +1,42 @@
+.card-img-circle {
+  background: transparent;
+  border: transparent;
+  cursor: pointer;
+  img {
+    max-height: 6rem;
+    max-width: 6rem;
+  }
+}
+.home-cat-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.top-categories {
+  overflow-x: scroll;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.bg-gray {
+  background: #f3f3f3;
+}
+
+@media all and (min-width: 992px) {
+  .card-img-circle {
+    img {
+      max-height: 8rem;
+      max-width: 8rem;
+    }
+  }
+  .home-cat-item {
+    div {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
+  .top-categories {
+    flex-wrap: wrap;
+  }
+}

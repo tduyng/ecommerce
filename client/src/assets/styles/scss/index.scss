@@ -1,1 +1,16 @@
+html,
+body {
+  background: #fff;
+}
+.container-1400 {
+  max-width: 1400px;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 @import 'navbar';
+@import 'home';

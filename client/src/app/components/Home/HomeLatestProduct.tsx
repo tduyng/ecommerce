@@ -49,21 +49,21 @@ export const HomeLatestProduct = () => {
     ],
   };
 
+  if (loading) return <Loader />;
+
   return (
     <div className="pt-5">
       <h2 className="text-center">Latest Product</h2>
 
-      {loading && <Loader />}
-
-      {!loading && products && (
-        <div className="related">
-          <Slider {...settings}>
-            {products.length > 0
-              ? products.map(item => <ProductComponent product={item} key={item._id} />)
-              : null}
-          </Slider>
-        </div>
-      )}
+      <div className="d-flex">
+        <Slider {...settings}>
+          {products?.length > 0
+            ? products.map(item => {
+                return <ProductComponent product={item} key={item._id} />;
+              })
+            : null}
+        </Slider>
+      </div>
     </div>
   );
 };
