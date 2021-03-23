@@ -28,18 +28,30 @@
 
 .card-image {
   cursor: pointer;
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
 }
 .card-img-top {
   cursor: pointer;
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
+}
+
+.card-img-top-50 {
+  cursor: pointer;
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
 }
 .img-15 {
-  max-height: 15rem;
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
   cursor: pointer;
 }
-.img-20 {
-  max-height: 20rem;
-  cursor: pointer;
-}
+
 .cursor-pointer {
   cursor: pointer;
 }

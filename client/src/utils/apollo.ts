@@ -16,7 +16,10 @@ function createApolloClient() {
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
-          fields: {},
+          fields: {
+            products: { merge: true },
+            me: { merge: true },
+          },
         },
       },
     }),

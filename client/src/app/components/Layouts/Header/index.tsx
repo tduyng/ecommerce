@@ -4,7 +4,7 @@ import { SearchBox } from './SearchBox';
 import { useLogoutMutation, useMeQuery, User } from 'src/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import NextLink from 'next/link';
 import { CategoryList } from './CategoryList';
 
@@ -20,7 +20,17 @@ export const Header = () => {
     if (!logoutFetching) {
       await logout();
       await apolloClient.resetStore();
-      toast.success('Logout successfully!');
+
+      toast.success('Logged out successfully', {
+        position: 'bottom-left',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       router.push('/');
     }
   };
@@ -43,7 +53,7 @@ export const Header = () => {
   if (!loading && user) {
     authGroupButtons = (
       <>
-        <NavDropdown title={user?.fullName} id="username">
+        <NavDropdown title={user?.fullName || user?.username} id="username">
           <NextLink href="/profile" passHref>
             <NavDropdown.Item>Profile</NavDropdown.Item>
           </NextLink>
@@ -53,11 +63,25 @@ export const Header = () => {
     );
   }
 
+  const groupAdmin = (
+    <NavDropdown title="Admin" id="adminmenu">
+      <NextLink href="/admin/product/new" passHref>
+        <NavDropdown.Item>Create Product</NavDropdown.Item>
+      </NextLink>
+      <NextLink href="/admin/users" passHref>
+        <NavDropdown.Item>Users</NavDropdown.Item>
+      </NextLink>
+      <NextLink href="/admin/orders" passHref>
+        <NavDropdown.Item>Orders</NavDropdown.Item>
+      </NextLink>
+    </NavDropdown>
+  );
+
   const [width, setWidth] = useState(1000);
 
   useEffect(() => {
     setLoadingHeader(false);
-    if (data?.me) {
+    if (data?.me.user) {
       setUser(data?.me?.user as User);
     } else {
       setUser(null);
@@ -88,19 +112,7 @@ export const Header = () => {
                 </Nav.Link>
               </NextLink>
               {authGroupButtons}
-              {!loading && user && user?.role == 'ADMIN' && (
-                <NavDropdown title="Admin" id="adminmenu">
-                  <NextLink href="/admin/product/new" passHref>
-                    <NavDropdown.Item>Create Product</NavDropdown.Item>
-                  </NextLink>
-                  <NextLink href="/admin/users" passHref>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </NextLink>
-                  <NextLink href="/admin/orders" passHref>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </NextLink>
-                </NavDropdown>
-              )}
+              {!loading && user && user?.role == 'ADMIN' && groupAdmin}
             </Nav>
           </Navbar.Collapse>
         </Container>

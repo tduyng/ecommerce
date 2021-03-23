@@ -28,9 +28,13 @@ export const HomeCinematic = () => {
   return (
     <div className="container-1400 mt-4">
       <div>
-        <Image src="/images/home/home-cinematic.jpg" rounded></Image>
+        <Image
+          src="/images/home/home-cinematic.jpg"
+          rounded
+          className="img-fluid"
+        ></Image>
       </div>
-      <Row className="justify-content-center mx-auto pl-4 mt-2">
+      <Row className="justify-content-center mx-auto mt-2">
         {products.map((item, index) => (
           <Col xs={12} sm={4} md={4} lg={4} key={index} className="d-block">
             <CartPresent product={item}></CartPresent>

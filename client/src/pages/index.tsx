@@ -7,6 +7,8 @@ import { HomeHotDeal } from 'src/app/components/Home/HomeHotDeal';
 import { HomeTopCategories } from 'src/app/components/Home/HomeTopCategories';
 import { HomeTopRating } from 'src/app/components/Home/HomeTopRating';
 import { HomeCinematic } from 'src/app/components/Home/HomeCinematic';
+import { HomeCareAtm } from 'src/app/components/Home/HomeCardAtm';
+import { HomeContact } from 'src/app/components/Home/HomeContact';
 
 export default function Home() {
   return (
@@ -17,13 +19,17 @@ export default function Home() {
         <HomeHotDeal />
       </div>
 
-      <div className="bg-gray">
+      <div className="bg-gray pb-5">
         <div className="container-1400">
           <HomeTopCategories />
           <HomeCinematic />
           <HomeTopRating />
           <HomeLatestProduct />
+          <HomeCareAtm />
         </div>
+      </div>
+      <div className="container-1400">
+        <HomeContact />
       </div>
     </MainLayout>
   );

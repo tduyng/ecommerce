@@ -22,7 +22,7 @@ export class EmailService {
 		await this.send({
 			template: 'welcome',
 			to: toEmail,
-			subject: '🥳🎉 Welcome to the Bookstore',
+			subject: '🥳🎉 Welcome to the Zeta Shop',
 			context: {
 				siteUrl: this._env.clientUrl,
 			},
@@ -42,7 +42,7 @@ export class EmailService {
 	}
 
 	public async sendEmailConfirmation(toEmail: string, token: string): Promise<void> {
-		const tokenUrl = `${this._env.serverUrl}/api/auth/activate?token=${token}`;
+		const tokenUrl = `${this._env.clientUrl}/activate?token=${token}`;
 		await this.send({
 			template: 'email-confirmation',
 			to: toEmail,

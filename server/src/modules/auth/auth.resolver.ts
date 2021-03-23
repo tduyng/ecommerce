@@ -46,7 +46,7 @@ export class AuthResolver {
 		req.user = user;
 		const authToken: AuthToken = await this.authService.generateAuthToken({ user });
 		req.session.authToken = authToken;
-		return { authToken };
+		return { authToken, user };
 	}
 
 	@Mutation(() => AuthTokenResponse)
@@ -59,7 +59,7 @@ export class AuthResolver {
 		const authToken: AuthToken = await this.authService.generateAuthToken({ user });
 		req.user = user;
 		req.session.authToken = authToken;
-		return { authToken };
+		return { authToken, user };
 	}
 
 	@Mutation(() => Boolean)

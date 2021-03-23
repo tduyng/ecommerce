@@ -25,6 +25,7 @@ export type AuthToken = {
 export type AuthTokenResponse = {
   __typename?: 'AuthTokenResponse';
   authToken?: Maybe<AuthToken>;
+  user?: Maybe<User>;
 };
 
 export type CartItem = {
@@ -592,7 +593,10 @@ export type ActivateMutation = (
   { __typename?: 'Mutation' }
   & { activate: (
     { __typename?: 'AuthTokenResponse' }
-    & { authToken?: Maybe<(
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
+    )>, authToken?: Maybe<(
       { __typename?: 'AuthToken' }
       & Pick<AuthToken, 'accessToken'>
     )> }
@@ -746,7 +750,10 @@ export type LoginMutation = (
   { __typename?: 'Mutation' }
   & { login: (
     { __typename?: 'AuthTokenResponse' }
-    & { authToken?: Maybe<(
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
+    )>, authToken?: Maybe<(
       { __typename?: 'AuthToken' }
       & Pick<AuthToken, 'accessToken'>
     )> }
@@ -1199,12 +1206,15 @@ ${RegularUserFragmentDoc}`;
 export const ActivateDocument = gql`
     mutation Activate($token: String!) {
   activate(token: $token) {
+    user {
+      ...RegularUser
+    }
     authToken {
       accessToken
     }
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 export type ActivateMutationFn = Apollo.MutationFunction<ActivateMutation, ActivateMutationVariables>;
 
 /**
@@ -1572,12 +1582,15 @@ export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPas
 export const LoginDocument = gql`
     mutation Login($input: LoginUserInput!) {
   login(input: $input) {
+    user {
+      ...RegularUser
+    }
     authToken {
       accessToken
     }
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
