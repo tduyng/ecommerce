@@ -692,6 +692,9 @@ export type AutoRefreshMutation = (
     & { authToken?: Maybe<(
       { __typename?: 'AuthToken' }
       & Pick<AuthToken, 'accessToken'>
+    )>, user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
     )> }
   ) }
 );
@@ -1447,9 +1450,12 @@ export const AutoRefreshDocument = gql`
     authToken {
       accessToken
     }
+    user {
+      ...RegularUser
+    }
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 export type AutoRefreshMutationFn = Apollo.MutationFunction<AutoRefreshMutation, AutoRefreshMutationVariables>;
 
 /**

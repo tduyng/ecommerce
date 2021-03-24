@@ -133,7 +133,7 @@ export class AuthResolver {
 		const newAuthToken = req.session?.authToken;
 		newAuthToken.accessToken = newAccessToken;
 		req.session.authToken = newAuthToken;
-		return { authToken: newAuthToken };
+		return { authToken: newAuthToken, user: realUser };
 	}
 
 	@Mutation(() => AuthTokenResponse)

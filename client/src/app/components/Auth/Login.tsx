@@ -9,8 +9,10 @@ import {
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useUserAuth } from 'src/app/hooks/useUserAuth';
 
 export const Login = () => {
+  const [user] = useUserAuth();
   const [login] = useLoginMutation();
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -50,18 +52,14 @@ export const Login = () => {
       } else if (response?.data?.login?.user) {
         toast.success('Logged in successfully', {
           position: 'bottom-left',
-          autoClose: 1000,
-          hideProgressBar: true,
+          autoClose: 3000,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
         });
-        if (typeof router.query.redirect === 'string') {
-          router.push(router.query.redirect);
-        } else {
-          router.push('/');
-        }
+        router.push(redirect);
       }
     } catch (error) {
       setShowAlert(true);
@@ -73,9 +71,11 @@ export const Login = () => {
     if (typeof router.query.redirect === 'string') {
       setRedirect(router.query.redirect);
     } else {
-      setRedirect('');
+      setRedirect('/');
     }
   }, [redirect, setRedirect]);
+
+  if (user) router.push(redirect);
   return (
     <Row className="justify-content-md-center mt-5">
       <Col xs={12} md={6} lg={4}>
