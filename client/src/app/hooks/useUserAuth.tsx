@@ -17,7 +17,7 @@ export const useUserAuth = () => {
     if (data?.me?.user) {
       setUser(data?.me?.user as User);
 
-      // Try access refreshToken if accessToken expired
+      // Try access refreshToken when accessToken expired
     } else {
       const callRefresh = async () => {
         try {
