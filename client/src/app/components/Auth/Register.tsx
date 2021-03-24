@@ -106,22 +106,19 @@ export const Register = () => {
             required
             autoComplete="password"
           ></Form.Control>
-
-          <Button type="submit" variant="primary" className="mt-4">
-            Login
-          </Button>
-        </Form>
-
-        <Row className="py-3">
-          <Col>
+          <div className="mt-3 mr-1 text-right ml-auto">
             <small>Already have an account? </small>
             <Link href={redirect ? `/login?redirect=${redirect}` : '/login'} passHref>
               <a>
                 <small>Login</small>
               </a>
             </Link>
-          </Col>
-        </Row>
+          </div>
+
+          <Button type="submit" variant="primary" className="mt-4 d-block w-100">
+            Register
+          </Button>
+        </Form>
       </Col>
     </Row>
   );

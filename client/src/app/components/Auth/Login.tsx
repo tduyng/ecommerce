@@ -71,7 +71,7 @@ export const Login = () => {
     if (typeof router.query.redirect === 'string') {
       setRedirect(router.query.redirect);
     } else {
-      setRedirect('/');
+      setRedirect('');
     }
   }, [redirect, setRedirect]);
 
@@ -90,7 +90,7 @@ export const Login = () => {
             {error}
           </Alert>
         )}
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="mt-4">
           <Form.Group>
             <Form.Control
               type="text"
@@ -111,24 +111,31 @@ export const Login = () => {
               autoComplete="password"
             ></Form.Control>
           </Form.Group>
-          <Button type="submit" variant="primary">
+          <div className="d-flex justify-content-between px-1">
+            <div>
+              <Link href="/forgot-password" passHref>
+                <a>
+                  <small>Forgot password?</small>
+                </a>
+              </Link>
+            </div>
+            <div>
+              <small>New customer? </small>
+              <Link
+                href={redirect ? `/register?redirect=${redirect}` : '/register'}
+                passHref
+              >
+                <a>
+                  <small> Register</small>
+                </a>
+              </Link>
+            </div>
+          </div>
+
+          <Button type="submit" variant="primary" className="mt-3 d-block w-100">
             Login
           </Button>
         </Form>
-
-        <Row className="py-3">
-          <Col>
-            <small>New customer? </small>
-            <Link
-              href={redirect ? `/register?redirect=${redirect}` : '/register'}
-              passHref
-            >
-              <a>
-                <small>Register</small>
-              </a>
-            </Link>
-          </Col>
-        </Row>
       </Col>
     </Row>
   );
