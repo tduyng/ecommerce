@@ -18,6 +18,7 @@ import { AppService } from './app/app.service';
 				useNewUrlParser: true,
 				useCreateIndex: true,
 				useUnifiedTopology: true,
+				useFindAndModify: false,
 			}),
 		}),
 		// GraphQLWithUploadModule.forRoot(),
