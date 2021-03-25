@@ -96,6 +96,7 @@ type Mutation {
   resetPassword(input: ResetPasswordInput!): UserResponse!
   reviewProduct(input: CreateReviewProductInput!, productId: String!): Product!
   updateCart(input: CartItemInput!): [CartItem!]!
+  updateProfile(input: UpdateProfileInput!): UserResponse!
 }
 
 type Order {
@@ -282,6 +283,13 @@ input UpdateProductInput {
   image: String = "https://i.imgur.com/Vih6Km5.png"
   name: String
   price: Float
+}
+
+input UpdateProfileInput {
+  avatar: String
+  email: String
+  fullName: String
+  username: String
 }
 
 input UpdateUserInput {

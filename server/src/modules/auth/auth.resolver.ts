@@ -1,4 +1,5 @@
 import { SESSION_AUTH_KEY } from '@common/config/session.config';
+import { CurrentUser } from '@common/decorators';
 import { HttpContext, UserFromRequest } from '@common/types';
 import { User } from '@modules/user/user.schema';
 import { UserService } from '@modules/user/user.service';
@@ -12,6 +13,7 @@ import {
 	RegisterUserInput,
 	ResetPasswordInput,
 	TokenResponse,
+	UpdateProfileInput,
 	UserResponse,
 } from './dto';
 import { JwtGuard, JwtRefreshTokenGuard } from './guards';
@@ -57,6 +59,12 @@ export class AuthResolver {
 		const user = await this.authService.validateUser(input);
 		if (!user) throw new BadRequestException('Invalid credentials');
 		const authToken: AuthToken = await this.authService.generateAuthToken({ user });
+
+		await this.authService.resetCurrentHashedRefreshToken(
+			user._id,
+			authToken.refreshToken,
+		);
+
 		req.user = user;
 		req.session.authToken = authToken;
 		return { authToken, user };
@@ -72,6 +80,16 @@ export class AuthResolver {
 		} catch (error) {
 			throw error;
 		}
+	}
+
+	@UseGuards(JwtGuard)
+	@Mutation(() => UserResponse)
+	public async updateProfile(
+		@Args('input') input: UpdateProfileInput,
+		@CurrentUser() user: User,
+	) {
+		const updated = await this.authService.updateProfile(user._id, input);
+		return { user: updated };
 	}
 
 	@Mutation(() => TokenResponse)
@@ -119,21 +137,23 @@ export class AuthResolver {
 	@Mutation(() => AuthTokenResponse)
 	public async autoRefresh(@Context() { req }: HttpContext) {
 		const refreshToken = req.session?.authToken?.refreshToken;
-		if (!refreshToken) return { accessToken: null, refreshToken: null };
+		if (!refreshToken) return null;
 		const accessToken = req.session?.authToken?.accessToken;
 		// if accessToken still valid --> ignore
-		if (accessToken) return req.session?.authToken;
 		// If access token expired and refreshToken still valid --> auto refresh
 		const userJwt = await this.authService.getUserFromRefreshToken(refreshToken);
 		if (!userJwt) return null;
 
 		const realUser = await this.userService.findById(userJwt._id);
 		if (!realUser) return null;
+
+		if (accessToken) return { authToken: req.session?.authToken, user: realUser };
+
 		const newAccessToken = await this.authService.resetAccessToken({ user: realUser });
 		const newAuthToken = req.session?.authToken;
 		newAuthToken.accessToken = newAccessToken;
 		req.session.authToken = newAuthToken;
-		return { authToken: newAuthToken };
+		return { authToken: newAuthToken, user: realUser };
 	}
 
 	@Mutation(() => AuthTokenResponse)

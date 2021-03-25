@@ -3,5 +3,8 @@ mutation AutoRefresh {
     authToken {
       accessToken
     }
+    user {
+      ...RegularUser
+    }
   }
 }

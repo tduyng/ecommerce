@@ -5,7 +5,7 @@ import { Rating } from './Rating';
 
 export const ProductComponent = ({ product }) => {
   return (
-    <Card className="my-3 p-1 rounded" style={{ cursor: 'pointer' }}>
+    <Card className="my-3 p-1 rounded text-left" style={{ cursor: 'pointer' }}>
       <Link href={`/product/${product._id}`} passHref>
         <Card.Img
           src={product.image}

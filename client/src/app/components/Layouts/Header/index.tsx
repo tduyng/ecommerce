@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { SearchBox } from './SearchBox';
-import { useLogoutMutation, useMeQuery, User } from 'src/generated/graphql';
+import { useLogoutMutation } from 'src/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import NextLink from 'next/link';
 import { CategoryList } from './CategoryList';
+import { useUserAuth } from 'src/app/hooks/useUserAuth';
 
 export const Header = () => {
   const apolloClient = useApolloClient();
   const [loadingHeader, setLoadingHeader] = useState(true);
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
-  const { data, loading } = useMeQuery();
+  const [user] = useUserAuth();
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
 
   const logoutUser = async () => {
     if (!logoutFetching) {
@@ -50,7 +50,7 @@ export const Header = () => {
       </NextLink>
     </>
   );
-  if (!loading && user) {
+  if (user) {
     authGroupButtons = (
       <>
         <NavDropdown title={user?.fullName || user?.username} id="username">
@@ -81,19 +81,13 @@ export const Header = () => {
 
   useEffect(() => {
     setLoadingHeader(false);
-    if (data?.me.user) {
-      setUser(data?.me?.user as User);
-    } else {
-      setUser(null);
-    }
-
     function handleResize() {
       setWidth(window.innerWidth);
     }
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
-  }, [data, loading, loadingHeader, setLoadingHeader, width, setWidth]);
+  }, [user, loadingHeader, setLoadingHeader, width, setWidth]);
 
   return (
     <header className="bg-dark px-2">
@@ -112,7 +106,7 @@ export const Header = () => {
                 </Nav.Link>
               </NextLink>
               {authGroupButtons}
-              {!loading && user && user?.role == 'ADMIN' && groupAdmin}
+              {user && user?.role == 'ADMIN' && groupAdmin}
             </Nav>
           </Navbar.Collapse>
         </Container>

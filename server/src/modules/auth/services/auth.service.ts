@@ -124,12 +124,8 @@ export class AuthService {
 	public async updateProfile(_id: string, input: UpdateProfileInput): Promise<User> {
 		const user: User = await this.userModel.findById(_id).lean();
 		if (!user) throw new BadRequestException(`User with id: ${_id} not found`);
-		const username = input.username || user.username;
-		const email = input.email || user.email;
-		const avatar = input.avatar || user.avatar;
-
 		const updated: User = await this.userModel
-			.findById(_id, { username, email, avatar }, { new: true })
+			.findByIdAndUpdate(_id, input, { new: true })
 			.lean();
 		return updated;
 	}
@@ -154,6 +150,7 @@ export class AuthService {
 			.select('+currentHashedRefreshToken')
 			.lean();
 		if (!user) return null;
+		if (!user.currentHashedRefreshToken) return null;
 		const isRefreshTokenMatching = await this.passwordService.verify(
 			user.currentHashedRefreshToken,
 			refreshToken,
