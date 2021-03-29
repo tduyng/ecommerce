@@ -52,12 +52,12 @@ export const HomeContact = () => {
           <div>
             <Form>
               <Form.Row className="align-items-center no-gutters">
-                <Col xs={8}>
+                <Col xs={12} sm={8}>
                   <Form.Control type="email" placeholder="Enter email"></Form.Control>
                 </Col>
-                <Col xs={3} className="px-0 mr-auto">
+                <Col xs={12} sm={4} className="px-0 mr-auto mt-2">
                   <Button variant="primary" type="submit">
-                    Sign Up
+                    SignUp
                   </Button>
                 </Col>
               </Form.Row>

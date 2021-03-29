@@ -203,3 +203,11 @@ body {
 .text-underline {
   text-decoration: underline;
 }
+
+.btn-cart:hover i {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  color: #ee5132;
+}

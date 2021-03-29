@@ -1,42 +1,4 @@
 {
-  "users": [{
-      "username": "admin1",
-      "email": "admin1@yopmail.com",
-      "password": "1234567",
-      "role": "ADMIN"
-    },
-    {
-      "username": "user1",
-      "email": "user1@yopmail.com",
-      "password": "1234567"
-    },
-    {
-      "username": "user2",
-      "email": "user2@yopmail.com",
-      "password": "1234567"
-    },
-    {
-      "username": "client1",
-      "email": "client1@yopmail.com",
-      "password": "1234567"
-    },
-    {
-      "username": "client2",
-      "email": "client2@yopmail.com",
-      "password": "1234567"
-    },
-    {
-      "username": "client3",
-      "email": "client3@yopmail.com",
-      "password": "1234567"
-    },
-    {
-      "username": "client4",
-      "email": "client4@yopmail.com",
-      "password": "1234567"
-    }
-  ],
-
   "products": [{
     "name": "Aputure MC RGBWW Mini LED Light",
     "brand": "Aputure",
@@ -6352,6 +6314,4 @@
     "image": "https://www.adorama.com/images/product/images/product/bmatemminixo.jpg",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n \nModi nostrum aut qui aperiam assumenda nisi non magnam dolores, amet saepe totam pariatur repellendus temporibus, amet suscipit cum sit facilis, quae repudiandae eos saepe debitis sed culpa vero velit consequatur. Nihil esse ullam explicabo iste, earum repellat aperiam dolore necessitatibus corrupti suscipit possimus? Non reiciendis animi modi temporibus, esse reprehenderit rerum quo nobis nihil perferendis eveniet aut sunt corrupti qui, asperiores odit repellendus ex.\n \nFacere minima inventore impedit nobis ad adipisci fuga voluptate, tempora dolores quas similique dolorum repellat cumque ea eos vitae hic, voluptate soluta quia mollitia sapiente aliquam corporis hic beatae nulla nemo? Maxime possimus recusandae ratione laborum, itaque rem sint iusto atque neque vero nulla delectus voluptatibus accusamus natus, qui modi quos facere ipsam dignissimos natus voluptatum quasi non esse?\n \nIpsum quaerat assumenda eum, corporis debitis quis veniam quo soluta eaque, suscipit dolor repellat, at dignissimos obcaecati facilis voluptates hic autem esse id omnis nesciunt? Ipsa mollitia quis modi nobis sunt id reiciendis, nobis modi nemo reiciendis ut, qui assumenda et, sed labore minima voluptates dicta perferendis?\n \nTemporibus perspiciatis nobis voluptas, odit consequuntur delectus nisi doloremque ab ipsa cum recusandae. Aperiam molestias at sequi in voluptas temporibus optio laborum nisi, quaerat et beatae quidem, voluptatum iste enim maxime sapiente totam harum dignissimos, modi exercitationem eligendi veniam libero eveniet eos temporibus consequatur, error ratione in earum accusantium."
   }]
-
-
 }
