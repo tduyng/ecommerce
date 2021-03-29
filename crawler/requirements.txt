@@ -1,0 +1,4 @@
+Scrapy==2.4.1
+scrapy-splash==0.7.2
+lorem-text==1.5
+scrapy-proxies==0.4
