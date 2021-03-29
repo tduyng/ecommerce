@@ -46,14 +46,23 @@ async function uploadData() {
 
 	await UserModel.create(users);
 	const user = await UserModel.findOne({ username: 'admin1' });
-	const customProducts = products.map((product) => {
-		return {
-			...product,
-			user,
-			countInStock: 10,
-			price: parseInt(product.price),
-		};
-	});
+
+	const customProducts = [];
+
+	const names = [];
+	for (const product of products) {
+		if (!names.includes(product.name)) {
+			names.push(product.name);
+			customProducts.push({
+				...product,
+				user,
+				countInStock: 10,
+				price: parseInt(product.price),
+				name: product.name || 'Missing',
+			});
+		}
+	}
+
 	await ProductModel.create(customProducts);
 
 	Logger.log('Data created');
