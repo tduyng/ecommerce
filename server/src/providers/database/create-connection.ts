@@ -10,6 +10,7 @@ export const createConnection = async (): Promise<Connection> => {
 		useUnifiedTopology: true,
 		useFindAndModify: false,
 		useNewUrlParser: true,
+		autoIndex: false,
 	});
 
 	Logger.log('Database connected');

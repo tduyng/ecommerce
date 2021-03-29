@@ -40,7 +40,7 @@
     "graphql-tools": "^7.0.4",
     "hasha": "^5.2.2",
     "helmet": "^4.4.1",
-    "mongoose": "^5.12.0",
+    "mongoose": "^5.12.2",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
