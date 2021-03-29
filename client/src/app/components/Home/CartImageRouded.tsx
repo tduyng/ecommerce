@@ -9,7 +9,7 @@ interface Props {
 export const CartImageRounded: React.FC<Props> = ({ category, image }) => {
   const slug = '/category/' + slugify(category, { lower: true });
   return (
-    <Card className="card-img-circle text-center mx-auto">
+    <Card className="card-img-circle text-center mx-auto mt-5">
       <Link href={slug} passHref>
         <Card.Img src={image} className="rounded-circle mx-auto" />
       </Link>

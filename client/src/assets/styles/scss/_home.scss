@@ -105,3 +105,12 @@ $grid-gutter-width: 0.5rem !default;
 .text-underline {
   text-decoration: underline;
 }
+.btn-cart {
+  &:hover {
+    i {
+      transition: 0.5s;
+      transform: scale(1.2);
+      color: #ee5132;
+    }
+  }
+}

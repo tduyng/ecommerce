@@ -7,7 +7,7 @@ interface RatingProps {
 }
 export const Rating: React.FC<RatingProps> = ({ value, text, color = '#f8e825' }) => {
   return (
-    <div className="rating">
+    <div className="rating" style={{ fontSize: '0.8rem' }}>
       <span>
         <i
           style={{ color }}

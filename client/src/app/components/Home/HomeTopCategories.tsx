@@ -56,7 +56,7 @@ export const HomeTopCategories = () => {
     <div className=" pt-4 mt-4 text-center">
       <h2 className="text-center">Top Categories</h2>
 
-      <div className="top-categories pt-5 mx-auto">
+      <div className="top-categories mx-auto">
         {categories.map((item, index) => {
           return (
             <div key={index} className="home-cat-item mx-auto">
