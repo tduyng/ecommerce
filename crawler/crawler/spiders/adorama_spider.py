@@ -55,7 +55,7 @@ class AdoramaSpider(scrapy.Spider):
 
         for product in products:
             product_detail = product.xpath('//div[@class="item-details"]')
-            product_name = product_detail.xpath("/h2/text()").get()
+            product_name = product_detail.xpath("/h2/text()").get() or "Unknown"
 
             item.brand = product_name.split(" ")[0]
             item.category = elements_url[-1].lower()

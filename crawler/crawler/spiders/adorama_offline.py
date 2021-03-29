@@ -46,7 +46,12 @@ class AdoramaOfflineSpider(scrapy.Spider):
 
         for product in products:
             product_detail = product.xpath('//div[@class="item-details"]')
-            product_name = product_detail.xpath("//h2/a/text()").get().strip()
+            product_name = (
+                product_detail.xpath("//h2/a/text()").get().strip()
+                or product_detail.xpath("//h2/a/text()[2]").get().strip()
+                or "Unknown"
+            )
+
             img_url = product.xpath('//div[@class="item-img"]//img/@src').get() or "/notfound"
 
             item["brand"] = "Unknown" if len(product_name) <= 0 else product_name.split(" ")[0]
