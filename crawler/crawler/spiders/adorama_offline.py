@@ -28,6 +28,9 @@ class AdoramaOfflineSpider(scrapy.Spider):
     for file in glob.glob("*.html"):
         start_urls.append("file://" + rootDir + "/crawler/html/" + file)
 
+    # # Single test
+    # start_urls = ["file://" + rootDir + "/crawler/html/laptop-apple.html"]
+
     # Return root dir
     os.chdir(rootDir)
 
@@ -45,11 +48,11 @@ class AdoramaOfflineSpider(scrapy.Spider):
             self.logger.info("--------------------html empty")
 
         for product in products:
-            product_detail = product.xpath('//div[@class="item-details"]')
+
             product_name = (
-                product_detail.xpath("//h2/a/text()").get().strip()
-                or product_detail.xpath("//h2/a/text()[2]").get().strip()
-                or "Unknown"
+                product.xpath('./div[@class="item-details"]/h2/a/text()').get().strip()
+                or product.xpath('./div[@class="item-details"]/h2/a/text()[2]').get().strip()
+                or "Missing"
             )
 
             img_url = product.xpath('//div[@class="item-img"]//img/@src').get() or "/notfound"
@@ -82,3 +85,4 @@ class AdoramaOfflineSpider(scrapy.Spider):
                 json.dump(data, file, ensure_ascii=False)
 
             yield item
+            pass
