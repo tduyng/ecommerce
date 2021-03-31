@@ -2,6 +2,21 @@
 
 E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - MongoDB
 
+>(Project is working in progress...)
+## Technologies
+
+- Backend
+  - NodeJS (via NestJS)
+  - GraphQL (via @nestjs/graphql)
+  - Testing: Unit tests, e2e tests with jest
+- Frontend
+  - ReactJS (via NextJS)
+  - Apollo GraphQL
+  - Testing: jest & react-library testing
+- Database
+  - MongoDB
+  - Data provide: scrapping from other website with scrapy (python)
+  
 
 ## Features
 - Auth: Jwt, refresh-token, verification email
@@ -22,14 +37,4 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 - Testing: Unit tests, end to end tests
 - CI-CD: Github actions
 
-## Technologies
-
-- Backend
-  - NodeJS (via NestJS)
-  - GraphQL (via @nestjs/graphql)
-- Frontend
-  - ReactJS (via NextJS)
-  - Apollo GraphQL
-- Database
-  - MongoDB
 
