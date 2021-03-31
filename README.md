@@ -6,16 +6,21 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 ## Technologies
 
 - Backend
+  - TypeScript
   - NodeJS (via NestJS)
   - GraphQL (via @nestjs/graphql)
+  - Upload image with firebase bucket
+  - Email verification with sendgrid
   - Testing: Unit tests, e2e tests with jest
 - Frontend
+  - TypeScript
   - ReactJS (via NextJS)
   - Apollo GraphQL
+  - React Bootstrap + SCSS for styling
   - Testing: jest & react-library testing
 - Database
   - MongoDB
-  - Data provide: scrapping from other website with scrapy (python)
+  - Data provides: scrapping from other website with scrapy (python)
   
 
 ## Features
