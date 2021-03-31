@@ -33,4 +33,3 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 - Database
   - MongoDB
 
-All features inspired by [ProShop of Awesome Brad Traversy](https://github.com/bradtraversy/proshop_mern)
