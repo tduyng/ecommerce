@@ -137,15 +137,15 @@ export class AuthResolver {
 	@Mutation(() => AuthTokenResponse)
 	public async autoRefresh(@Context() { req }: HttpContext) {
 		const refreshToken = req.session?.authToken?.refreshToken;
-		if (!refreshToken) return null;
+		if (!refreshToken) return { user: null, authToken: null };
 		const accessToken = req.session?.authToken?.accessToken;
 		// if accessToken still valid --> ignore
 		// If access token expired and refreshToken still valid --> auto refresh
 		const userJwt = await this.authService.getUserFromRefreshToken(refreshToken);
-		if (!userJwt) return null;
+		if (!userJwt) return { user: null, authToken: null };
 
 		const realUser = await this.userService.findById(userJwt._id);
-		if (!realUser) return null;
+		if (!realUser) return { user: null, authToken: null };
 
 		if (accessToken) return { authToken: req.session?.authToken, user: realUser };
 
