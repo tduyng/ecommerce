@@ -77,6 +77,15 @@ $grid-gutter-width: 0.5rem !default;
   .slick-list {
     margin-left: -0.6vw;
   }
+  .icon-related {
+    position: absolute;
+    top: 40%;
+    font-size: x-large;
+    color: black;
+    padding: 0.5vw;
+    opacity: 0.5;
+    cursor: pointer;
+  }
 
   .next {
     right: 0;

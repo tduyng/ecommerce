@@ -171,6 +171,16 @@ body {
   margin-left: -0.6vw;
 }
 
+.item-slider .icon-related {
+  position: absolute;
+  top: 40%;
+  font-size: x-large;
+  color: black;
+  padding: 0.5vw;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
 .item-slider .next {
   right: 0;
 }

@@ -64,7 +64,7 @@ export const Header = () => {
   }
 
   const groupAdmin = (
-    <NavDropdown title="Admin" id="adminmenu">
+    <NavDropdown title="Dashboard" id="adminmenu">
       <NextLink href="/admin/product/new" passHref>
         <NavDropdown.Item>Create Product</NavDropdown.Item>
       </NextLink>
@@ -105,8 +105,8 @@ export const Header = () => {
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
               </NextLink>
-              {authGroupButtons}
               {user && user?.role == 'ADMIN' && groupAdmin}
+              {authGroupButtons}
             </Nav>
           </Navbar.Collapse>
         </Container>
