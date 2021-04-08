@@ -38,6 +38,8 @@ interface IFormPassword {
 export const Profile = () => {
   const [alert, setAlert] = useState({ variant: 'danger', message: '' });
   const [showAlert, setShowAlert] = useState(false);
+  const [errorPassword, setErrorPassword] = useState('');
+  const [showAlertPassword, setShowAlertPassword] = useState(false);
   const [user] = useUserAuth();
   const [loading, setLoading] = useState(true);
   const [updateProfile] = useUpdateProfileMutation();
@@ -90,7 +92,6 @@ export const Profile = () => {
           progress: undefined,
         });
       }
-      console.log(response);
     } catch (error) {
       setAlert({ variant: 'error', message: error.message });
       setShowAlert(true);
@@ -100,14 +101,10 @@ export const Profile = () => {
   const submitChangePassword = async (e: any) => {
     e.preventDefault();
 
-    console.log('call change password');
     const { oldPassword, newPassword, confirmPassword } = formPassword;
     if (newPassword !== confirmPassword) {
-      setAlert({
-        variant: 'error',
-        message: 'New password and password confirmation must match',
-      });
-      setShowAlert(true);
+      setErrorPassword('New password and password confirmation must match');
+      setShowAlertPassword(true);
       return;
     }
     try {
@@ -124,13 +121,13 @@ export const Profile = () => {
           // cache.evict({ fieldName: 'products:{}' });
         },
       });
-      console.log('response change password', response);
       if (response?.data?.changePassword?.user) {
-        toast.info(
+        router.push('/');
+        toast.success(
           'Update profile successfully, please re-login with your new password!',
           {
             position: 'bottom-left',
-            autoClose: 5000,
+            autoClose: 10000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -138,17 +135,10 @@ export const Profile = () => {
             progress: undefined,
           },
         );
-        router.reload();
-      } else {
-        setAlert({
-          variant: 'error',
-          message: response?.data?.changePassword?.error?.message,
-        });
-        setShowAlert(true);
       }
     } catch (error) {
-      setAlert({ variant: 'error', message: error.message });
-      setShowAlert(true);
+      setErrorPassword(error.message);
+      setShowAlertPassword(true);
     }
   };
 
@@ -191,20 +181,24 @@ export const Profile = () => {
             <small>{alert.message}</small>
           </Alert>
         )}
-        <Modal show={showPasswordForm} onHide={() => setShowPasswordFrom(false)}>
+        <Modal
+          show={showPasswordForm}
+          onHide={() => setShowPasswordFrom(false)}
+          style={{ marginTop: '6.5rem' }}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Change password</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={submitChangePassword}>
-              {alert.message && (
+            <Form>
+              {showAlertPassword && (
                 <Alert
-                  show={showAlert}
-                  variant={alert.variant}
-                  onClick={() => setShowAlert(!showAlert)}
+                  show={showAlertPassword}
+                  variant="danger"
+                  onClick={() => setShowAlertPassword(!showAlertPassword)}
                   dismissible
                 >
-                  {alert.message}
+                  {errorPassword}
                 </Alert>
               )}
               <Form.Group>
