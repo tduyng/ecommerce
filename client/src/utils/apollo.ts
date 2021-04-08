@@ -17,9 +17,16 @@ function createApolloClient() {
       typePolicies: {
         Query: {
           fields: {
-            products: { merge: true },
             me: { merge: true },
+            // products: { merge: true },
+            // allCategories: { merge: true },
+            // categoryBrand: { merge: true },
+            // brandsByCategory: { merge: true },
+            // myOrders: { merge: true },
           },
+        },
+        User: {
+          keyFields: ['_id', 'username', 'email', 'avatar'],
         },
       },
     }),

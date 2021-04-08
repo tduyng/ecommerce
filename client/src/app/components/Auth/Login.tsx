@@ -17,7 +17,6 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
-  const [redirect, setRedirect] = useState('');
 
   const [formData, setFormData] = useState<LoginUserInput>({
     usernameOrEmail: '',
@@ -42,7 +41,7 @@ export const Login = () => {
               me: { user: data?.login.user },
             },
           });
-          cache.evict({ fieldName: 'products:{}' });
+          // cache.evict({ fieldName: 'products:{}' });
         },
       });
       console.log(response);
@@ -59,7 +58,11 @@ export const Login = () => {
           draggable: true,
           progress: undefined,
         });
-        router.push(redirect);
+        if (typeof router.query.redirect === 'string') {
+          router.push(router.query.redirect);
+        } else {
+          router.push('/');
+        }
       }
     } catch (error) {
       setShowAlert(true);
@@ -67,15 +70,22 @@ export const Login = () => {
     }
   };
 
-  useEffect(() => {
+  if (user) {
     if (typeof router.query.redirect === 'string') {
-      setRedirect(router.query.redirect);
+      router.push(router.query.redirect);
     } else {
-      setRedirect('');
+      router.push('/');
     }
-  }, [redirect, setRedirect]);
+  }
 
-  if (user) router.push(redirect);
+  // useEffect(() => {
+  //   if (typeof router.query.redirect === 'string') {
+  //     setRedirect(router.query.redirect);
+  //   } else {
+  //     setRedirect('');
+  //   }
+  // }, [redirect, setRedirect]);
+
   return (
     <Row className="justify-content-md-center mt-5">
       <Col xs={12} md={6} lg={4}>
@@ -122,7 +132,11 @@ export const Login = () => {
             <div>
               <small>New customer? </small>
               <Link
-                href={redirect ? `/register?redirect=${redirect}` : '/register'}
+                href={
+                  typeof router.query.redirect === 'string'
+                    ? `/register?redirect=${router.query.redirect}`
+                    : '/register'
+                }
                 passHref
               >
                 <a>

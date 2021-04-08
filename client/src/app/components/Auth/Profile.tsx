@@ -186,6 +186,7 @@ export const Profile = () => {
                   placeholder="Current password"
                   id="old_password"
                   onChange={handleChangePassword('oldPassword')}
+                  autoComplete="oldPassword"
                   value={formPassword.oldPassword}
                 ></Form.Control>
               </Form.Group>
