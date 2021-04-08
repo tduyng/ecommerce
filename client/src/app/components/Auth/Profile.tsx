@@ -153,7 +153,7 @@ export const Profile = () => {
   useEffect(() => {
     setLoading(false);
     refreshForm();
-  }, []);
+  }, [loading]);
 
   if (loading) return <Loader />;
   if (!user) router.push('/login?redirect=profile');
