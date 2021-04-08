@@ -30,7 +30,7 @@ export class EmailService {
 	}
 
 	public async sendResetPassword(toEmail: string, token: string): Promise<void> {
-		const tokenUrl = `${this._env.serverUrl}/api/auth/reset-password?token=${token}`;
+		const tokenUrl = `${this._env.clientUrl}/reset-password?token=${token}`;
 		await this.send({
 			template: 'reset-password',
 			to: toEmail,
