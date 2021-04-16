@@ -5,11 +5,13 @@ import isEqual from 'lodash/isEqual';
 
 let apolloClient;
 
-function createApolloClient() {
+export function createApolloClient() {
+  const isProd = process.env.NODE_ENV == 'production';
+  const uri = isProd ? process.env.SITE_URL : 'http://localhost:5025/graphql';
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: 'http://localhost:5025/graphql', // Server URL (must be absolute)
+      uri,
       credentials: 'include',
       // Additional fetch() options like `credentials` or `headers`
     }),

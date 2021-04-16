@@ -19,6 +19,25 @@ body {
   cursor: pointer;
 }
 
+.text-red {
+  color: red;
+}
+
+.no-border {
+  border: none;
+}
+
+.btn-delete {
+  color: red;
+  background: transparent;
+  border: none;
+}
+
+.btn-delete:hover {
+  opacity: 0.5;
+  background: white;
+}
+
 @media all and (min-width: 992px) {
   .navbar .nav-item .dropdown-menu {
     display: none;

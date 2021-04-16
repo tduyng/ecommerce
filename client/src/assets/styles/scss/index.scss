@@ -14,5 +14,20 @@ body {
 .fas {
   cursor: pointer;
 }
+.text-red {
+  color: red;
+}
+.no-border {
+  border: none;
+}
+.btn-delete {
+  color: red;
+  background: transparent;
+  border: none;
+  &:hover {
+    opacity: 0.5;
+    background: white;
+  }
+}
 @import 'navbar';
 @import 'home';

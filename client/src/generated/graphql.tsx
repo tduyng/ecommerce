@@ -1024,6 +1024,36 @@ export type OrderByIdQuery = (
   ) }
 );
 
+export type ProductByIdQueryVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type ProductByIdQuery = (
+  { __typename?: 'Query' }
+  & { productById: (
+    { __typename?: 'Product' }
+    & RegularProductFragment
+  ) }
+);
+
+export type ProductsQueryVariables = Exact<{
+  pagination?: Maybe<PaginationInput>;
+}>;
+
+
+export type ProductsQuery = (
+  { __typename?: 'Query' }
+  & { products: (
+    { __typename?: 'PaginatedProduct' }
+    & Pick<PaginatedProduct, 'count'>
+    & { products: Array<(
+      { __typename?: 'Product' }
+      & RegularProductFragment
+    )> }
+  ) }
+);
+
 export type ProductsByBrandQueryVariables = Exact<{
   brand: Scalars['String'];
   pagination?: Maybe<PaginationInput>;
@@ -1051,36 +1081,6 @@ export type ProductsByCategoryQueryVariables = Exact<{
 export type ProductsByCategoryQuery = (
   { __typename?: 'Query' }
   & { productsByCategory: (
-    { __typename?: 'PaginatedProduct' }
-    & Pick<PaginatedProduct, 'count'>
-    & { products: Array<(
-      { __typename?: 'Product' }
-      & RegularProductFragment
-    )> }
-  ) }
-);
-
-export type ProductByIdQueryVariables = Exact<{
-  _id: Scalars['String'];
-}>;
-
-
-export type ProductByIdQuery = (
-  { __typename?: 'Query' }
-  & { productById: (
-    { __typename?: 'Product' }
-    & RegularProductFragment
-  ) }
-);
-
-export type ProductsQueryVariables = Exact<{
-  pagination?: Maybe<PaginationInput>;
-}>;
-
-
-export type ProductsQuery = (
-  { __typename?: 'Query' }
-  & { products: (
     { __typename?: 'PaginatedProduct' }
     & Pick<PaginatedProduct, 'count'>
     & { products: Array<(
@@ -2281,6 +2281,79 @@ export function useOrderByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type OrderByIdQueryHookResult = ReturnType<typeof useOrderByIdQuery>;
 export type OrderByIdLazyQueryHookResult = ReturnType<typeof useOrderByIdLazyQuery>;
 export type OrderByIdQueryResult = Apollo.QueryResult<OrderByIdQuery, OrderByIdQueryVariables>;
+export const ProductByIdDocument = gql`
+    query ProductById($_id: String!) {
+  productById(_id: $_id) {
+    ...RegularProduct
+  }
+}
+    ${RegularProductFragmentDoc}`;
+
+/**
+ * __useProductByIdQuery__
+ *
+ * To run a query within a React component, call `useProductByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductByIdQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useProductByIdQuery(baseOptions: Apollo.QueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
+      }
+export function useProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
+        }
+export type ProductByIdQueryHookResult = ReturnType<typeof useProductByIdQuery>;
+export type ProductByIdLazyQueryHookResult = ReturnType<typeof useProductByIdLazyQuery>;
+export type ProductByIdQueryResult = Apollo.QueryResult<ProductByIdQuery, ProductByIdQueryVariables>;
+export const ProductsDocument = gql`
+    query Products($pagination: PaginationInput) {
+  products(pagination: $pagination) {
+    count
+    products {
+      ...RegularProduct
+    }
+  }
+}
+    ${RegularProductFragmentDoc}`;
+
+/**
+ * __useProductsQuery__
+ *
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsQuery({
+ *   variables: {
+ *      pagination: // value for 'pagination'
+ *   },
+ * });
+ */
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+      }
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
 export const ProductsByBrandDocument = gql`
     query ProductsByBrand($brand: String!, $pagination: PaginationInput) {
   productsByBrand(brand: $brand, pagination: $pagination) {
@@ -2359,79 +2432,6 @@ export function useProductsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type ProductsByCategoryQueryHookResult = ReturnType<typeof useProductsByCategoryQuery>;
 export type ProductsByCategoryLazyQueryHookResult = ReturnType<typeof useProductsByCategoryLazyQuery>;
 export type ProductsByCategoryQueryResult = Apollo.QueryResult<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>;
-export const ProductByIdDocument = gql`
-    query ProductById($_id: String!) {
-  productById(_id: $_id) {
-    ...RegularProduct
-  }
-}
-    ${RegularProductFragmentDoc}`;
-
-/**
- * __useProductByIdQuery__
- *
- * To run a query within a React component, call `useProductByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductByIdQuery({
- *   variables: {
- *      _id: // value for '_id'
- *   },
- * });
- */
-export function useProductByIdQuery(baseOptions: Apollo.QueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
-      }
-export function useProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
-        }
-export type ProductByIdQueryHookResult = ReturnType<typeof useProductByIdQuery>;
-export type ProductByIdLazyQueryHookResult = ReturnType<typeof useProductByIdLazyQuery>;
-export type ProductByIdQueryResult = Apollo.QueryResult<ProductByIdQuery, ProductByIdQueryVariables>;
-export const ProductsDocument = gql`
-    query Products($pagination: PaginationInput) {
-  products(pagination: $pagination) {
-    count
-    products {
-      ...RegularProduct
-    }
-  }
-}
-    ${RegularProductFragmentDoc}`;
-
-/**
- * __useProductsQuery__
- *
- * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductsQuery({
- *   variables: {
- *      pagination: // value for 'pagination'
- *   },
- * });
- */
-export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
-      }
-export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
-        }
-export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
-export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
-export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
 export const QueryProductsDocument = gql`
     query QueryProducts($q: String!, $pagination: PaginationInput) {
   queryProducts(q: $q, pagination: $pagination) {

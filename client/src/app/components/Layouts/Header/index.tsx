@@ -71,6 +71,9 @@ export const Header = () => {
       <NextLink href="/admin/users" passHref>
         <NavDropdown.Item>Users</NavDropdown.Item>
       </NextLink>
+      <NextLink href="/admin/product-list" passHref>
+        <NavDropdown.Item>Product List</NavDropdown.Item>
+      </NextLink>
       <NextLink href="/admin/orders" passHref>
         <NavDropdown.Item>Orders</NavDropdown.Item>
       </NextLink>
