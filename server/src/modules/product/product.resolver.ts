@@ -37,6 +37,19 @@ export class ProductResolver {
 	}
 
 	@Query(() => PaginatedProduct)
+	public async productsOfBrandByCategory(
+		@Args('category') category: string,
+		@Args('brand') brand: string,
+		@Args('pagination', { nullable: true }) pagination?: PaginationInput,
+	) {
+		return await this.productService.findProductsOfBrandByCategory(
+			category,
+			brand,
+			pagination,
+		);
+	}
+
+	@Query(() => PaginatedProduct)
 	public async queryProducts(
 		@Args('q') q: string,
 		@Args('pagination', { nullable: true }) pagination?: PaginationInput,

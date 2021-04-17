@@ -227,6 +227,7 @@ type Query {
   products(pagination: PaginationInput): PaginatedProduct!
   productsByBrand(brand: String!, pagination: PaginationInput): PaginatedProduct!
   productsByCategory(category: String!, pagination: PaginationInput): PaginatedProduct!
+  productsOfBrandByCategory(brand: String!, category: String!, pagination: PaginationInput): PaginatedProduct!
   queryProducts(pagination: PaginationInput, q: String!): PaginatedProduct!
   topProducts(limit: Int): [Product!]!
 }
