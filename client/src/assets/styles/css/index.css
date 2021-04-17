@@ -240,3 +240,20 @@ body {
           transform: scale(1.2);
   color: #ee5132;
 }
+
+.sidebar-products {
+  margin-left: 0;
+  padding-left: 0;
+  max-width: 6rem;
+}
+
+.sidebar-products li {
+  width: 5rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.sidebar-products li:hover {
+  background: #f2f2f2;
+  border-radius: 2px;
+}

@@ -21,7 +21,7 @@ export const ProductComponent = ({ product }) => {
   };
   return (
     <Card
-      className="my-3 p-1 rounded text-left"
+      className="my-1 p-1 rounded text-left"
       style={{ cursor: 'pointer', minHeight: '21rem' }}
     >
       <Link href={`/product/${product._id}`} passHref>

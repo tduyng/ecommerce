@@ -2,11 +2,14 @@ import { gql } from '@apollo/client';
 import { Product } from 'src/generated/graphql';
 import { createApolloClient } from './apollo';
 
-export const getAllProducts = async (query: any): Promise<Product[]> => {
+export const getAllProducts = async (
+  query: any,
+  limitDefault = 25,
+): Promise<Product[]> => {
   const apolloClient = createApolloClient();
   const { category, brand } = query;
   let filteredProducts: Product[] = [];
-  const limit = Number(query.limit as string) || 1000;
+  const limit = Number(query.limit as string) || limitDefault;
 
   if (category && !brand) {
     const queryFilter = gql`
