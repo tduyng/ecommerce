@@ -8,17 +8,12 @@ import Loader from 'src/app/components/Loader';
 
 export default function ActivatePage() {
   const router = useRouter();
-  const [token, setToken] = useState('');
   const [activate] = useActivateMutation();
 
   useEffect(() => {
     if (!router.isReady) return;
-    if (typeof router.query.token === 'string') {
-      setToken(router.query.token);
-    } else {
-      setToken('');
-    }
     const activateAccount = async () => {
+      const token = router.query.token as string;
       try {
         const response = await activate({ variables: { token } });
         if (response?.data?.activate?.user) {
@@ -34,7 +29,7 @@ export default function ActivatePage() {
         } else {
           toast.error('Token not valid!', {
             position: 'bottom-left',
-            autoClose: 5000,
+            autoClose: 10000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -45,7 +40,7 @@ export default function ActivatePage() {
       } catch (error) {
         toast.error(error.message, {
           position: 'bottom-left',
-          autoClose: 5000,
+          autoClose: 10000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -57,7 +52,7 @@ export default function ActivatePage() {
       }
     };
     activateAccount();
-  }, [token, setToken, router.isReady]);
+  }, [router.isReady]);
 
   if (!router.isReady) return <Loader />;
 

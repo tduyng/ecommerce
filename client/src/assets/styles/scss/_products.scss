@@ -1,0 +1,14 @@
+.sidebar-products {
+  margin-left: 0;
+  padding-left: 0;
+  max-width: 6rem;
+  li {
+    width: 5rem;
+    list-style: none;
+    cursor: pointer;
+    &:hover {
+      background: rgb(242, 242, 242);
+      border-radius: 2px;
+    }
+  }
+}

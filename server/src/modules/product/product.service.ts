@@ -33,19 +33,24 @@ export class ProductService {
 		return { count, products };
 	}
 
-	public async findManyByBrand(
+	public async findProductsOfBrandByCategory(
+		category: string,
 		brand: string,
 		pagination?: PaginationInput,
-	): Promise<PaginatedProduct> {
+	) {
 		const limit = pagination?.limit || 25;
 		const page = pagination?.page || 1;
 		const products: Product[] = await this.productModel
-			.find({ brand: new RegExp(brand, 'i') })
+			.find({
+				category: new RegExp('^' + category + '$', 'i'),
+				brand: new RegExp('^' + brand + '$', 'i'),
+			})
 			.skip((page - 1) * limit)
 			.limit(limit)
 			.lean();
 		const count = await this.productModel.countDocuments({
-			brand: new RegExp(brand, 'i'),
+			category: new RegExp('^' + category + '$', 'i'),
+			brand: new RegExp('^' + brand + '$', 'i'),
 		});
 		return { count, products };
 	}
@@ -57,12 +62,29 @@ export class ProductService {
 		const limit = pagination?.limit || 25;
 		const page = pagination?.page || 1;
 		const products: Product[] = await this.productModel
-			.find({ category: new RegExp(category, 'i') })
+			.find({ category: new RegExp('^' + category + '$', 'i') })
 			.skip((page - 1) * limit)
 			.limit(limit)
 			.lean();
 		const count = await this.productModel.countDocuments({
-			category: new RegExp(category, 'i'),
+			category: new RegExp('^' + category + '$', 'i'),
+		});
+		return { count, products };
+	}
+
+	public async findManyByBrand(
+		brand: string,
+		pagination?: PaginationInput,
+	): Promise<PaginatedProduct> {
+		const limit = pagination?.limit || 25;
+		const page = pagination?.page || 1;
+		const products: Product[] = await this.productModel
+			.find({ brand: new RegExp('^' + brand + '$', 'i') })
+			.skip((page - 1) * limit)
+			.limit(limit)
+			.lean();
+		const count = await this.productModel.countDocuments({
+			brand: new RegExp('^' + brand + '$', 'i'),
 		});
 		return { count, products };
 	}

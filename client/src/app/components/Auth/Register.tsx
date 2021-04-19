@@ -10,7 +10,6 @@ export const Register = () => {
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
-  const [redirect, setRedirect] = useState('');
 
   const [formData, setFormData] = useState<RegisterUserInput>({
     username: '',
@@ -47,9 +46,9 @@ export const Register = () => {
           },
         );
         if (typeof router.query.redirect === 'string') {
-          router.push(router.query.redirect);
+          router.push('/login?redirect=' + router.query.redirect);
         } else {
-          router.push('/');
+          router.push('/login');
         }
       }
     } catch (error) {
@@ -57,13 +56,6 @@ export const Register = () => {
     }
   };
 
-  useEffect(() => {
-    if (typeof router.query.redirect === 'string') {
-      setRedirect(router.query.redirect);
-    } else {
-      setRedirect('');
-    }
-  }, [redirect, setRedirect]);
   return (
     <Row className="justify-content-md-center mt-5">
       <Col xs={12} md={6} lg={4}>
@@ -108,7 +100,14 @@ export const Register = () => {
           ></Form.Control>
           <div className="mt-3 mr-1 text-right ml-auto">
             <small>Already have an account? </small>
-            <Link href={redirect ? `/login?redirect=${redirect}` : '/login'} passHref>
+            <Link
+              href={
+                typeof router.query.redirect === 'string'
+                  ? `/login?redirect=${router.query.redirect}`
+                  : '/login'
+              }
+              passHref
+            >
               <a>
                 <small>Login</small>
               </a>

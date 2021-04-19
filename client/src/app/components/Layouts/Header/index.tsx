@@ -64,12 +64,15 @@ export const Header = () => {
   }
 
   const groupAdmin = (
-    <NavDropdown title="Admin" id="adminmenu">
+    <NavDropdown title="Dashboard" id="adminmenu">
       <NextLink href="/admin/product/new" passHref>
         <NavDropdown.Item>Create Product</NavDropdown.Item>
       </NextLink>
       <NextLink href="/admin/users" passHref>
         <NavDropdown.Item>Users</NavDropdown.Item>
+      </NextLink>
+      <NextLink href="/admin/product-list" passHref>
+        <NavDropdown.Item>Product List</NavDropdown.Item>
       </NextLink>
       <NextLink href="/admin/orders" passHref>
         <NavDropdown.Item>Orders</NavDropdown.Item>
@@ -105,8 +108,8 @@ export const Header = () => {
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
               </NextLink>
-              {authGroupButtons}
               {user && user?.role == 'ADMIN' && groupAdmin}
+              {authGroupButtons}
             </Nav>
           </Navbar.Collapse>
         </Container>

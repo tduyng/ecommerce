@@ -19,6 +19,25 @@ body {
   cursor: pointer;
 }
 
+.text-red {
+  color: red;
+}
+
+.no-border {
+  border: none;
+}
+
+.btn-delete {
+  color: red;
+  background: transparent;
+  border: none;
+}
+
+.btn-delete:hover {
+  opacity: 0.5;
+  background: white;
+}
+
 @media all and (min-width: 992px) {
   .navbar .nav-item .dropdown-menu {
     display: none;
@@ -171,6 +190,16 @@ body {
   margin-left: -0.6vw;
 }
 
+.item-slider .icon-related {
+  position: absolute;
+  top: 40%;
+  font-size: x-large;
+  color: black;
+  padding: 0.5vw;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
 .item-slider .next {
   right: 0;
 }
@@ -210,4 +239,21 @@ body {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
   color: #ee5132;
+}
+
+.sidebar-products {
+  margin-left: 0;
+  padding-left: 0;
+  max-width: 6rem;
+}
+
+.sidebar-products li {
+  width: 5rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.sidebar-products li:hover {
+  background: #f2f2f2;
+  border-radius: 2px;
 }

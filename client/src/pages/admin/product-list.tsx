@@ -2,19 +2,19 @@ import { GetServerSideProps } from 'next';
 import React from 'react';
 import { MainLayout } from 'src/app/components/Layouts/MainLayout';
 import { MetaTags } from 'src/app/components/Layouts/MetaTags';
-import { AllProducts } from 'src/app/components/Products/AllProducts';
+import { ProductList } from 'src/app/components/Products/ProductList';
 import { Product } from 'src/generated/graphql';
 import { getAllProducts } from 'src/utils/getAllProducts';
 
 interface Props {
   products: Product[];
 }
-export default function ProductsPage(props: Props) {
+export default function ProductListPage(props: Props) {
   return (
     <MainLayout>
       <MetaTags title="Products" />
       <div className="container-1400">
-        <AllProducts products={props.products} />
+        <ProductList products={props.products} />
       </div>
     </MainLayout>
   );

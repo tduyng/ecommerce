@@ -23,6 +23,7 @@ export const CategoryList: React.FC<Props> = ({ width }) => {
     <div className="w-100 py-2 d-flex">
       <>
         {!loading &&
+          categoryBrands &&
           categoryBrands.map((item, index) => {
             <HoverControlledDropdown key={index}>
               <Dropdown.Toggle
