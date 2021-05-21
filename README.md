@@ -2,7 +2,7 @@
 
 E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - MongoDB
 
->(Project is working in progress...)
+>(Client is working in progress...)
 ## Technologies
 
 - Backend
@@ -43,3 +43,4 @@ E-commerce project using **GraphQL** with stack: NestJS - ReactJS(NextJS) - Mong
 - CI-CD: Github actions
 
 
+![home page](docs/images/home-page.png)
